@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "Redux",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,14 +10,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "@react-navigation/bottom-tabs": "^6.5.7",
-    "@react-navigation/native": "^6.1.6",
-    "@react-navigation/native-stack": "^6.9.12",
+    "@reduxjs/toolkit": "^1.9.5",
     "react": "18.2.0",
     "react-native": "0.71.7",
-    "react-native-safe-area-context": "^4.5.2",
-    "react-native-screens": "^3.20.0",
-    "react-native-validator-form": "^1.0.0"
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "toolkit": "^1.5.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
