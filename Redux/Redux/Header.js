@@ -7,7 +7,7 @@ import Cart from '../cart';
 const Header = () => {
   return (
     <View>
-      {/* <View>
+       <View>
         <TouchableOpacity>
           <Text
             onPress={() => props.navigation.navigate('Login')}
@@ -22,7 +22,7 @@ const Header = () => {
             Cart
           </Text>
 
-        </TouchableOpacity> */}
+        </TouchableOpacity> 
         <Button title="Cart" />
       </View>
     </View>
