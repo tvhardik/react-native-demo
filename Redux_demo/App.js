@@ -1,38 +1,19 @@
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import MainTab from './screen/MainTab';
+import MainDrawer from './screen/MainDrawer';
+import MainStack from './screen/MainStack';
+const Stack = createNativeStackNavigator();
 
-function Feed() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed Screen</Text>
-    </View>
-  );
-}
-
-function Article() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Article Screen</Text>
-    </View>
-  );
-}
-
-const Drawer = createDrawerNavigator();
-
-function MyDrawer() {
-  return (
-    <Drawer.Navigator useLegacyImplementation>
-      <Drawer.Screen name="Feed" component={Feed} />
-      <Drawer.Screen name="Article" component={Article} />
-    </Drawer.Navigator>
-  );
-}
-
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
-      <MyDrawer />
+      <MainTab />
+      {/* <MainStack/>
+      <MainDrawer/> */}
     </NavigationContainer>
   );
-}
+};
+
+export default App;
