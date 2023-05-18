@@ -1,18 +1,15 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import MainStack from './MainStack';
 import MainTab from './MainTab';
-import Profile from './Profile';
-import Home from './Home';
+import Contactscreen from './Contactscreen';
+
 const Drawer = createDrawerNavigator();
 const MainDrawer = () => {
-  return (
-    <Drawer.Navigator nitialRouteName="Home">
-      <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Profile" component={Profile} />
+  return ( 
+    <Drawer.Navigator initialRouteName="Home Page" >
+      <Drawer.Screen name="Home screen" component={MainTab} />
+      <Drawer.Screen name="About Page" component={Contactscreen} />
     </Drawer.Navigator>
   );
 };
-
 export default MainDrawer;

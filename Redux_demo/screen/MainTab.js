@@ -1,8 +1,9 @@
 import React from 'react';
-import Contect from './Contect';
+import Contactscreen from './Contactscreen';
 import MainStack from './MainStack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from './Home';
+
+import AntDesign from 'react-native-vector-icons/AntDesign';
 const TabBottom = createBottomTabNavigator();
 const MainTab = () => {
   return (
@@ -10,11 +11,22 @@ const MainTab = () => {
       <TabBottom.Screen
         name="Home"
         component={MainStack}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => <AntDesign name="home" color={'black'} size={25} />,
+        }}
       />
-      <TabBottom.Screen name="Contect" component={Contect} />
+      <TabBottom.Screen
+        name="Contact Page"
+        component={Contactscreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => (
+            <AntDesign name="adduser" color={'black'} size={25} />
+          ),
+        }}
+      />
     </TabBottom.Navigator>
   );
 };
-
 export default MainTab;

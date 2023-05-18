@@ -1,12 +1,11 @@
-import {View, Text, Button} from 'react-native';
+import {View, Text} from 'react-native';
 import React from 'react';
 
-const About = () => {
+const Contactscreen = () => {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>About Screen</Text>
+      <Text>Contact screen</Text>
     </View>
   );
 };
-
-export default About;
+export default Contactscreen;
