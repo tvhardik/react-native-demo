@@ -7,12 +7,16 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Additemtocart} from '../Redux/Actions';
+
 let productList = [
   {
     name: 'Samsung S20',
     color: 'white',
     price: '40000',
+    specification: '128GB',
     Image:
       'https://img.global.news.samsung.com/in/wp-content/uploads/2022/03/SM-A536_Galaxy-A53-5G_Awesome-Peach_Front.jpg',
   },
@@ -20,6 +24,7 @@ let productList = [
     name: 'Iphone 12 ',
     color: 'white',
     price: '80000',
+    specification: '256GB',
     Image:
       'https://www.apple.com/v/iphone-12/k/images/meta/iphone-12_specs__uks7xn3l3yqa_og.png?202303230955',
   },
@@ -27,30 +32,51 @@ let productList = [
     name: 'One Plus 10 Pro',
     color: 'white',
     price: '30000',
+    specification: '128GB',
     Image: 'https://static.toiimg.com/photo/msid-93587897/93587897.jpg',
   },
   {
     name: 'MI 10T',
     color: 'white',
     price: '30000',
+    specification: '64GB',
     Image: 'https://www.pngmart.com/files/22/Mi-PNG-Pic.png',
   },
   {
     name: 'Reamle 10 pro',
     color: 'white',
     price: '30000',
+    specification: '64GB',
     Image:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsXqOsEQc5oLSfEO_w7D45eh5jndm2_ZGArQ&usqp=CAU',
   },
 ];
 
-const Productpage = () => {
+const Productpage = props => {
+  const dispatch = useDispatch();
+
+  const addItem = items => {
+    dispatch(Additemtocart(items));
+  };
+  const item = useSelector(state => state);
+  let addedItem = [];
+  addedItem = item;
   return (
     <View style={styles.container}>
       <View style={styles.Header}>
         <Text style={{fontSize: 20, color: '#000'}}>Products</Text>
-        <TouchableOpacity style={styles.Viewcart}>
-          <Text style={{color: '#ffffff', fontSize: 13}}>View Cart</Text>
+        <TouchableOpacity
+          style={styles.Viewcart}
+          onPress={() => props.navigation.navigate('addtocart')}>
+          <Text style={{fontSize: 20, padding: 2, textAlign: 'center'}}>
+            {addedItem.length}
+          </Text>
+          <Image
+            style={{width: '40%', height: '100%'}}
+            source={{
+              uri: 'https://cdn-icons-png.flaticon.com/256/57/57629.png',
+            }}
+          />
         </TouchableOpacity>
       </View>
       <FlatList
@@ -77,13 +103,14 @@ const Productpage = () => {
                   {item.name}
                 </Text>
                 <Text style={{color: 'black'}}>{item.color}</Text>
-                <Text style={{fontWeight: '500'}}>{'₹' + item.price}</Text>
-                <TouchableOpacity style={styles.Addtocart}>
+                <Text style={{fontWeight: '500'}}>{item.specification}</Text>
+                <TouchableOpacity
+                  style={styles.Addtocart}
+                  onPress={() => addItem(item)}>
                   <Text
                     style={{
                       fontSize: 13,
                       fontWeight: '400',
-                      color: '#fff',
                     }}>
                     ADD TO CART
                   </Text>
@@ -97,6 +124,7 @@ const Productpage = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f5f5f5',
@@ -127,13 +155,12 @@ const styles = StyleSheet.create({
     width: 100,
   },
   Viewcart: {
-    height: 20,
+    height: 30,
+    borderRadius: 20,
     backgroundColor: '#1e90ff',
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 100,
-    marginLeft: 155,
+    marginLeft: 165,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
 });
 export default Productpage;
