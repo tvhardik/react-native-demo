@@ -10,7 +10,11 @@ const StackNavigation = () => {
     <>
       <NavigationContainer independent={true}>
         <Stack.Navigator initialRouteName="LoginScreen">
-          <Stack.Screen name="LoginScreen" component={Loginpage} />
+          <Stack.Screen
+            name="LoginScreen"
+            component={Loginpage}
+            options={{title: 'Login'}}
+          />
           <Stack.Screen
             name="Productscreen"
             component={Productpage}
@@ -19,7 +23,7 @@ const StackNavigation = () => {
           <Stack.Screen
             name="addtocart"
             component={Addtocart}
-            options={{ title: 'Your Cart'}}
+            options={{title: 'Your Cart'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

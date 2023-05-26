@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Additemtocart} from '../Redux/Actions';
 

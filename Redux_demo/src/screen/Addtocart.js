@@ -18,7 +18,7 @@ const Addtocart = () => {
   };
   return (
     <View>
-      <FlatList
+      <FlatList 
         data={items}
         renderItem={({item, index}) => {
           return (
@@ -56,6 +56,33 @@ const Addtocart = () => {
                     Rmove
                   </Text>
                 </TouchableOpacity>
+                {/* <View
+                  style={{
+                    flexDirection: 'row',
+                  }}>
+                  <TouchableOpacity
+                    style={{
+                      height: 20,
+                      backgroundColor: 'green',
+                      width: 20,
+                      alignItems: 'center',
+                      borderRadius: 5,
+                    }}>
+                    <Text style={{fontSize: 15}}>+</Text>
+                  </TouchableOpacity>
+                  <Text style={{paddingLeft: 10}}>{'0'}</Text>
+                  <TouchableOpacity
+                    style={{
+                      height: 20,
+                      backgroundColor: 'green',
+                      width: 20,
+                      alignItems: 'center',
+                      borderRadius: 5,
+                      marginLeft: 10,
+                    }}>
+                    <Text style={{fontSize: 15}}>-</Text>
+                  </TouchableOpacity>
+                </View> */}
               </View>
             </View>
           );

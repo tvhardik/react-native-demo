@@ -1,16 +1,16 @@
-import {View, Text, FlatList} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+import {Text, View, FlatList} from 'react-native';
 
-const apiGet = () => {
+const axiosapi = () => {
   const [data, setData] = useState([]);
-  const getAPIData = async () => {
-    const url = 'https://jsonplaceholder.typicode.com/posts';
-    let result = await fetch(url);
-    result = await result.json();
-    setData(result);
+  const printdata = () => {
+    axios
+      .get('https://jsonplaceholder.typicode.com/posts')
+      .then(json => setData(json.data));
   };
   useEffect(() => {
-    getAPIData();
+    printdata();
   }, []);
 
   return (
@@ -36,4 +36,4 @@ const apiGet = () => {
     </View>
   );
 };
-export default apiGet;
+export default axiosapi;

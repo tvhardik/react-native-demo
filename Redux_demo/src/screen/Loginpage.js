@@ -8,24 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 const Loginpage = props => {
-  const [username, setUserNameError] = useState('');
-  const [password, setPasswordError] = useState('');
-  const [error, setError] = useState({field: '', message: ''});
-  const Submit = () => {
-    let LoginError = {field: '', message: ''};
-    if (username === '') {
-      LoginError.field = 'username';
-      LoginError.message = 'Email is Required';
-      setError(LoginError);
-    } else if (password === '') {
-      LoginError.field = 'Password';
-      LoginError.message = 'Password is Required';
-      setError(LoginError);
-    } else {
-      setError({field: '', message: ''});
-      alert('Login successfulluy');
-    }
-  };
+
   return (
     <View style={styles.container}>
       <View
@@ -50,22 +33,14 @@ const Loginpage = props => {
           style={styles.inputView}
           placeholder="User Name"
           autoCapitalize="none"
-          value={username}
-          onChangeText={name => setUserNameError(name)}
         />
-        {error.field === 'username' && (
-          <Text style={styles.error}>{error.message}</Text>
-        )}
         <TextInput
           style={styles.inputView}
           placeholder="Password"
           autoCapitalize="none"
-          value={password}
-          onChangeText={data => setPasswordError(data)}
+
         />
-        {error.field === 'Password' && (
-          <Text style={styles.error}>{error.message}</Text>
-        )}
+    
         <View style={styles.Stylebutton}>
           <TouchableOpacity>
             <Text style={{padding: 10, textAlign: 'center'}}>
@@ -74,7 +49,7 @@ const Loginpage = props => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.inputView}
-            onPressIn={Submit}
+      
             onPress={() => props.navigation.navigate('Productscreen')}>
             <Text style={{textAlign: 'center'}}>Login</Text>
           </TouchableOpacity>
@@ -105,9 +80,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 150,
   },
-  error: {
-    marginLeft: 16,
-    color: 'red',
-  },
+
 });
 export default Loginpage;
