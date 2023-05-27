@@ -1,4 +1,5 @@
 import React from 'react';
+import {View, Text} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Loginpage from '../screen/Loginpage';
@@ -7,7 +8,7 @@ import Addtocart from '../screen/Addtocart';
 const StackNavigation = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <>
+    <View style={{flex: 1}}>
       <NavigationContainer independent={true}>
         <Stack.Navigator initialRouteName="LoginScreen">
           <Stack.Screen
@@ -27,8 +28,7 @@ const StackNavigation = () => {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </View>
   );
 };
-
 export default StackNavigation;

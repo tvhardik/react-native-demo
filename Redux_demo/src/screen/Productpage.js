@@ -8,7 +8,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Additemtocart} from '../Redux/Actions';
+import {Getitem, Additemtocart, Removeitemfromcart} from '../Redux/Actions';
+// import {ProductReducers} from '../Redux/Reducers';
 
 let productList = [
   {
@@ -52,15 +53,17 @@ let productList = [
 ];
 
 const Productpage = props => {
-  const dispatch = useDispatch();
-
-  const addItem = items => {
-    dispatch(Additemtocart(items));
-  };
-  const item = useSelector(state => state);
-  let addedItem = [];
-  addedItem = item;
+  const {product, addtocart} = useSelector(start => start.ProductReducers);
   return (
+    // const Productpage = props => {
+    // const dispatch = useDispatch();
+
+    // const addItem = items => {
+    //   dispatch(Additemtocart(items));
+    // };
+    // const item = useSelector(state => state);
+    // let addedItem = [];
+    // addedItem = item;
     <View style={styles.container}>
       <View style={styles.Header}>
         <Text style={{fontSize: 20, color: '#000'}}>Products</Text>
@@ -68,7 +71,7 @@ const Productpage = props => {
           style={styles.Viewcart}
           onPress={() => props.navigation.navigate('addtocart')}>
           <Text style={{fontSize: 20, padding: 2, textAlign: 'center'}}>
-            {addedItem.length}
+            {/* {addedItem.length} */}
           </Text>
           <Image
             style={{width: '40%', height: '100%'}}

@@ -1,12 +1,12 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import StackNavigation from './Navigation/StackNavigation';
+import Tab from './Navigation/Tab';
 
 const Main = () => {
   return (
-    <>
-      <StackNavigation />
-    </>
+    <View style={{flex: 1}}>
+      <Tab />
+    </View>
   );
 };
 
