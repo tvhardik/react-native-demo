@@ -23,15 +23,12 @@ const Productpage = props => {
   useEffect(() => {
     fetchProduct();
   }, []);
-
   const cartItems = useSelector(state => state.ProductReducers.addtocart); //Product add to cart count itema
   const dispatchitem = useDispatch();
-
   useEffect(() => {
     dispatchitem(Getitem());
   }, []);
-
-  const itemCount = cartItems ? cartItems.length : 0;
+  const itemCount = cartItems ? cartItems.length : 0; //count
   return (
     <View style={styles.container}>
       <View style={styles.Header}>
@@ -74,7 +71,10 @@ const Productpage = props => {
                   }}>
                   {item.title}
                 </Text>
-                <Text style={{color: 'black'}}>{item.price}</Text>
+                <Text style={{color: 'green'}}>
+                  {'$'}
+                  {item.price}
+                </Text>
                 <Text style={{fontWeight: '500'}}>{item.category}</Text>
                 <TouchableOpacity
                   style={styles.Addtocart}

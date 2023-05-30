@@ -16,9 +16,16 @@ const Addtocart = () => {
   const removeitem = id => {
     dispatch(Removeitemfromcart(id));
   };
+  const increaseQuantity = id => {
+    dispatch(IncreaseQuantity(id));
+  };
+
+  const decreaseQuantity = id => {
+    dispatch(DecreaseQuantity(id));
+  };
   const cartItems = useSelector(state => state.ProductReducers.addtocart); //Product add to cart count itema
   const itemCount = cartItems ? cartItems.length : 0;
-
+  const totalPrice = cartItems.reduce((total, item) => total + item.price, 0); //totel price
   return (
     <View style={styles.container}>
       <FlatList
@@ -45,7 +52,10 @@ const Addtocart = () => {
                   }}>
                   {item.title}
                 </Text>
-                <Text style={{color: 'black'}}>{item.price}</Text>
+                <Text style={{color: 'green'}}>
+                  {'$'}
+                  {item.price}
+                </Text>
                 <Text style={{fontWeight: '500'}}>{item.category}</Text>
                 <TouchableOpacity
                   style={styles.Remove}
@@ -70,10 +80,11 @@ const Addtocart = () => {
                       width: 20,
                       alignItems: 'center',
                       borderRadius: 5,
-                    }}>
+                    }}
+                    onPress={() => increaseQuantity(itemId)}>
                     <Text style={{fontSize: 15}}>+</Text>
                   </TouchableOpacity>
-                  <Text style={{paddingLeft: 10}}>{'0'}</Text>
+                  <Text style={{paddingLeft: 10}}>{item.quantity}</Text>
                   <TouchableOpacity
                     style={{
                       height: 20,
@@ -82,7 +93,8 @@ const Addtocart = () => {
                       alignItems: 'center',
                       borderRadius: 5,
                       marginLeft: 10,
-                    }}>
+                    }}
+                    onPress={() => decreaseQuantity(itemId)}>
                     <Text style={{fontSize: 15}}>-</Text>
                   </TouchableOpacity>
                 </View>
@@ -104,8 +116,8 @@ const Addtocart = () => {
         <Text style={{fontWeight: 500}}>
           {'Addeditem' + ' (' + itemCount + ')'}
         </Text>
-        <Text style={{fontWeight: 500}}>
-          {'Totel' + ' (' + itemCount + ')'}
+        <Text style={{fontWeight: 500, color: 'green'}}>
+          {'Totel $' + totalPrice}
         </Text>
       </View>
     </View>
