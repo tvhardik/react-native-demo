@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 const Loginpage = props => {
-
   return (
     <View style={styles.container}>
       <View
@@ -38,9 +37,8 @@ const Loginpage = props => {
           style={styles.inputView}
           placeholder="Password"
           autoCapitalize="none"
-
         />
-    
+
         <View style={styles.Stylebutton}>
           <TouchableOpacity>
             <Text style={{padding: 10, textAlign: 'center'}}>
@@ -49,7 +47,6 @@ const Loginpage = props => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.inputView}
-      
             onPress={() => props.navigation.navigate('Productscreen')}>
             <Text style={{textAlign: 'center'}}>Login</Text>
           </TouchableOpacity>
@@ -80,6 +77,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 150,
   },
-
+  container: {
+    // backgroundColor: '#d3d3d3',
+  },
 });
 export default Loginpage;

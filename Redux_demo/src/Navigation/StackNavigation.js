@@ -10,7 +10,7 @@ const StackNavigation = () => {
   return (
     <View style={{flex: 1}}>
       <NavigationContainer independent={true}>
-        <Stack.Navigator initialRouteName="LoginScreen">
+        <Stack.Navigator>
           <Stack.Screen
             name="LoginScreen"
             component={Loginpage}

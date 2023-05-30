@@ -4,12 +4,13 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import StackNavigation from './StackNavigation';
 import Profile from '../screen/profile';
+import Productpage from '../screen/Productpage';
 
 const TabNavigate = createBottomTabNavigator();
 const Tab = () => {
   return (
     <View style={{flex: 1}}>
-      <NavigationContainer ndependent={true}>
+      <NavigationContainer >
         <TabNavigate.Navigator initialRouteName="Productscreen">
           <TabNavigate.Screen
             name="Productscreen"

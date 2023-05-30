@@ -8,62 +8,31 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Getitem, Additemtocart, Removeitemfromcart} from '../Redux/Actions';
-// import {ProductReducers} from '../Redux/Reducers';
-
-let productList = [
-  {
-    name: 'Samsung S20',
-    color: 'white',
-    price: '40000',
-    specification: '128GB',
-    Image:
-      'https://img.global.news.samsung.com/in/wp-content/uploads/2022/03/SM-A536_Galaxy-A53-5G_Awesome-Peach_Front.jpg',
-  },
-  {
-    name: 'Iphone 12 ',
-    color: 'white',
-    price: '80000',
-    specification: '256GB',
-    Image:
-      'https://www.apple.com/v/iphone-12/k/images/meta/iphone-12_specs__uks7xn3l3yqa_og.png?202303230955',
-  },
-  {
-    name: 'One Plus 10 Pro',
-    color: 'white',
-    price: '30000',
-    specification: '128GB',
-    Image: 'https://static.toiimg.com/photo/msid-93587897/93587897.jpg',
-  },
-  {
-    name: 'MI 10T',
-    color: 'white',
-    price: '30000',
-    specification: '64GB',
-    Image: 'https://www.pngmart.com/files/22/Mi-PNG-Pic.png',
-  },
-  {
-    name: 'Reamle 10 pro',
-    color: 'white',
-    price: '30000',
-    specification: '64GB',
-    Image:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsXqOsEQc5oLSfEO_w7D45eh5jndm2_ZGArQ&usqp=CAU',
-  },
-];
+import {Getitem, Additemtocart} from '../Redux/Actions';
+import {useEffect} from 'react';
 
 const Productpage = props => {
-  const {product, addtocart} = useSelector(start => start.ProductReducers);
-  return (
-    // const Productpage = props => {
-    // const dispatch = useDispatch();
+  const addItem = items => {
+    dispatch(Additemtocart(items));
+  };
+  const {product} = useSelector(state => state.ProductReducers);
+  const dispatch = useDispatch();
+  const fetchProduct = () => {
+    dispatch(Getitem());
+  };
+  useEffect(() => {
+    fetchProduct();
+  }, []);
 
-    // const addItem = items => {
-    //   dispatch(Additemtocart(items));
-    // };
-    // const item = useSelector(state => state);
-    // let addedItem = [];
-    // addedItem = item;
+  const cartItems = useSelector(state => state.ProductReducers.addtocart); //Product add to cart count itema
+  const dispatchitem = useDispatch();
+
+  useEffect(() => {
+    dispatchitem(Getitem());
+  }, []);
+
+  const itemCount = cartItems ? cartItems.length : 0;
+  return (
     <View style={styles.container}>
       <View style={styles.Header}>
         <Text style={{fontSize: 20, color: '#000'}}>Products</Text>
@@ -71,7 +40,7 @@ const Productpage = props => {
           style={styles.Viewcart}
           onPress={() => props.navigation.navigate('addtocart')}>
           <Text style={{fontSize: 20, padding: 2, textAlign: 'center'}}>
-            {/* {addedItem.length} */}
+            {itemCount}
           </Text>
           <Image
             style={{width: '40%', height: '100%'}}
@@ -82,12 +51,13 @@ const Productpage = props => {
         </TouchableOpacity>
       </View>
       <FlatList
-        data={productList}
+        data={product}
+        keyExtractor={item => item.id.toString()}
         renderItem={({item}) => {
           return (
             <View style={styles.FlatList}>
               <Image
-                source={{uri: item.Image}}
+                source={{uri: item.image}}
                 style={{width: 100, height: 100}}
               />
               <View
@@ -102,10 +72,10 @@ const Productpage = props => {
                     fontWeight: '800',
                     color: 'black',
                   }}>
-                  {item.name}
+                  {item.title}
                 </Text>
-                <Text style={{color: 'black'}}>{item.color}</Text>
-                <Text style={{fontWeight: '500'}}>{item.specification}</Text>
+                <Text style={{color: 'black'}}>{item.price}</Text>
+                <Text style={{fontWeight: '500'}}>{item.category}</Text>
                 <TouchableOpacity
                   style={styles.Addtocart}
                   onPress={() => addItem(item)}>
@@ -129,7 +99,7 @@ const Productpage = props => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#d3d3d3',
   },
   Header: {
     width: '100%',

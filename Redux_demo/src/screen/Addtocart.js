@@ -11,20 +11,24 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Removeitemfromcart} from '../Redux/Actions';
 
 const Addtocart = () => {
-  const items = useSelector(state => state);
+  const {addtocart} = useSelector(state => state.ProductReducers);
   const dispatch = useDispatch();
-  const removeitem = Index => {
-    dispatch(Removeitemfromcart(Index));
+  const removeitem = id => {
+    dispatch(Removeitemfromcart(id));
   };
+  const cartItems = useSelector(state => state.ProductReducers.addtocart); //Product add to cart count itema
+  const itemCount = cartItems ? cartItems.length : 0;
+
   return (
-    <View>
-      <FlatList 
-        data={items}
-        renderItem={({item, index}) => {
+    <View style={styles.container}>
+      <FlatList
+        data={addtocart}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({item}) => {
           return (
             <View style={styles.FlatList}>
               <Image
-                source={{uri: item.Image}}
+                source={{uri: item.image}}
                 style={{width: 100, height: 100}}
               />
               <View
@@ -39,26 +43,25 @@ const Addtocart = () => {
                     fontWeight: '800',
                     color: 'black',
                   }}>
-                  {item.name}
+                  {item.title}
                 </Text>
-                <Text style={{color: 'black'}}>{item.color}</Text>
-                <Text style={{fontWeight: '500'}}>{item.specification}</Text>
+                <Text style={{color: 'black'}}>{item.price}</Text>
+                <Text style={{fontWeight: '500'}}>{item.category}</Text>
                 <TouchableOpacity
                   style={styles.Remove}
-                  onPress={() => {
-                    removeitem(index);
-                  }}>
+                  onPress={() => removeitem(item)}>
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: 14,
                       fontWeight: '400',
                     }}>
-                    Rmove
+                    Remove
                   </Text>
                 </TouchableOpacity>
-                {/* <View
+                <View
                   style={{
                     flexDirection: 'row',
+                    marginVertical: 4,
                   }}>
                   <TouchableOpacity
                     style={{
@@ -82,12 +85,29 @@ const Addtocart = () => {
                     }}>
                     <Text style={{fontSize: 15}}>-</Text>
                   </TouchableOpacity>
-                </View> */}
+                </View>
               </View>
             </View>
           );
         }}
       />
+      <View
+        style={{
+          width: '100%',
+          height: 50,
+          backgroundColor: '#ffffff',
+          position: 'absolute',
+          bottom: 0,
+          padding: 5,
+          alignItems: 'center',
+        }}>
+        <Text style={{fontWeight: 500}}>
+          {'Addeditem' + ' (' + itemCount + ')'}
+        </Text>
+        <Text style={{fontWeight: 500}}>
+          {'Totel' + ' (' + itemCount + ')'}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -111,7 +131,8 @@ const styles = StyleSheet.create({
     width: 100,
   },
   container: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#d3d3d3',
+    flex: 1,
   },
 });
 export default Addtocart;

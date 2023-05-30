@@ -3,7 +3,6 @@ const initialState = {
   product: [],
   addtocart: [],
 };
-
 export const ProductReducers = (state = initialState, action) => {
   switch (action.type) {
     case GET_ITEM:
@@ -17,7 +16,6 @@ export const ProductReducers = (state = initialState, action) => {
           products => products.id !== action.payload.id,
         ),
       };
-
     default:
       return state;
   }
