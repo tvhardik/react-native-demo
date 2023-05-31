@@ -3,8 +3,6 @@ import {
   ADD_ITEM,
   REMOVE_ITEM,
   GET_ITEM,
-  INCREASE_QUANTITY,
-  DECREASE_QUANTITY,
 } from './ActionTypes';
 
 export const Getitem = () => {
@@ -29,14 +27,4 @@ export const Removeitemfromcart = data => dispatch =>
   dispatch({
     type: REMOVE_ITEM,
     payload: data,
-  });
-export const IncreaseQuantity = itemId => dispatch =>
-  dispatch({
-    type: INCREASE_QUANTITY,
-    payload: itemId,
-  });
-export const DecreaseQuantity = itemId => dispatch =>
-  dispatch({
-    type: DECREASE_QUANTITY,
-    payload: itemId,
   });

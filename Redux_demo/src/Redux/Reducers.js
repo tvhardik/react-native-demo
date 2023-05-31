@@ -1,4 +1,9 @@
-import {ADD_ITEM, REMOVE_ITEM, GET_ITEM} from './ActionTypes';
+import {
+  ADD_ITEM,
+  REMOVE_ITEM,
+  GET_ITEM,
+  SET_ALL_PRODUCT_LIST,
+} from './ActionTypes';
 
 const initialState = {
   product: [],
@@ -18,34 +23,11 @@ export const ProductReducers = (state = initialState, action) => {
           products => products.id !== action.payload.id,
         ),
       };
-    // case INCREASE_QUANTITY:
-    //   return {
-    //     ...state,
-    //     addtocart: state.addtocart.map(product => {
-    //       if (product.id === action.payload) {
-    //         return {
-    //           ...product,
-    //           quantity: product.quantity + 1,
-    //         };
-    //       }
-    //       return product;
-    //     }),
-    //   };
-
-    // case DECREASE_QUANTITY:
-    //   return {
-    //     ...state,
-    //     addtocart: state.addtocart.map(product => {
-    //       if (product.id === action.payload && product.quantity > 1) {
-    //         return {
-    //           ...product,
-    //           quantity: product.quantity - 1,
-    //         };
-    //       }
-    //       return product;
-    //     }),
-    //   };
-
+    case SET_ALL_PRODUCT_LIST:
+      return {
+        ...state,
+        productList: action.payload,
+      };
     default:
       return state;
   }

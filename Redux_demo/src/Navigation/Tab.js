@@ -5,6 +5,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import StackNavigation from './StackNavigation';
 import Profile from '../screen/profile';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Productpage from '../screen/Productpage';
+
 const TabNavigate = createBottomTabNavigator();
 const Tab = () => {
   return (
@@ -22,15 +24,10 @@ const Tab = () => {
               }
               return <Icon name={iconName} size={size} color={color} />;
             },
-          })}
-          // tabBarOptions={{
-          //   activeTintColor: 'blue',
-          //   inactiveTintColor: 'gray',
-          // }}
-          >
+          })}>
           <TabNavigate.Screen
             name="Productscreen"
-            component={StackNavigation}
+            component={Productpage}
             options={{headerShown: false}}
           />
           <TabNavigate.Screen

@@ -77,8 +77,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 150,
   },
-  container: {
-    // backgroundColor: '#d3d3d3',
-  },
 });
 export default Loginpage;

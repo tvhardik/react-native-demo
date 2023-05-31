@@ -29,6 +29,7 @@ const Productpage = props => {
     dispatchitem(Getitem());
   }, []);
   const itemCount = cartItems ? cartItems.length : 0; //count
+
   return (
     <View style={styles.container}>
       <View style={styles.Header}>
@@ -36,14 +37,18 @@ const Productpage = props => {
         <TouchableOpacity
           style={styles.Viewcart}
           onPress={() => props.navigation.navigate('addtocart')}>
-          <Text style={{fontSize: 20, padding: 2, textAlign: 'center'}}>
+          <Text
+            style={{
+              fontSize: 20,
+              padding: 2,
+              textAlign: 'center',
+              color: '#ffffff',
+            }}>
             {itemCount}
           </Text>
           <Image
-            style={{width: '40%', height: '100%'}}
-            source={{
-              uri: 'https://cdn-icons-png.flaticon.com/256/57/57629.png',
-            }}
+            style={{width: 30, height: 30}}
+            source={require('../img/shopping-cart.png')}
           />
         </TouchableOpacity>
       </View>
@@ -55,7 +60,7 @@ const Productpage = props => {
             <View style={styles.FlatList}>
               <Image
                 source={{uri: item.image}}
-                style={{width: 100, height: 100}}
+                style={{width: 100, height: 100, resizeMode: 'contain'}}
               />
               <View
                 style={{
@@ -83,6 +88,7 @@ const Productpage = props => {
                     style={{
                       fontSize: 13,
                       fontWeight: '400',
+                      color: '#ffffff',
                     }}>
                     ADD TO CART
                   </Text>
@@ -102,7 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#d3d3d3',
   },
   Header: {
-    width: '100%',
+    // width: '100%',
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',
@@ -116,18 +122,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#ffffff',
     marginVertical: 10,
-    padding: 10,
+    padding: 15,
   },
   Addtocart: {
-    height: 20,
+    height: 22,
     backgroundColor: '#1e90ff',
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     width: 100,
   },
   Viewcart: {
     height: 30,
+    width: 80,
     borderRadius: 20,
     backgroundColor: '#1e90ff',
     marginLeft: 165,
