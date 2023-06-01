@@ -23,7 +23,7 @@ const Productpage = props => {
   useEffect(() => {
     fetchProduct();
   }, []);
-  const cartItems = useSelector(state => state.ProductReducers.addtocart); //Product add to cart count itema
+  const cartItems = useSelector(state => state.ProductReducers.cartData); //Product add to cart count itema
   const dispatchitem = useDispatch();
   useEffect(() => {
     dispatchitem(Getitem());

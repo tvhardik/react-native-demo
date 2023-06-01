@@ -1,6 +1,6 @@
 import {View} from 'react-native';
 import React from 'react';
-import Tab from './Navigation/Tab';
+// import Tab from './Navigation/Tab';
 import StackNavigation from './Navigation/StackNavigation';
 StackNavigation;
 const Main = () => {

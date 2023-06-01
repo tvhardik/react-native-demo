@@ -8,36 +8,28 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Removeitemfromcart} from '../Redux/Actions';
+import {Removeitemfromcart, Additemtocart} from '../Redux/Actions';
 
 const Addtocart = () => {
-  const [productList, setProductList] = useState([]);
-  const {addtocart} = useSelector(state => state.ProductReducers);
+  const {cartData} = useSelector(state => state.ProductReducers);
   const dispatch = useDispatch();
   const removeitem = item => {
     dispatch(Removeitemfromcart(item));
   };
-  const increament = async (index, item) => {
-    let itemData = item;
-    itemData.qty = itemData?.qty ? itemData?.qty : 1;
-    if (itemData.qty > 0) {
-      itemData.qty = itemData.qty += 1;
-      setProductList(productList);
-      dispatch(Removeitemfromcart(productList));
-    }
+  const addItem = item => {
+    dispatch(Additemtocart(item));
   };
-  const decreament = async (index, item) => {
-    let itemData = item;
-    itemData.qty = itemData?.qty ? itemData?.qty : 1;
-    if (itemData.qty !== 1) {
-      itemData.qty = itemData.qty - 1;
-      setProductList(productList);
-      dispatch(Removeitemfromcart(productList));
-    }
+  const increament = item => {
+    dispatch(Additemtocart(item));
+  };
+  const decreament = item => {
+    dispatch(Removeitemfromcart(item));
   };
   //item count and price
-  const cartItems = useSelector(state => state.ProductReducers.addtocart);
+  const cartItems = cartData;
   const itemCount = cartItems ? cartItems.length : 0;
+
+
   const totalPrice = cartItems.reduce(
     (total, item) => (total = total + item.qty * item.price),
     0,
@@ -45,11 +37,11 @@ const Addtocart = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={addtocart}
-        keyExtractor={(item, index) => item.id.toString() + index.toString()}
-        renderItem={({index, item}) => {
+        data={cartData}
+        keyExtractor={item => item.id.toString()}
+        renderItem={({item}) => {
           return (
-            <View style={styles.FlatList}> 
+            <View style={styles.FlatList}>
               <Image
                 source={{uri: item.image}}
                 style={{width: 100, height: 100, resizeMode: 'contain'}}
@@ -72,7 +64,7 @@ const Addtocart = () => {
                   {item.price}
                 </Text>
                 <Text style={{fontWeight: '500'}}>{item.category}</Text>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={styles.Remove}
                   onPress={() => removeitem(item)}>
                   <Text
@@ -83,7 +75,7 @@ const Addtocart = () => {
                     }}>
                     Remove
                   </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <View
                   style={{
                     flexDirection: 'row',
@@ -98,7 +90,7 @@ const Addtocart = () => {
                       alignItems: 'center',
                       borderRadius: 5,
                     }}
-                    onPress={() => increament(index, item)}>
+                    onPress={() => increament(item)}>
                     <Text style={{fontSize: 15, color: '#ffffff'}}>+</Text>
                   </TouchableOpacity>
                   <Text style={{paddingLeft: 10}}>{item.qty}</Text>
@@ -111,7 +103,7 @@ const Addtocart = () => {
                       borderRadius: 5,
                       marginLeft: 10,
                     }}
-                    onPress={() => decreament(index, item)}>
+                    onPress={() => decreament(item)}>
                     <Text style={{fontSize: 15, color: '#ffffff'}}>-</Text>
                   </TouchableOpacity>
                 </View>
@@ -135,17 +127,6 @@ const Addtocart = () => {
         <Text style={{fontWeight: 500, color: 'green'}}>
           {'Totel $' + totalPrice}
         </Text>
-        {/* <View>
-          <TouchableOpacity
-            style={{
-              height: 20,
-              width: 40,
-              backgroundColor: 'green',
-              paddingLeft: 20,
-            }}>
-            <Text>CheckOut</Text>
-          </TouchableOpacity>
-        </View> */}
       </View>
     </View>
   );
