@@ -28,8 +28,10 @@ const Productpage = props => {
   useEffect(() => {
     dispatchitem(Getitem());
   }, []);
-  const itemCount = cartItems ? cartItems.length : 0; //count
-
+  const itemCount = cartItems.reduce(
+    (total, item) => (total = total + item.qty),
+    0,
+  );
   return (
     <View style={styles.container}>
       <View style={styles.Header}>

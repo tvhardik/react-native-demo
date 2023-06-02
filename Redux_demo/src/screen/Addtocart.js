@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Removeitemfromcart, Additemtocart} from '../Redux/Actions';
 
@@ -27,11 +27,23 @@ const Addtocart = () => {
   };
   //item count and price
   const cartItems = cartData;
-  const itemCount = cartItems ? cartItems.length : 0;
+  // const itemCount = cartItems ? cartItems.length : 0;
+  // let countOccurrencesFromAPI(apiData, targetId) {
+  //   let count = 0;
 
+  //   apiData.forEach(item => {
+  //     if (item.id === targetId) {
+  //       count++;
+  //     }
+  //   });
+  //   return count;
 
   const totalPrice = cartItems.reduce(
     (total, item) => (total = total + item.qty * item.price),
+    0,
+  );
+  const itemCount = cartItems.reduce(
+    (total, item) => (total = total + item.qty),
     0,
   );
   return (
@@ -64,18 +76,6 @@ const Addtocart = () => {
                   {item.price}
                 </Text>
                 <Text style={{fontWeight: '500'}}>{item.category}</Text>
-                {/* <TouchableOpacity
-                  style={styles.Remove}
-                  onPress={() => removeitem(item)}>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      fontWeight: '400',
-                      color: '#ffffff',
-                    }}>
-                    Remove
-                  </Text>
-                </TouchableOpacity> */}
                 <View
                   style={{
                     flexDirection: 'row',

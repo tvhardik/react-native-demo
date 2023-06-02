@@ -10,7 +10,6 @@ export const ProductReducers = (state = initialState, action) => {
   switch (action.type) {
     case GET_ITEM:
       return {...state, product: action.payload};
-
     case ADD_ITEM:
       const isExist = state.cartData.findIndex(
         item => item.id === action?.payload.id,
@@ -42,7 +41,9 @@ export const ProductReducers = (state = initialState, action) => {
           cartData: cartdata,
         };
       } else {
-        const tempCartData = cartdata.filter(item => item.id !== action?.payload.id);
+        const tempCartData = cartdata.filter(
+          item => item.id !== action?.payload.id,
+        );
         return {
           ...state,
           cartData: tempCartData,

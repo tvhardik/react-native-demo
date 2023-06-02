@@ -5,12 +5,16 @@ import {NavigationContainer} from '@react-navigation/native';
 import Loginpage from '../screen/Loginpage';
 import Productpage from '../screen/Productpage';
 import Addtocart from '../screen/Addtocart';
+// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+// import Profile from '../screen/profile';
+// import Icon from 'react-native-vector-icons/AntDesign';
+const Stack = createNativeStackNavigator();
+// const TabNavigate = createBottomTabNavigator();
 
 const StackNavigation = () => {
-  const Stack = createNativeStackNavigator();
   return (
     <View style={{flex: 1}}>
-      <NavigationContainer>
+      <NavigationContainer independent={true}>
         <Stack.Navigator>
           <Stack.Screen
             name="LoginScreen"

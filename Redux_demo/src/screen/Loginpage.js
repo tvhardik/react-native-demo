@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+// state = {isFromLogin: true};
 const Loginpage = props => {
   return (
     <View style={styles.container}>
