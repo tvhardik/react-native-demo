@@ -1,3 +1,4 @@
+import {useRoute} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   View,
@@ -6,9 +7,29 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
-// state = {isFromLogin: true};
-const Loginpage = props => {
+const Loginpage = ({navigation}) => {
+  // console.log('props!!!!!!!!', props);
+  
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const signIn = () => {
+    const strongRegex = new RegExp( // Login Validation
+      '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
+    );
+
+    if (!strongRegex.test(email)) {
+      Alert.alert('Email is invalid');
+      return false;
+    } else if (password.length < 8) {
+      Alert.alert('Password is invalid');
+      return false;
+    }
+    if (strongRegex.test(email)) {
+      navigation.navigate('Tabs', {email: email});
+    }
+  };
   return (
     <View style={styles.container}>
       <View
@@ -27,17 +48,21 @@ const Loginpage = props => {
           }}
         />
       </View>
-      <Text style={styles.title}>Welcome to shop</Text>
+      <Text style={styles.title}>Welcome</Text>
       <View style={styles.View}>
         <TextInput
           style={styles.inputView}
           placeholder="User Name"
           autoCapitalize="none"
+          value={email}
+          onChangeText={email => setEmail(email)}
         />
         <TextInput
           style={styles.inputView}
           placeholder="Password"
           autoCapitalize="none"
+          onChangeText={password => setPassword(password)}
+          secureTextEntry={true}
         />
 
         <View style={styles.Stylebutton}>
@@ -46,9 +71,7 @@ const Loginpage = props => {
               Forgot Password?
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.inputView}
-            onPress={() => props.navigation.navigate('Productscreen')}>
+          <TouchableOpacity style={styles.inputView} onPress={() => signIn()}>
             <Text style={{textAlign: 'center'}}>Login</Text>
           </TouchableOpacity>
         </View>
@@ -59,7 +82,7 @@ const Loginpage = props => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 15,
+    fontSize: 20,
     textAlign: 'center',
     fontWeight: 'bold',
     marginTop: 100,

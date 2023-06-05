@@ -13,30 +13,15 @@ import {Removeitemfromcart, Additemtocart} from '../Redux/Actions';
 const Addtocart = () => {
   const {cartData} = useSelector(state => state.ProductReducers);
   const dispatch = useDispatch();
-  const removeitem = item => {
-    dispatch(Removeitemfromcart(item));
-  };
-  const addItem = item => {
-    dispatch(Additemtocart(item));
-  };
+
   const increament = item => {
     dispatch(Additemtocart(item));
   };
   const decreament = item => {
     dispatch(Removeitemfromcart(item));
   };
-  //item count and price
-  const cartItems = cartData;
-  // const itemCount = cartItems ? cartItems.length : 0;
-  // let countOccurrencesFromAPI(apiData, targetId) {
-  //   let count = 0;
 
-  //   apiData.forEach(item => {
-  //     if (item.id === targetId) {
-  //       count++;
-  //     }
-  //   });
-  //   return count;
+  const cartItems = cartData;
 
   const totalPrice = cartItems.reduce(
     (total, item) => (total = total + item.qty * item.price),
@@ -46,6 +31,7 @@ const Addtocart = () => {
     (total, item) => (total = total + item.qty),
     0,
   );
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -120,7 +106,6 @@ const Addtocart = () => {
           position: 'absolute',
           bottom: 0,
           padding: 5,
-          // flexDirection: 'row',
           alignItems: 'center',
         }}>
         <Text style={{fontWeight: 500}}>{'Addeditem  ' + itemCount}</Text>

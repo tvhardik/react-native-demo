@@ -6,36 +6,35 @@ const initialState = {
 };
 
 export const ProductReducers = (state = initialState, action) => {
-  // console.log('add to cart action payload check ::::::', action.payload);
   switch (action.type) {
-    case GET_ITEM:
+    case GET_ITEM: //get api data 
       return {...state, product: action.payload};
-    case ADD_ITEM:
-      const isExist = state.cartData.findIndex(
+    case ADD_ITEM: //add item
+      const isExistincreament = state.cartData.findIndex(
         item => item.id === action?.payload.id,
       );
-      if (isExist === -1) {
+      if (isExistincreament === -1) {
         return {
           ...state,
           cartData: [...state.cartData, {...action.payload, qty: 1}],
         };
       } else {
         const cartDataTemp = state.cartData;
-        cartDataTemp[isExist].qty = cartDataTemp[isExist].qty + 1;
+        cartDataTemp[isExistincreament].qty =
+          cartDataTemp[isExistincreament].qty + 1;
         return {
           ...state,
           cartData: cartDataTemp,
         };
       }
 
-    case REMOVE_ITEM:
-      const isExistDe = state.cartData.findIndex(
+    case REMOVE_ITEM: //remove item
+      const isExistdecreament = state.cartData.findIndex(
         item => item.id === action?.payload.id,
       );
-
       const cartdata = state.cartData;
-      if (cartdata[isExistDe].qty > 1) {
-        cartdata[isExistDe].qty = cartdata[isExistDe].qty - 1;
+      if (cartdata[isExistdecreament].qty > 1) {
+        cartdata[isExistdecreament].qty = cartdata[isExistdecreament].qty - 1;
         return {
           ...state,
           cartData: cartdata,
@@ -49,7 +48,6 @@ export const ProductReducers = (state = initialState, action) => {
           cartData: tempCartData,
         };
       }
-
     default:
       return state;
   }
