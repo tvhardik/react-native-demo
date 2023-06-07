@@ -1,4 +1,3 @@
-import {useRoute} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   View,
@@ -9,26 +8,44 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-const Loginpage = ({navigation}) => {
-  // console.log('props!!!!!!!!', props);
-  
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch} from 'react-redux';
+import {Login} from '../Redux/Actions';
+
+const Loginpage = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const signIn = () => {
-    const strongRegex = new RegExp( // Login Validation
+  const dispatch = useDispatch();
+
+  const asyncLogin = async () => {
+    try {
+      await AsyncStorage.setItem('email', email);
+      await AsyncStorage.setItem('password', password);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleLogin = () => {
+    const strongRegex = new RegExp(
       '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
     );
 
     if (!strongRegex.test(email)) {
       Alert.alert('Email is invalid');
-      return false;
+      return;
     } else if (password.length < 8) {
       Alert.alert('Password is invalid');
-      return false;
+      return;
     }
-    if (strongRegex.test(email)) {
-      navigation.navigate('Tabs', {email: email});
-    }
+    const data = {
+      email,
+      password,
+    };
+    dispatch(Login(data));
+    asyncLogin();
+
+    props.navigation.navigate('Tabs');
   };
   return (
     <View style={styles.container}>
@@ -61,18 +78,18 @@ const Loginpage = ({navigation}) => {
           style={styles.inputView}
           placeholder="Password"
           autoCapitalize="none"
+          value={password}
           onChangeText={password => setPassword(password)}
           secureTextEntry={true}
         />
-
         <View style={styles.Stylebutton}>
+          <TouchableOpacity style={styles.inputView} onPress={handleLogin}>
+            <Text style={{textAlign: 'center', fontSize: 15}}>Login</Text>
+          </TouchableOpacity>
           <TouchableOpacity>
             <Text style={{padding: 10, textAlign: 'center'}}>
               Forgot Password?
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.inputView} onPress={() => signIn()}>
-            <Text style={{textAlign: 'center'}}>Login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -81,6 +98,10 @@ const Loginpage = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#d3d3d3',
+    flex: 1,
+  },
   title: {
     fontSize: 20,
     textAlign: 'center',

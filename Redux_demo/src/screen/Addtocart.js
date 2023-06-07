@@ -33,6 +33,7 @@ const Addtocart = () => {
   );
 
   return (
+    
     <View style={styles.container}>
       <FlatList
         data={cartData}

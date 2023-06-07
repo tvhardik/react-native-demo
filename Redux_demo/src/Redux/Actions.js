@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ADD_ITEM, REMOVE_ITEM, GET_ITEM} from './ActionTypes';
+import {ADD_ITEM, REMOVE_ITEM, GET_ITEM, LOGIN, LOGOUT} from './ActionTypes';
 
 export const Getitem = () => {
   return async dispatch => {
@@ -26,3 +26,17 @@ export const Removeitemfromcart = data => dispatch =>
     type: REMOVE_ITEM,
     payload: data,
   });
+
+export const Login = data => {
+  return {
+    type: LOGIN,
+    payload: data,
+  };
+};
+
+export const Logout = data => {
+  return {
+    type: LOGOUT,
+    payload: data,
+  };
+};

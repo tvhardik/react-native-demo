@@ -1,9 +1,28 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {useRoute} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Profile = props => {
-  // console.log('email>>>', email);
-  const route = useRoute();
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const email = await AsyncStorage.getItem('email');
+    setEmail(email);
+  };
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('email');
+    await AsyncStorage.removeItem('password');
+    props.navigation.reset({
+      routes: [{name: 'LoginScreen'}], //Login page reset
+    });
+    // props.navigation.navigate('LoginScreen');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.body}>
@@ -13,27 +32,11 @@ const Profile = props => {
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.infoLabel}>Email:</Text>
-          {/* <Text style={styles.infoText}>{route.params.email}</Text> */}
+          <Text style={styles.infoText}>{email}</Text>
         </View>
         <View style={{padding: 15}}>
-          <TouchableOpacity
-            style={{
-              height: 35,
-              backgroundColor: '#1e90ff',
-              borderRadius: 10,
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 100,
-            }}
-            onPress={() => props.navigation.navigate('LoginScreen')}>
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: '400',
-                color: '#ffffff',
-              }}>
-              Back to login
-            </Text>
+          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+            <Text style={styles.logoutButtonText}>Logout</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -44,7 +47,7 @@ const Profile = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ECF0F3',
+    backgroundColor: '#d3d3d3',
   },
   body: {
     marginTop: 120,
@@ -72,6 +75,19 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 16,
+  },
+  logoutButton: {
+    height: 35,
+    backgroundColor: '#1e90ff',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 150,
+  },
+  logoutButtonText: {
+    fontSize: 15,
+    fontWeight: '400',
+    color: '#ffffff',
   },
 });
 

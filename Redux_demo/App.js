@@ -1,11 +1,16 @@
 import React from 'react';
 import Main from './src/Main';
 import {Provider} from 'react-redux';
-import {mystore} from './src/Redux/Store';
+import {PersistGate} from 'redux-persist/integration/react';
+import persistStore from 'redux-persist/es/persistStore';
+import {store} from './src/Redux/Store';
+const persistor = persistStore(store);
 const App = () => {
   return (
-    <Provider store={mystore}>
-      <Main/>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <Main />
+      </PersistGate>
     </Provider>
   );
 };

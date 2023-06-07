@@ -100,7 +100,7 @@ const Productpage = props => {
           );
         }}
       />
-      <StatusBar hidden={true} />
+      {/* <StatusBar hidden={true} /> */}
     </View>
   );
 };
@@ -122,11 +122,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 10,
     backgroundColor: '#ffffff',
-    marginVertical: 10,
+    marginVertical: 8,
     padding: 15,
   },
   Addtocart: {
-    height: 22,
+    height: 25,
     backgroundColor: '#1e90ff',
     borderRadius: 10,
     alignItems: 'center',

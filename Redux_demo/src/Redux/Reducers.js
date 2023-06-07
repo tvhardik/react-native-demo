@@ -1,13 +1,14 @@
-import {ADD_ITEM, REMOVE_ITEM, GET_ITEM} from './ActionTypes';
+import {ADD_ITEM, REMOVE_ITEM, GET_ITEM, LOGIN, LOGOUT} from './ActionTypes';
 
 const initialState = {
+  isAuthenticated: false,
   product: [],
   cartData: [],
 };
 
 export const ProductReducers = (state = initialState, action) => {
   switch (action.type) {
-    case GET_ITEM: //get api data 
+    case GET_ITEM: //get api data
       return {...state, product: action.payload};
     case ADD_ITEM: //add item
       const isExistincreament = state.cartData.findIndex(
@@ -48,6 +49,21 @@ export const ProductReducers = (state = initialState, action) => {
           cartData: tempCartData,
         };
       }
+
+    case LOGIN: // login
+      return {
+        ...state,
+        isAuthenticated: false,
+        cartData: [],
+      };
+
+    case LOGOUT: // logout
+      return {
+        // ...state,
+        // isAuthenticated: false,
+        cartData: [],
+        // initialState,
+      };
     default:
       return state;
   }
