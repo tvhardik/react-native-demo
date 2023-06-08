@@ -3,6 +3,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Profile from '../screen/profile';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Productpage from '../screen/Productpage';
+import Addtocart from '../screen/Addtocart';
+const Stack = createNativeStackNavigator();
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const TabNavigate = createBottomTabNavigator();
 const Tab = () => {
   return (
@@ -18,7 +21,14 @@ const Tab = () => {
           }
           return <Icon name={iconName} size={size} color={color} />;
         },
-      })}>
+      })
+      }
+      >
+      {/* <TabNavigate.Navigator
+        name="addtocartscreen"
+        options={{headerShown: false}}
+      />
+      {props => <Stack {...props} />} */}
       <TabNavigate.Screen
         name="Productscreen"
         component={Productpage}

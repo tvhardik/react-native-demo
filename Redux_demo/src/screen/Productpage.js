@@ -100,7 +100,7 @@ const Productpage = props => {
           );
         }}
       />
-      {/* <StatusBar hidden={true} /> */}
+      <StatusBar hidden={true} />
     </View>
   );
 };

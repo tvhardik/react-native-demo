@@ -10,7 +10,7 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Removeitemfromcart, Additemtocart} from '../Redux/Actions';
 
-const Addtocart = () => {
+const Addtocart = props => {
   const {cartData} = useSelector(state => state.ProductReducers);
   const dispatch = useDispatch();
 
@@ -33,7 +33,6 @@ const Addtocart = () => {
   );
 
   return (
-    
     <View style={styles.container}>
       <FlatList
         data={cartData}

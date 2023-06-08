@@ -18,11 +18,11 @@ const StackNavigation = () => {
             component={Loginpage}
             options={{title: 'Login'}}
           />
-          <Stack.Screen name="Tabs" options={{headerShown: false}}>
+          {/* <Stack.Screen name="Tabs" options={{headerShown: false}}>
             {props => <Tab {...props} />}
-          </Stack.Screen>
+          </Stack.Screen> */}
           <Stack.Screen
-            name="addtocart"
+            name="addtocartscree"
             component={Addtocart}
             options={{title: 'Your Cart'}}
           />

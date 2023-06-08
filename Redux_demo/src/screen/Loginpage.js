@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Image,
@@ -11,8 +11,10 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {Login} from '../Redux/Actions';
+import {AuthContest} from '../Authentication';
 
 const Loginpage = props => {
+  const {loginscreen} = useContext(AuthContest);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
@@ -27,9 +29,7 @@ const Loginpage = props => {
   };
 
   const handleLogin = () => {
-    const strongRegex = new RegExp(
-      '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
-    );
+    const strongRegex = new RegExp('^[a-zA-Z0-9._%+-]+@gmail.com$');
 
     if (!strongRegex.test(email)) {
       Alert.alert('Email is invalid');
@@ -44,6 +44,7 @@ const Loginpage = props => {
     };
     dispatch(Login(data));
     asyncLogin();
+    loginscreen();
 
     props.navigation.navigate('Tabs');
   };

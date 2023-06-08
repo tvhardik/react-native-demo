@@ -1,9 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AuthContest} from '../Authentication';
+import {useNavigation} from '@react-navigation/native';
 
-const Profile = props => {
+const Profile = () => {
+  const {logoutscreen} = useContext(AuthContest);
   const [email, setEmail] = useState('');
+  const navigation = useNavigation(); // Initialize the navigation variable
 
   useEffect(() => {
     getData();
@@ -17,10 +21,10 @@ const Profile = props => {
   const handleLogout = async () => {
     await AsyncStorage.removeItem('email');
     await AsyncStorage.removeItem('password');
-    props.navigation.reset({
-      routes: [{name: 'LoginScreen'}], //Login page reset
+    logoutscreen();
+    navigation({
+      routes: [{name: 'LoginScreen'}],
     });
-    // props.navigation.navigate('LoginScreen');
   };
 
   return (

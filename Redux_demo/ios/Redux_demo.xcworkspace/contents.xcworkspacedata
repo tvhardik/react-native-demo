@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Redux_demo.xcworkspace">
-   </FileRef>
-   <FileRef
       location = "group:Redux_demo.xcodeproj">
    </FileRef>
    <FileRef
