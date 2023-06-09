@@ -10,7 +10,7 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Removeitemfromcart, Additemtocart} from '../Redux/Actions';
 
-const Addtocart = props => {
+const Addtocart = () => {
   const {cartData} = useSelector(state => state.ProductReducers);
   const dispatch = useDispatch();
 

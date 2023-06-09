@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import Loginpage from '../screen/Loginpage';
-import Addtocart from '../screen/Addtocart';
+
 import Tab from './Tab';
 import Profile from '../screen/profile';
+import Addtocart from '../screen/Addtocart';
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
+  // const {isLoading, userToken} = useContext(AuthContest);
+
   return (
     <View style={{flex: 1}}>
       <NavigationContainer independent={true}>
@@ -18,11 +21,11 @@ const StackNavigation = () => {
             component={Loginpage}
             options={{title: 'Login'}}
           />
-          {/* <Stack.Screen name="Tabs" options={{headerShown: false}}>
+          <Stack.Screen name="Tabs" options={{headerShown: false}}>
             {props => <Tab {...props} />}
-          </Stack.Screen> */}
+          </Stack.Screen>
           <Stack.Screen
-            name="addtocartscree"
+            name="addtocart"
             component={Addtocart}
             options={{title: 'Your Cart'}}
           />

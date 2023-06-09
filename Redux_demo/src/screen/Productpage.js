@@ -11,7 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Getitem, Additemtocart} from '../Redux/Actions';
 import {useEffect} from 'react';
 
-const Productpage = props => {
+const Productpage = ({navigation}) => {
   const addItem = items => {
     dispatch(Additemtocart(items));
   };
@@ -38,7 +38,7 @@ const Productpage = props => {
         <Text style={{fontSize: 20, color: '#000'}}>Products</Text>
         <TouchableOpacity
           style={styles.Viewcart}
-          onPress={() => props.navigation.navigate('addtocart')}>
+          onPress={() => navigation.navigate('addtocart')}>
           <Text
             style={{
               fontSize: 20,

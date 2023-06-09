@@ -3,11 +3,15 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContest} from '../Authentication';
 import {useNavigation} from '@react-navigation/native';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {useDispatch} from 'react-redux';
+import {Login} from '../Redux/Actions';
 
 const Profile = () => {
   const {logoutscreen} = useContext(AuthContest);
   const [email, setEmail] = useState('');
-  const navigation = useNavigation(); // Initialize the navigation variable
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getData();
@@ -21,10 +25,18 @@ const Profile = () => {
   const handleLogout = async () => {
     await AsyncStorage.removeItem('email');
     await AsyncStorage.removeItem('password');
+
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      console.log('Google account logged out successfully');
+    } catch (error) {
+      console.error('Error logging out from Google account:', error);
+    }
+
+    dispatch(Login(null));
     logoutscreen();
-    navigation({
-      routes: [{name: 'LoginScreen'}],
-    });
+    navigation.navigate('LoginScreen');
   };
 
   return (

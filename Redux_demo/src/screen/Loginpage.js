@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   View,
   Image,
@@ -12,8 +12,34 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {Login} from '../Redux/Actions';
 import {AuthContest} from '../Authentication';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+const Loginpage = ({navigation}) => {
+  useEffect(() => {
+    GoogleSignin.configure();
+  }, []);
 
-const Loginpage = props => {
+  const googleLogin = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log('user info', userInfo);
+      // Navigate to the product screen after successful Google login
+      navigation.navigate('Tabs');
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log(error);
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log(error);
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log(error);
+      } else {
+        console.log(error);
+      }
+    }
+  };
   const {loginscreen} = useContext(AuthContest);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,7 +53,6 @@ const Loginpage = props => {
       console.log(e);
     }
   };
-
   const handleLogin = () => {
     const strongRegex = new RegExp('^[a-zA-Z0-9._%+-]+@gmail.com$');
 
@@ -45,9 +70,9 @@ const Loginpage = props => {
     dispatch(Login(data));
     asyncLogin();
     loginscreen();
-
-    props.navigation.navigate('Tabs');
+    navigation.navigate('Tabs');
   };
+
   return (
     <View style={styles.container}>
       <View
@@ -92,6 +117,29 @@ const Loginpage = props => {
               Forgot Password?
             </Text>
           </TouchableOpacity>
+          <View
+            style={{
+              alignSelf: 'center',
+              flexDirection: 'row',
+              paddingRight: 10,
+            }}>
+            <TouchableOpacity style={{paddingRight: 20}} onPress={googleLogin}>
+              <Image
+                style={styles.googlelogo}
+                source={{
+                  uri: 'https://img.icons8.com/?size=512&id=IKRAu0iMDDyV&format=png',
+                }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={googleLogin}>
+              <Image
+                style={styles.googlelogo}
+                source={{
+                  uri: 'https://img.icons8.com/?size=512&id=WI60cLQ7XN0Q&format=png',
+                }}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>
@@ -115,6 +163,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 10,
     padding: 10,
+  },
+  googlelogo: {
+    width: 40,
+    height: 40,
   },
   logo: {
     resizeMode: 'contain',
