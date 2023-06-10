@@ -34,9 +34,9 @@ const Tab = props => {
           component={Profile}
           options={{title: 'Your Profile'}}
         />
-        <TabNavigate.Screen
+        {/* <TabNavigate.Screen
           name="Svgscreen"
-          component={SvgImage}></TabNavigate.Screen>
+          component={SvgImage}></TabNavigate.Screen> */}
       </TabNavigate.Navigator>
     </>
   );

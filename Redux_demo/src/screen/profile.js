@@ -47,8 +47,8 @@ const Profile = () => {
           <Text style={styles.name}>Your ID</Text>
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.infoLabel}>Email:</Text>
-          <Text style={styles.infoText}>{email}</Text>
+          {/* <Text style={styles.infoLabel}>Email:</Text> */}
+          {/* <Text style={styles.infoText}>{email}</Text> */}
         </View>
         <View style={{padding: 15}}>
           <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>

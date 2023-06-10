@@ -9,6 +9,7 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {LoginButton, AccessToken} from 'react-native-fbsdk-next';
 import {useDispatch} from 'react-redux';
 import {Login} from '../Redux/Actions';
 import {AuthContest} from '../Authentication';
@@ -16,7 +17,8 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-const Loginpage = ({navigation}) => {
+
+const Loginpage = props => {
   useEffect(() => {
     GoogleSignin.configure();
   }, []);
@@ -27,7 +29,7 @@ const Loginpage = ({navigation}) => {
       const userInfo = await GoogleSignin.signIn();
       console.log('user info', userInfo);
       // Navigate to the product screen after successful Google login
-      navigation.navigate('Tabs');
+      props.navigation.navigate('Tabs');
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log(error);
@@ -40,6 +42,7 @@ const Loginpage = ({navigation}) => {
       }
     }
   };
+
   const {loginscreen} = useContext(AuthContest);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -55,11 +58,10 @@ const Loginpage = ({navigation}) => {
   };
   const handleLogin = () => {
     const strongRegex = new RegExp('^[a-zA-Z0-9._%+-]+@gmail.com$');
-
     if (!strongRegex.test(email)) {
       Alert.alert('Email is invalid');
       return;
-    } else if (password.length < 8) {
+    } else if (password.length < 5) {
       Alert.alert('Password is invalid');
       return;
     }
@@ -69,8 +71,8 @@ const Loginpage = ({navigation}) => {
     };
     dispatch(Login(data));
     asyncLogin();
+    props.navigation.navigate('Tabs');
     loginscreen();
-    navigation.navigate('Tabs');
   };
 
   return (
@@ -121,24 +123,47 @@ const Loginpage = ({navigation}) => {
             style={{
               alignSelf: 'center',
               flexDirection: 'row',
-              paddingRight: 10,
             }}>
-            <TouchableOpacity style={{paddingRight: 20}} onPress={googleLogin}>
+            <TouchableOpacity onPress={googleLogin}>
               <Image
                 style={styles.googlelogo}
                 source={{
-                  uri: 'https://img.icons8.com/?size=512&id=IKRAu0iMDDyV&format=png',
+                  uri: 'https://raw.githubusercontent.com/react-native-google-signin/google-signin/master/img/signin-button.png',
                 }}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={googleLogin}>
+            {/* <TouchableOpacity
+            // onPress={googleLogin}
+            >
               <Image
                 style={styles.googlelogo}
                 source={{
                   uri: 'https://img.icons8.com/?size=512&id=WI60cLQ7XN0Q&format=png',
                 }}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+          </View>
+          <View
+            style={{
+              alignContent: 'center',
+              alignItems: 'center',
+              paddingTop: 10,
+            }}>
+            <LoginButton
+              onLoginFinished={(error, result) => {
+                if (error) {
+                  console.log('login has error: ' + result.error);
+                } else if (result.isCancelled) {
+                  console.log('login is cancelled.');
+                } else {
+                  AccessToken.getCurrentAccessToken().then(data => {
+                    console.log(data.accessToken.toString());
+                    props.navigation.navigate('Tabs');
+                  });
+                }
+              }}
+              onLogoutFinished={() => console.log('logout.')}
+            />
           </View>
         </View>
       </View>
@@ -165,8 +190,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   googlelogo: {
-    width: 40,
-    height: 40,
+    width: 195,
+    height: 31,
+    borderRadius: 10,
   },
   logo: {
     resizeMode: 'contain',
