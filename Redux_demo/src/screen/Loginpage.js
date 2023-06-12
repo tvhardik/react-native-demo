@@ -17,6 +17,7 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 
 const Loginpage = props => {
   useEffect(() => {
@@ -46,6 +47,47 @@ const Loginpage = props => {
   const {loginscreen} = useContext(AuthContest);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const createUser = () => {
+    if (email && password) {
+      try {
+        auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then(() => {
+            console.log('User account created & signed in!');
+          })
+          .catch(error => {
+            if (error.code === 'auth/email-already-in-use') {
+              console.log('That email address is already in use!');
+            }
+
+            if (error.code === 'auth/invalid-email') {
+              console.log('That email address is invalid!');
+            }
+          });
+      } catch (e) {
+        console.log('eeee');
+      }
+    }
+  };
+  const userSingin = () => {
+    if (email && password) {
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          props.navigation.navigate('Tabs');
+          // Alert.alert('User all ready logged in');
+        })
+        .catch(error => {
+          console.log(error);
+          alert(error);
+        });
+    } else {
+      alert('Email and Password should not empty');
+      console.log('dsjdhsjdh');
+    }
+  };
+
   const dispatch = useDispatch();
 
   const asyncLogin = async () => {
@@ -56,6 +98,7 @@ const Loginpage = props => {
       console.log(e);
     }
   };
+
   const handleLogin = () => {
     const strongRegex = new RegExp('^[a-zA-Z0-9._%+-]+@gmail.com$');
     if (!strongRegex.test(email)) {
@@ -111,7 +154,13 @@ const Loginpage = props => {
           secureTextEntry={true}
         />
         <View style={styles.Stylebutton}>
-          <TouchableOpacity style={styles.inputView} onPress={handleLogin}>
+          <TouchableOpacity
+            style={styles.inputView}
+            onPress={() => {
+              // createUser();
+              userSingin();
+              // handleLogin();
+            }}>
             <Text style={{textAlign: 'center', fontSize: 15}}>Login</Text>
           </TouchableOpacity>
           <TouchableOpacity>
@@ -132,16 +181,6 @@ const Loginpage = props => {
                 }}
               />
             </TouchableOpacity>
-            {/* <TouchableOpacity
-            // onPress={googleLogin}
-            >
-              <Image
-                style={styles.googlelogo}
-                source={{
-                  uri: 'https://img.icons8.com/?size=512&id=WI60cLQ7XN0Q&format=png',
-                }}
-              />
-            </TouchableOpacity> */}
           </View>
           <View
             style={{
@@ -154,7 +193,7 @@ const Loginpage = props => {
                 if (error) {
                   console.log('login has error: ' + result.error);
                 } else if (result.isCancelled) {
-                  console.log('login is cancelled.');
+                  // console.log('login is cancelled.');
                 } else {
                   AccessToken.getCurrentAccessToken().then(data => {
                     console.log(data.accessToken.toString());
@@ -191,7 +230,7 @@ const styles = StyleSheet.create({
   },
   googlelogo: {
     width: 195,
-    height: 31,
+    height: 30,
     borderRadius: 10,
   },
   logo: {

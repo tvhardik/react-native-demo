@@ -6,8 +6,13 @@ import {useNavigation} from '@react-navigation/native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch} from 'react-redux';
 import {Login} from '../Redux/Actions';
-
+import auth from '@react-native-firebase/auth';
 const Profile = () => {
+  const SignOut = () => {
+    auth()
+      .signOut()
+      .then(() => console.log('User signed out!'));
+  };
   const {logoutscreen} = useContext(AuthContest);
   const [email, setEmail] = useState('');
   const navigation = useNavigation();
@@ -31,11 +36,12 @@ const Profile = () => {
       await GoogleSignin.signOut();
       console.log('Google account logged out successfully');
     } catch (error) {
-      console.error('Error logging out from Google account:', error);
+      // console.error('Error logging out from Google account:');
     }
 
     dispatch(Login(null));
     logoutscreen();
+    SignOut();
     navigation.navigate('LoginScreen');
   };
 
