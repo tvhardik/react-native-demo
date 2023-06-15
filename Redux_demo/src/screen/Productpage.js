@@ -10,10 +10,26 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {Getitem, Additemtocart} from '../Redux/Actions';
 import {useEffect} from 'react';
+import PushNotification from 'react-native-push-notification';
 
 const Productpage = ({navigation}) => {
+  // const createChannels = () => {
+  //   PushNotification.createChannel({
+  //     channelId: 'Shop',
+  //     channelName: 'shop',
+  //   });
+  // };
+  const handledNotification = item => {
+    PushNotification.localNotification({
+      channelId: 'Shop',
+      title: 'Your Product is added to cart' + item.title,
+      message: item.price,
+      showWhen: true,
+    });
+  };
   const addItem = items => {
     dispatch(Additemtocart(items));
+    // SendNotification(items.title, 'Your product is added to cart');
   };
   const {product} = useSelector(state => state.ProductReducers);
   const dispatch = useDispatch();
@@ -32,6 +48,7 @@ const Productpage = ({navigation}) => {
     (total, item) => (total = total + item.qty),
     0,
   );
+
   return (
     <View style={styles.container}>
       <View style={styles.Header}>
@@ -85,7 +102,10 @@ const Productpage = ({navigation}) => {
                 <Text style={{fontWeight: '500'}}>{item.category}</Text>
                 <TouchableOpacity
                   style={styles.Addtocart}
-                  onPress={() => addItem(item)}>
+                  onPress={() => {
+                    addItem(item);
+                    handledNotification(item);
+                  }}>
                   <Text
                     style={{
                       fontSize: 13,

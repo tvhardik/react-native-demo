@@ -6,6 +6,7 @@ import Loginpage from '../screen/Loginpage';
 import Tab from './Tab';
 import Profile from '../screen/profile';
 import Addtocart from '../screen/Addtocart';
+import Createuser from '../screen/Createuser';
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
@@ -18,6 +19,10 @@ const StackNavigation = () => {
             component={Loginpage}
             options={{title: 'Login'}}
           />
+          <Stack.Screen
+            name="CreateUserScreen"
+            component={Createuser}
+            options={{title: 'Create Id'}}></Stack.Screen>
           <Stack.Screen name="Tabs" options={{headerShown: false}}>
             {props => <Tab {...props} />}
           </Stack.Screen>
@@ -31,6 +36,6 @@ const StackNavigation = () => {
       </NavigationContainer>
     </View>
   );
-};    
+};
 
 export default StackNavigation;

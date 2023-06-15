@@ -48,43 +48,24 @@ const Loginpage = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const createUser = () => {
-    if (email && password) {
-      try {
-        auth()
-          .createUserWithEmailAndPassword(email, password)
-          .then(() => {
-            console.log('User account created & signed in!');
-          })
-          .catch(error => {
-            if (error.code === 'auth/email-already-in-use') {
-              console.log('That email address is already in use!');
-            }
-
-            if (error.code === 'auth/invalid-email') {
-              console.log('That email address is invalid!');
-            }
-          });
-      } catch (e) {
-        console.log('eeee');
-      }
-    }
-  };
-  const userSingin = () => {
+  const userSignIn = () => {
     if (email && password) {
       auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
           props.navigation.navigate('Tabs');
-          // Alert.alert('User all ready logged in');
         })
         .catch(error => {
           console.log(error);
-          alert(error);
+          if (error.code === 'auth/wrong-password') {
+            alert('Invalid password');
+          } else {
+            alert('Invalid email or password');
+          }
         });
     } else {
-      alert('Email and Password should not empty');
-      console.log('dsjdhsjdh');
+      alert('Email and Password should not be empty');
+      console.log('Email and Password should not be empty');
     }
   };
 
@@ -114,6 +95,7 @@ const Loginpage = props => {
     };
     dispatch(Login(data));
     asyncLogin();
+    userSignIn();
     props.navigation.navigate('Tabs');
     loginscreen();
   };
@@ -157,14 +139,19 @@ const Loginpage = props => {
           <TouchableOpacity
             style={styles.inputView}
             onPress={() => {
-              // createUser();
-              userSingin();
-              // handleLogin();
+              userSignIn();
             }}>
             <Text style={{textAlign: 'center', fontSize: 15}}>Login</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.inputView}
+            onPress={() => {
+              props.navigation.navigate('CreateUserScreen');
+            }}>
+            <Text style={{textAlign: 'center'}}>Create User</Text>
+          </TouchableOpacity>
           <TouchableOpacity>
-            <Text style={{padding: 10, textAlign: 'center'}}>
+            <Text style={{padding: 15, textAlign: 'center'}}>
               Forgot Password?
             </Text>
           </TouchableOpacity>
@@ -193,7 +180,6 @@ const Loginpage = props => {
                 if (error) {
                   console.log('login has error: ' + result.error);
                 } else if (result.isCancelled) {
-                  // console.log('login is cancelled.');
                 } else {
                   AccessToken.getCurrentAccessToken().then(data => {
                     console.log(data.accessToken.toString());

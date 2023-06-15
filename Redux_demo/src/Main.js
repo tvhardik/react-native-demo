@@ -2,7 +2,7 @@ import {ActivityIndicator, View} from 'react-native';
 import React, {useContext} from 'react';
 import StackNavigation from './Navigation/StackNavigation';
 import {AuthContest} from './Authentication';
-import Tab from './Navigation/Tab';
+import Tab from './Navigation/Tab'; 
 import {NavigationContainer} from '@react-navigation/native';
 const Main = () => {
   const {isLoading, userToken} = useContext(AuthContest);
@@ -16,7 +16,6 @@ const Main = () => {
   return (
     <NavigationContainer>
       {userToken !== null ? <Tab /> : <StackNavigation />}
-      {/* <StackNavigation /> */}
     </NavigationContainer>
   );
 };
