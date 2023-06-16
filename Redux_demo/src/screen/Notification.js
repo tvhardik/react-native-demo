@@ -24,12 +24,9 @@ export const Notificationbackground = async () => {
   });
 
   messaging().onMessage(async data => {
-    // console.log(data, 'Data----');
     const channelName = 'shop';
     PushNotification.localNotification({
       channelId: channelName,
-      // title: data.title,
-      // message: data.body,
     });
     alert(JSON.stringify(data));
   });

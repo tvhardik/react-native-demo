@@ -10,7 +10,7 @@ import React, {useState} from 'react';
 const AuthLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const createUser = () => {};
+  // const createUser = () => {};
   return (
     <View
       style={{

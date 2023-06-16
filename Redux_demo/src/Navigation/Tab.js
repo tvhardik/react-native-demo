@@ -2,6 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Profile from '../screen/profile';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Icon1 from 'react-native-vector-icons/Entypo';
 import Productpage from '../screen/Productpage';
 import Addtocart from '../screen/Addtocart';
 import Map from '../screen/Map';
@@ -10,6 +11,7 @@ import Icons from 'react-native-vector-icons/Entypo';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SvgImage from '../screen/svgimage';
 import Loginpage from '../screen/Loginpage';
+import Message from '../screen/Message';
 
 const TabNavigate = createBottomTabNavigator();
 const Tab = props => {
@@ -24,6 +26,7 @@ const Tab = props => {
               iconName = focused ? 'plussquareo' : 'plussquareo';
             } else if (route.name === 'Profilescreen') {
               iconName = focused ? 'user' : 'user';
+              7;
             }
             return <Icon name={iconName} size={size} color={color} />;
           },
@@ -45,6 +48,25 @@ const Tab = props => {
           options={{
             tabBarIcon: ({color, size}) => (
               <Icons name="map" size={size} color={color} />
+            ),
+          }}
+        />
+        {/* <TabNavigate.Screen
+          name="MessageScreen"
+          component={Message}
+          options={{
+            tabBarStyle: {display: 'none'},
+            title: 'Chat screen',
+          }}
+        /> */}
+        <TabNavigate.Screen
+          name="MessageScreen"
+          component={Message}
+          options={{
+            tabBarStyle: {display: 'none'},
+            title: 'Chat screen',
+            tabBarIcon: ({color, size}) => (
+              <Icon1 name="chat" size={size} color={color} />
             ),
           }}
         />

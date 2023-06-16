@@ -16,7 +16,7 @@ const Main = () => {
   return (
     <NavigationContainer>
       {userToken !== null ? <Tab /> : <StackNavigation />}
-    </NavigationContainer>
+    </NavigationContainer>  
   );
 };
 

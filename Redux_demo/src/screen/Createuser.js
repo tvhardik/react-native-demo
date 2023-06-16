@@ -6,9 +6,8 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
-import {doc, getDoc} from '@react-native-firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 const Createuser = () => {
@@ -26,16 +25,12 @@ const Createuser = () => {
           .then(response => {
             const {user} = response;
             const userId = user.uid;
-            // console.log(LName, FName, Email, 'name---->>>>>');
-            // console.log(response, 'response---->>>>>');
-            // console.log(user, 'user data----->>>>>>');
             firestore().collection('user').doc(userId).set({
               firstName: FName,
               lastName: LName,
               email: Email,
+              id: userId,
             });
-            // console.log(FName, LName, Email, 'store data>>>>>>>>>>');
-            // console.log(userId, 'user id----->>>>>');
             console.log('User account created & signed in!');
             Alert.alert('User ID created');
             navigation.navigate('LoginScreen');
@@ -53,6 +48,8 @@ const Createuser = () => {
       } catch (e) {
         console.log('Error creating user:', e);
       }
+    } else {
+      alert('empty');
     }
   };
   return (

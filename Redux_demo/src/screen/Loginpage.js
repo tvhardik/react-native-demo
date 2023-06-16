@@ -28,7 +28,7 @@ const Loginpage = props => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log('user info', userInfo);
+      // console.log('user info', userInfo);
       // Navigate to the product screen after successful Google login
       props.navigation.navigate('Tabs');
     } catch (error) {
@@ -189,6 +189,19 @@ const Loginpage = props => {
               }}
               onLogoutFinished={() => console.log('logout.')}
             />
+            <View style={{padding: 15}}>
+              <TouchableOpacity
+                style={
+                  {
+                    // height: 30,
+                    // width: '100%',
+                    // backgroundColor: 'black',
+                    // borderRadius: 10,
+                  }
+                }>
+                <Text>Select language</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>

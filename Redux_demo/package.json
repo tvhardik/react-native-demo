@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@firebase/firestore": "^3.12.2",
     "@react-native-async-storage/async-storage": "^1.18.2",
     "@react-native-firebase/app": "^18.0.0",
     "@react-native-firebase/auth": "^18.0.0",
@@ -28,7 +29,6 @@
     "add": "^2.0.6",
     "axios": "^1.4.0",
     "eslint-plugin-react-native": "^4.0.0",
-    "i18next": "^23.0.1",
     "link": "^1.5.1",
     "pods": "^2.0.0",
     "pushwoosh-react-native-plugin": "^6.1.20",
@@ -39,6 +39,7 @@
     "react-native-fbsdk-next": "^11.2.1",
     "react-native-geolocation-service": "^5.3.1",
     "react-native-gesture-handler": "^2.10.1",
+    "react-native-gifted-chat": "^2.4.0",
     "react-native-maps": "^1.7.1",
     "react-native-pager-view": "^6.2.0",
     "react-native-push-notification": "^8.1.1",
