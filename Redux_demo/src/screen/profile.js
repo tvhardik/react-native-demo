@@ -39,9 +39,9 @@ const Profile = () => {
       // console.error('Error logging out from Google account:');
     }
 
-    dispatch(Login(null));
-    logoutscreen();
+    // dispatch(Login(null));
     SignOut();
+    logoutscreen();
     navigation.navigate('LoginScreen');
   };
 

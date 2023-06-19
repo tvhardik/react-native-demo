@@ -7,6 +7,7 @@ import Tab from './Tab';
 import Profile from '../screen/profile';
 import Addtocart from '../screen/Addtocart';
 import Createuser from '../screen/Createuser';
+import Message from '../screen/Message';
 const Stack = createNativeStackNavigator();
 
 const StackNavigation = () => {
@@ -32,6 +33,11 @@ const StackNavigation = () => {
             options={{title: 'Your Cart'}}
           />
           <Stack.Screen name="Profilescreen" component={Profile}></Stack.Screen>
+          <Stack.Screen
+            name="MessageScreen"
+            component={Message}
+            options={{title: 'Chat'}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

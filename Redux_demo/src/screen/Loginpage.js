@@ -96,6 +96,7 @@ const Loginpage = props => {
     dispatch(Login(data));
     asyncLogin();
     userSignIn();
+
     props.navigation.navigate('Tabs');
     loginscreen();
   };

@@ -12,6 +12,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SvgImage from '../screen/svgimage';
 import Loginpage from '../screen/Loginpage';
 import Message from '../screen/Message';
+import UserList from '../screen/userlist';
 
 const TabNavigate = createBottomTabNavigator();
 const Tab = props => {
@@ -59,12 +60,24 @@ const Tab = props => {
             title: 'Chat screen',
           }}
         /> */}
-        <TabNavigate.Screen
+        {/* <TabNavigate.Screen
           name="MessageScreen"
           component={Message}
+          // initialParams={{myId: 'yourIdValue', userId: 'recipientIdValue'}}
           options={{
             tabBarStyle: {display: 'none'},
             title: 'Chat screen',
+            tabBarIcon: ({color, size}) => (
+              <Icon1 name="chat" size={size} color={color} />
+            ),
+          }}
+        /> */}
+        <TabNavigate.Screen
+          name="User list"
+          component={UserList}
+          options={{
+            // tabBarStyle: {display: 'none'},
+            title: 'User list',
             tabBarIcon: ({color, size}) => (
               <Icon1 name="chat" size={size} color={color} />
             ),
