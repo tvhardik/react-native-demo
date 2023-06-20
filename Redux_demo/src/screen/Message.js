@@ -1,62 +1,103 @@
-import {View, Text} from 'react-native';
-import React, {useState, useEffect, useCallback} from 'react';
-import {Bubble, GiftedChat} from 'react-native-gifted-chat';
-import {useRoute} from '@react-navigation/native';
+import {useEffect, useState} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import {GiftedChat} from 'react-native-gifted-chat';
 import firestore from '@react-native-firebase/firestore';
 
-const Message = () => {
+const Message = props => {
   const [messages, setMessages] = useState([]);
-  const route = useRoute();
+  const {id} = props.route.params;
+  const {firstName} = props.route.params;
+  // console.log(id, 'username>>>>>>');
+  console.log('props>>>>>>>', props.route.params);
   useEffect(() => {
-    const livechat = firestore()
-      .collection('Chats')
-      .doc(route.params.id + route.params.data.email)
+    const messagesRef = firestore()
+      .collection('chats')
+      .doc('1234')
       .collection('messages')
       .orderBy('createdAt', 'desc');
-    livechat.onSnapshot(querysnapshot => {
-      const allmessage = querysnapshot.docs.map(item => {
-        return {...item.data, createdAt: Date.parse(new Date())};
+
+    const unsubscribe = messagesRef.onSnapshot(snapshot => {
+      const allMessages = snapshot.docs.map(doc => {
+        const data = doc.data();
+        const createdAt =
+          data.createdAt && data.createdAt.toDate
+            ? data.createdAt.toDate()
+            : null;
+        return {
+          ...data,
+          createdAt: createdAt,
+        };
       });
-      setMessages(allmessage);
+      setMessages(allMessages);
     });
-    return () => livechat();
+
+    return () => unsubscribe();
+
   }, []);
 
-  const onSend = useCallback((messages = []) => {
-    const msg = messages[0];
-    const myMsg = {
-      ...msg,
-      sendBy: route.params.id,
-      sendTo: route.params.data.email,
-      createdAt: Date.params(msg.createdAt),
+  const onSend = newMessages => {
+    const newMessage = newMessages[0];
+    const myMessage = {
+      ...newMessage,
+      sentBy: id,
+      sendTo: 'qA07YM9CpNgdTkwjE5OZIW84oZE3',
+      createdAt: new Date(),
     };
-    console.log(route, 'asfasfasdfsd>>>>');
-    // console.log(id, 'id>>>>>');
-    // console.log(route.params.id, 'route.params.id>>>>>');
-    // console.log(params.data.email, 'params.data.email>>>>>>');
-    setMessages(previousMessages =>
-      // console.log(previousMessages, 'previousMessages>>>>>>'),
 
-      GiftedChat.append(previousMessages, myMsg),
+    setMessages(
+      previousMessages => GiftedChat.append(previousMessages, myMessage),
+      console.log(myMessage, 'myMessage>>>>>>'),
     );
-    console.log(route, 'route>>>>>>>>>');
-    firestore().collection('Chats').collection('messages').add(myMsg);
-    // firestore()
-    //   .collection('Chats')
-    //   .doc('' + route.params.data?.email + route.params.id)
-    //   .collection('messages')
-    //   .add(myMsg);
-  }, []);
+
+    firestore()
+      .collection('chats')
+      .doc('1234')
+      .collection('messages')
+      .add({
+        ...myMessage,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      });
+  };
   return (
-    <View style={{flex: 1, backgroundColor: '#ffffff'}}>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>
+          {' '}
+          {firstName}
+        </Text>
+      </View>
       <GiftedChat
         messages={messages}
         onSend={messages => onSend(messages)}
         user={{
-          _id: route.params.id,
+          _id: id,
         }}
       />
     </View>
   );
 };
+
 export default Message;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+  },
+  header: {
+    backgroundColor: '#f8f8f8',
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    elevation: 20,
+  },
+  backButton: {
+    fontSize: 18,
+    color: '#333',
+    marginRight: 10,
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+});

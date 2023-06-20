@@ -8,45 +8,44 @@ import {
   Image,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import {useSelector} from 'react-redux';
-
-const UserList = ({navigation}) => {
-  const getuser = async () => {
-    // id = await AsyncStorage.getItem('id');
-  };
-  const user = useSelector(state => state.user);
-  //   console.log(user, 'user>>>');
+import {firebase} from '@react-native-firebase/auth';
+const UserList = ({navigation, user}) => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
-    getuser();
     const fetchUsers = async () => {
-      const usersSnapshot = await firestore().collection('user').get();
-
-      //   console.log(id, 'id>>>');
+      const currentUser = firebase.auth().currentUser;
+      const usersSnapshot = await firestore()
+        .collection('user')
+        .where('id', '!=', currentUser.uid)
+        .get();
+      // console.log('uid>>>>>'.uid);
       const userList = usersSnapshot.docs.map(doc => doc.data());
       setUsers(userList);
-      //   console.log(userList, 'userList>>');
     };
+
     fetchUsers();
   }, []);
 
   const renderItem = ({item}) => (
     <TouchableOpacity
       style={styles.userItem}
-      onPress={() => navigation.navigate('MessageScreen', {user: item})}>
+      onPress={() =>
+        navigation.navigate('MessageScreen', {
+          firstName: item.firstName,
+          id: item.id,
+        })
+      }>
       <Text style={styles.username}>
         <Image
           source={require('../assets/person.png')}
           style={{height: 30, width: 40}}
         />
         {item.firstName}
-        {``} {item.lastName}
-        {/* {item.email} */}
+        {``} 
+        {item.lastName}
       </Text>
     </TouchableOpacity>
   );
-
-  // console.log(id, 'id>>>>>>>>>>>>');
   return (
     <View style={styles.container}>
       <FlatList
@@ -75,8 +74,7 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 18,
     height: 50,
-    // paddingLeft: 15,
-    // paddingVertical,
+
     backgroundColor: '#ffff',
     borderRadius: 10,
   },

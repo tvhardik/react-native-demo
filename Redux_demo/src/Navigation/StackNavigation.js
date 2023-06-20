@@ -36,7 +36,8 @@ const StackNavigation = () => {
           <Stack.Screen
             name="MessageScreen"
             component={Message}
-            options={{title: 'Chat'}}
+            options={{headerShown: false}}
+            // options={{title: 'Chat'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

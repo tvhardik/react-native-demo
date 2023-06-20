@@ -4,8 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContest} from '../Authentication';
 import {useNavigation} from '@react-navigation/native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {useDispatch} from 'react-redux';
-import {Login} from '../Redux/Actions';
+
 import auth from '@react-native-firebase/auth';
 const Profile = () => {
   const SignOut = () => {
@@ -16,7 +15,6 @@ const Profile = () => {
   const {logoutscreen} = useContext(AuthContest);
   const [email, setEmail] = useState('');
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     getData();

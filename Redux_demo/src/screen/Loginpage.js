@@ -28,8 +28,6 @@ const Loginpage = props => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      // console.log('user info', userInfo);
-      // Navigate to the product screen after successful Google login
       props.navigation.navigate('Tabs');
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -45,8 +43,8 @@ const Loginpage = props => {
   };
 
   const {loginscreen} = useContext(AuthContest);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('hardik@gmail.com');
+  const [password, setPassword] = useState('123456');
 
   const userSignIn = () => {
     if (email && password) {
@@ -96,7 +94,6 @@ const Loginpage = props => {
     dispatch(Login(data));
     asyncLogin();
     userSignIn();
-
     props.navigation.navigate('Tabs');
     loginscreen();
   };
