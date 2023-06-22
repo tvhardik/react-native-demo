@@ -46,24 +46,18 @@ const Loginpage = props => {
   const [email, setEmail] = useState('hardik@gmail.com');
   const [password, setPassword] = useState('123456');
 
-  const userSignIn = () => {
-    if (email && password) {
-      auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          props.navigation.navigate('Tabs');
-        })
-        .catch(error => {
-          console.log(error);
-          if (error.code === 'auth/wrong-password') {
-            alert('Invalid password');
-          } else {
-            alert('Invalid email or password');
-          }
-        });
-    } else {
-      alert('Email and Password should not be empty');
-      console.log('Email and Password should not be empty');
+  const userSignin = async () => {
+    if (!email || !password) {
+      alert('Please fill out the empty fields');
+    }
+    try {
+      const newReg = await auth().signInWithEmailAndPassword(email, password);
+
+      console.log('Sign in done');
+      props.navigation.navigate('Tabs');
+      return newReg;
+    } catch (err) {
+      alert('Email or Password incorrect');
     }
   };
 
@@ -137,7 +131,7 @@ const Loginpage = props => {
           <TouchableOpacity
             style={styles.inputView}
             onPress={() => {
-              userSignIn();
+              userSignin();
             }}>
             <Text style={{textAlign: 'center', fontSize: 15}}>Login</Text>
           </TouchableOpacity>

@@ -7,6 +7,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import auth from '@react-native-firebase/auth';
 const Profile = () => {
+  // console.log(id, 'props.route.params>>>>>>>');
   const SignOut = () => {
     auth()
       .signOut()

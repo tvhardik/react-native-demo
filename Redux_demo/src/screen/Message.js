@@ -1,21 +1,27 @@
 import {useEffect, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {GiftedChat} from 'react-native-gifted-chat';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {GiftedChat, Bubble} from 'react-native-gifted-chat';
 import firestore from '@react-native-firebase/firestore';
+import {useNavigation} from '@react-navigation/native';
 
 const Message = props => {
   const [messages, setMessages] = useState([]);
   const {id} = props.route.params;
   const {firstName} = props.route.params;
-  // console.log(id, 'username>>>>>>');
-  console.log('props>>>>>>>', props.route.params);
+  const {currentUser} = props.route.params;
+  const navigation = useNavigation();
+  // console.log(currentUser, 'currentUser>>>>>>');
+
   useEffect(() => {
+    const chatid =
+      id > currentUser.uid
+        ? currentUser.uid + '-' + id
+        : id + '-' + currentUser.uid;
     const messagesRef = firestore()
       .collection('chats')
-      .doc('1234')
+      .doc(chatid)
       .collection('messages')
       .orderBy('createdAt', 'desc');
-
     const unsubscribe = messagesRef.onSnapshot(snapshot => {
       const allMessages = snapshot.docs.map(doc => {
         const data = doc.data();
@@ -32,26 +38,27 @@ const Message = props => {
     });
 
     return () => unsubscribe();
-
   }, []);
 
   const onSend = newMessages => {
+    const chatid =
+      id > currentUser.uid
+        ? currentUser.uid + '-' + id
+        : id + '-' + currentUser.uid;
     const newMessage = newMessages[0];
     const myMessage = {
       ...newMessage,
-      sentBy: id,
-      sendTo: 'qA07YM9CpNgdTkwjE5OZIW84oZE3',
+      sender: currentUser.uid,
+      receiver: id,
       createdAt: new Date(),
     };
-
-    setMessages(
-      previousMessages => GiftedChat.append(previousMessages, myMessage),
-      console.log(myMessage, 'myMessage>>>>>>'),
+    setMessages(previousMessages =>
+      GiftedChat.append(previousMessages, myMessage),
     );
 
     firestore()
       .collection('chats')
-      .doc('1234')
+      .doc(chatid)
       .collection('messages')
       .add({
         ...myMessage,
@@ -61,8 +68,14 @@ const Message = props => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Image
+            source={require('../assets/left.png')}
+            style={{height: 30, width: 30}}
+          />
+        </TouchableOpacity>
         <Text style={styles.headerText}>
-          {' '}
+          {`   `}
           {firstName}
         </Text>
       </View>
@@ -70,18 +83,27 @@ const Message = props => {
         messages={messages}
         onSend={messages => onSend(messages)}
         user={{
-          _id: id,
+          _id: currentUser.uid,
         }}
+        renderBubble={props => (
+          <Bubble
+            {...props}
+            wrapperStyle={{
+              left: {
+                backgroundColor: '#ffffff',
+              },
+            }}
+          />
+        )}
       />
     </View>
   );
 };
-
 export default Message;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#d3d3d3',
   },
   header: {
     backgroundColor: '#f8f8f8',

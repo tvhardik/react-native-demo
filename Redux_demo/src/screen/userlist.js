@@ -9,8 +9,9 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import {firebase} from '@react-native-firebase/auth';
-const UserList = ({navigation, user}) => {
+const UserList = ({navigation}) => {
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
     const fetchUsers = async () => {
       const currentUser = firebase.auth().currentUser;
@@ -18,34 +19,38 @@ const UserList = ({navigation, user}) => {
         .collection('user')
         .where('id', '!=', currentUser.uid)
         .get();
-      // console.log('uid>>>>>'.uid);
+
       const userList = usersSnapshot.docs.map(doc => doc.data());
+
       setUsers(userList);
     };
 
     fetchUsers();
   }, []);
-
   const renderItem = ({item}) => (
+    // console.log(item, 'item>>>>'),
     <TouchableOpacity
       style={styles.userItem}
       onPress={() =>
         navigation.navigate('MessageScreen', {
           firstName: item.firstName,
           id: item.id,
+          currentUser: firebase.auth().currentUser,
         })
       }>
       <Text style={styles.username}>
         <Image
           source={require('../assets/person.png')}
           style={{height: 30, width: 40}}
-        />
+        />{' '}
+        {``}
         {item.firstName}
-        {``} 
+        {` `}
         {item.lastName}
       </Text>
     </TouchableOpacity>
   );
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -68,8 +73,8 @@ const styles = StyleSheet.create({
   },
   userItem: {
     paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
+    borderBottomWidth: 5,
+    borderBottomColor: '#ccc',
   },
   username: {
     fontSize: 18,

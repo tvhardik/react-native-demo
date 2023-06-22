@@ -1,18 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Provider} from 'react-redux';
-import {Settings} from 'react-native-fbsdk-next';
 import Main from './src/Main';
 import {PersistGate} from 'redux-persist/integration/react';
 import persistStore from 'redux-persist/es/persistStore';
 import {store} from './src/Redux/Store';
 import {AuthProvider} from './src/Authentication';
-import RemotePushController from './src/screen/Notification';
 import messaging from '@react-native-firebase/messaging';
 import {
   Notificationbackground,
   requestUserPermission,
 } from './src/screen/Notification';
-
+import auth from '@react-native-firebase/auth';
 const persistor = persistStore(store);
 
 const App = () => {
@@ -32,14 +30,11 @@ const App = () => {
       });
   }, []);
 
-  Settings.initializeSDK();
-
   return (
     <AuthProvider>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <Main />
-          {/* <RemotePushController /> */}
         </PersistGate>
       </Provider>
     </AuthProvider>

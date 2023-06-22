@@ -15,7 +15,8 @@ import Message from '../screen/Message';
 import UserList from '../screen/userlist';
 
 const TabNavigate = createBottomTabNavigator();
-const Tab = props => {
+const Tab = (props, user) => {
+  // console.log(user, 'user>>>>>>>>>');
   return (
     <>
       <TabNavigate.Navigator
@@ -40,9 +41,7 @@ const Tab = props => {
           component={Profile}
           options={{title: 'Your Profile'}}
         />
-        {/* <TabNavigate.Screen
-          name="Svgscreen"
-          component={SvgImage}></TabNavigate.Screen> */}
+
         <TabNavigate.Screen
           name="Map"
           component={Map}
@@ -52,32 +51,12 @@ const Tab = props => {
             ),
           }}
         />
-        {/* <TabNavigate.Screen
-          name="MessageScreen"
-          component={Message}
-          options={{
-            tabBarStyle: {display: 'none'},
-            title: 'Chat screen',
-          }}
-        /> */}
-        {/* <TabNavigate.Screen
-          name="MessageScreen"
-          component={Message}
-          // initialParams={{myId: 'yourIdValue', userId: 'recipientIdValue'}}
-          options={{
-            tabBarStyle: {display: 'none'},
-            title: 'Chat screen',
-            tabBarIcon: ({color, size}) => (
-              <Icon1 name="chat" size={size} color={color} />
-            ),
-          }}
-        /> */}
         <TabNavigate.Screen
           name="User list"
           component={UserList}
           options={{
             // tabBarStyle: {display: 'none'},
-            title: 'User list',
+            title: 'Chats',
             tabBarIcon: ({color, size}) => (
               <Icon1 name="chat" size={size} color={color} />
             ),
