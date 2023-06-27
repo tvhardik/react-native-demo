@@ -1,7 +1,8 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {GiftedChat, Bubble} from 'react-native-gifted-chat';
-import firestore from '@react-native-firebase/firestore';
+import {GiftedChat, Bubble, Send} from 'react-native-gifted-chat';
+import database from '@react-native-firebase/database';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 
 const Message = props => {
@@ -10,34 +11,37 @@ const Message = props => {
   const {firstName} = props.route.params;
   const {currentUser} = props.route.params;
   const navigation = useNavigation();
-  // console.log(currentUser, 'currentUser>>>>>>');
 
   useEffect(() => {
     const chatid =
       id > currentUser.uid
         ? currentUser.uid + '-' + id
         : id + '-' + currentUser.uid;
-    const messagesRef = firestore()
-      .collection('chats')
-      .doc(chatid)
-      .collection('messages')
-      .orderBy('createdAt', 'desc');
-    const unsubscribe = messagesRef.onSnapshot(snapshot => {
-      const allMessages = snapshot.docs.map(doc => {
-        const data = doc.data();
-        const createdAt =
-          data.createdAt && data.createdAt.toDate
-            ? data.createdAt.toDate()
-            : null;
-        return {
-          ...data,
-          createdAt: createdAt,
-        };
-      });
-      setMessages(allMessages);
-    });
 
-    return () => unsubscribe();
+    const messagesRef = database()
+      .ref('chats')
+      .child(chatid)
+      .child('messages')
+      .orderByChild('createdAt');
+
+    const handleMessageSnapshot = snapshot => {
+      const allMessages = [];
+      snapshot.forEach(childSnapshot => {
+        const message = childSnapshot.val();
+        const createdAt = message.createdAt
+          ? new Date(message.createdAt)
+          : null;
+        allMessages.push({
+          ...message,
+          createdAt: createdAt,
+        });
+      });
+      setMessages(allMessages.reverse());
+    };
+
+    messagesRef.on('value', handleMessageSnapshot);
+
+    return () => messagesRef.off('value', handleMessageSnapshot);
   }, []);
 
   const onSend = newMessages => {
@@ -45,26 +49,69 @@ const Message = props => {
       id > currentUser.uid
         ? currentUser.uid + '-' + id
         : id + '-' + currentUser.uid;
+
     const newMessage = newMessages[0];
     const myMessage = {
       ...newMessage,
       sender: currentUser.uid,
       receiver: id,
-      createdAt: new Date(),
+      createdAt: new Date().getTime(),
     };
-    setMessages(previousMessages =>
-      GiftedChat.append(previousMessages, myMessage),
-    );
 
-    firestore()
-      .collection('chats')
-      .doc(chatid)
-      .collection('messages')
-      .add({
+    setMessages(previousMessages => [myMessage, ...previousMessages]);
+
+    database()
+      .ref('chats')
+      .child(chatid)
+      .child('messages')
+      .push({
         ...myMessage,
-        createdAt: firestore.FieldValue.serverTimestamp(),
+        createdAt: database.ServerValue.TIMESTAMP,
       });
   };
+
+  const openCamera = () => {
+    const options = {
+      mediaType: 'photo',
+      quality: 0.5,
+      includeBase64: false,
+    };
+
+    launchCamera(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled camera');
+      } else if (response.errorCode) {
+        console.log('Camera error:', response.errorMessage);
+      } else if (response.assets && response.assets.length > 0) {
+        const image = response.assets[0];
+        const newMessage = {
+          image: image.uri,
+          createdAt: new Date().getTime(),
+          user: {
+            _id: currentUser.uid,
+          },
+        };
+        onSend([newMessage]);
+      }
+    });
+  };
+
+  const openImageLibrary = () => {
+    launchImageLibrary({}, response => {
+      if (response.assets && response.assets.length > 0) {
+        const image = response.assets[0];
+        const messages = {
+          image: image.uri,
+          createdAt: new Date().getTime(),
+          user: {
+            _id: currentUser.uid,
+          },
+        };
+        onSend([messages]);
+      }
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -75,7 +122,7 @@ const Message = props => {
           />
         </TouchableOpacity>
         <Text style={styles.headerText}>
-          {`   `}
+          {`  `}
           {firstName}
         </Text>
       </View>
@@ -84,6 +131,25 @@ const Message = props => {
         onSend={messages => onSend(messages)}
         user={{
           _id: currentUser.uid,
+        }}
+        renderSend={props => {
+          return (
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <TouchableOpacity style={{margin: 10}} onPress={openImageLibrary}>
+                <Image
+                  source={require('../assets/gallery.png')}
+                  style={{height: 25, width: 30}}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={{margin: 10}} onPress={openCamera}>
+                <Image
+                  source={require('../assets/camera.png')}
+                  style={{height: 25, width: 29}}
+                />
+              </TouchableOpacity>
+              <Send {...props} />
+            </View>
+          );
         }}
         renderBubble={props => (
           <Bubble
@@ -99,7 +165,9 @@ const Message = props => {
     </View>
   );
 };
+
 export default Message;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

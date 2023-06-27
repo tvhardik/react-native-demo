@@ -23,7 +23,7 @@ const StackNavigation = () => {
           <Stack.Screen
             name="CreateUserScreen"
             component={Createuser}
-            options={{title: 'Create Id'}}></Stack.Screen>
+            options={{title: 'Create ID'}}></Stack.Screen>
           <Stack.Screen name="Tabs" options={{headerShown: false}}>
             {props => <Tab {...props} />}
           </Stack.Screen>

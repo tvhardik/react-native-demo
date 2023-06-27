@@ -14,7 +14,7 @@ const Createuser = () => {
   const [FName, setFName] = useState('');
   const [LName, setLName] = useState('');
   const [Email, setEmail] = useState('');
-  const [Password, setPassword] = useState('');
+  const [Password, setPassword] = useState('123456');
   const navigation = useNavigation();
 
   const CreateUserId = () => {
@@ -89,9 +89,7 @@ const Createuser = () => {
               textAlign: 'center',
               color: '#ffffff',
             }}
-            onPress={() => {
-              CreateUserId();
-            }}>
+            onPress={CreateUserId}>
             Create User
           </Text>
         </TouchableOpacity>

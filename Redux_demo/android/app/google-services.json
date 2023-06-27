@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "787839226205",
+    "firebase_url": "https://shop-357f8-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "shop-357f8",
     "storage_bucket": "shop-357f8.appspot.com"
   },
@@ -37,6 +38,13 @@
             {
               "client_id": "787839226205-3no9cjrr9d9tek8l74qbctoca1edndda.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "787839226205-3iv6tg9sotkoa4ahmqk3nrtl89pli3sj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.Redux-demo"
+              }
             }
           ]
         }
