@@ -19,14 +19,14 @@ const Productpage = ({navigation}) => {
   //     channelName: 'shop',
   //   });
   // };
-  const handledNotification = item => {
-    PushNotification.localNotification({
-      channelId: 'Shop',
-      title: 'Your Product is added to cart' + item.title,
-      message: item.price,
-      showWhen: true,
-    });
-  };
+  // const handledNotification = item => {
+  //   PushNotification.localNotification({
+  //     channelId: 'Shop',
+  //     title: 'Your Product is added to cart' + item.title,
+  //     message: item.price,
+  //     showWhen: true,
+  //   });
+  // };
   const addItem = items => {
     dispatch(Additemtocart(items));
     // SendNotification(items.title, 'Your product is added to cart');
