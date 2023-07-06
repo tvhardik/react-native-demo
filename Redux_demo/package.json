@@ -29,6 +29,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "add": "^2.0.6",
     "axios": "^1.4.0",
+    "deprecated-react-native-prop-types": "^2.2.0",
     "eslint-plugin-react-native": "^4.0.0",
     "firebase": "^9.23.0",
     "link": "^1.5.1",
