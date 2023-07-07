@@ -14,4 +14,4 @@ PushNotification.configure({
   },
 });
 
-AppRegistry.registerComponent(appName, () => test);
+AppRegistry.registerComponent(appName, () => YourComponent);

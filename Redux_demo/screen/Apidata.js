@@ -76,7 +76,7 @@ const Apidata = () => {
           }}
         />
       </View>
-      {/* <Picker
+      <Picker
         selectedValue={selectedLanguage}
         onValueChange={itemValue => setSelectedLanguage(itemValue)}>
         <Picker.Item label="React Native" value="React Native" />
@@ -104,7 +104,7 @@ const Apidata = () => {
         size="large"
         onToggle={isOn => console.log('changed to : ', isOn)}
       /> */}
-      <RadioForm //
+      <RadioForm
         style={{margin: 5}}
         initial={0}
         onPress={RadioChange}
