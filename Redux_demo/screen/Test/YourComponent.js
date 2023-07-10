@@ -1,16 +1,30 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Button,
+  ScrollView,
+} from 'react-native';
 import RadioForm from 'react-native-simple-radio-button';
-import CheckBox from '../CheckBox';
-import {Button} from 'react-native';
+import Slider from '@react-native-community/slider';
 import DatePicker from 'react-native-date-picker';
 import ToggleSwitch from 'toggle-switch-react-native';
 import {Picker} from '@react-native-picker/picker';
+import CheckBox from 'react-native-checkbox';
+import SwitchToggle from 'react-native-switch-toggle';
+import RadioButtonRN from 'radio-buttons-react-native';
+
 const YourComponent = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [selectedValue, setSelectedValue] = useState(null);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+  const [formData, setFormData] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [inputArea, setInputArea] = useState('');
+  const [slider, setSlider] = useState();
   const Apidata = [
     {
       id: 3,
@@ -112,66 +126,136 @@ const YourComponent = () => {
     },
   ];
 
+  const submit = () => {
+    const newData = Apidata.map(field => {
+      let value;
+      switch (field.field_type) {
+        case 'range_input':
+          value = slider;
+          break;
+        case 'date_input':
+          value = date.toLocaleDateString();
+          break;
+        case 'input_text':
+          value = inputValue;
+          break;
+        case 'text_area':
+          value = inputArea;
+          break;
+        case 'toggle_switch':
+          value = '';
+          break;
+        case 'select_input':
+          value = selectedLanguage;
+          break;
+        // case 'radio_button':
+        //   value = field.option.find(option => option.isCheck)?.value || '';
+        //   break;
+        default:
+      }
+      return {id: field.id, value};
+    });
+
+    setFormData(newData);
+    console.log(newData);
+  };
+
   const renderField = field => {
     return (
-      <>
+      <View style={{margin: 10}}>
         <Text>{field.name}</Text>
-        {field.field_type === 'date_input' ? (
-          <DatePicker
-            modal
-            open={open}
-            date={date}
-            onConfirm={selectedDate => {
-              setOpen(false);
-              setDate(selectedDate);
-            }}
-            onCancel={() => setOpen(false)}
+        {field.field_type === 'range_input' ? (
+          <Slider
+            style={{width: 390, height: 40}}
+            minimumValue={0}
+            maximumValue={100}
+            minimumTrackTintColor="black"
+            maximumTrackTintColor="#000000"
+            onValueChange={value => setSlider(value)}
           />
-        ) : field.field_type === 'range_input' ? (
+        ) : field.field_type === 'date_input' ? (
+          <View>
+            <Button title="Open" onPress={() => setOpen(true)} />
+            <DatePicker
+              modal
+              open={open}
+              date={date}
+              onConfirm={date => {
+                setOpen(false);
+                setDate(date);
+              }}
+              onCancel={() => {
+                setOpen(false);
+              }}
+            />
+          </View>
+        ) : field.field_type === 'select_input' ? (
           <Picker
             selectedValue={selectedLanguage}
-            onValueChange={option => setSelectedLanguage(option)}>
-            <Picker.option label="React Native" value="React Native" />
-            <Picker.option label="JavaScript" value="js" />
-            <Picker.option label="PHP" value="php" />
+            onValueChange={itemValue => setSelectedLanguage(itemValue)}>
+            {field.option.map((option, index) => (
+              <Picker.Item key={index} label={option} value={option} />
+            ))}
           </Picker>
+        ) : field.field_type === 'input_text' ? (
+          <TextInput
+            style={styles.inputView}
+            placeholder="Input"
+            autoCapitalize="none"
+            onChangeText={text => setInputValue(text)}
+          />
         ) : field.field_type === 'text_area' ? (
           <TextInput
             style={styles.textarea}
             placeholder="Textarea"
             multiline={true}
             numberOfLines={10}
+            onChangeText={text => {
+              setInputArea(text);
+            }}
           />
-        ) : field.field_type === 'input_text' ? (
-          <TextInput
-            style={styles.inputView}
-            placeholder="Input"
-            autoCapitalize="none"
-          />
-        ) : field.field_type === 'input_text' ? (
+        ) : field.field_type === 'toggle_switch' ? (
           <ToggleSwitch
-            style={{margin: 5}}
             isOn={false}
             onColor="green"
             offColor="red"
             labelStyle={{color: 'black', fontWeight: '900'}}
             size="large"
-            onToggle={isOn => console.log('changed to : ', isOn)}
+            onToggle={isOn => {
+              console.log('changed to : ', isOn);
+            }}
           />
-        ) : null}
-      </>
+        ) : // )
+        // : field.field_type === 'radio_button' ? (
+        //   <RadioButtonRN
+        //     data={field.option}
+        //     value={field.value}
+        //     selectedBtn={value => {
+        //       console.log(value);
+        //     }}
+        // />
+        // : field.field_type === 'check_box' ? (
+        //   field.option.map((checkbox, index) => (
+        //     <CheckBox
+        //       key={index}
+        //       label={checkbox.value}
+        //       checked={checkbox.isCheck}
+        //     />
+        //   ))
+        // )
+        null}
+      </View>
     );
   };
-  // console.log(date, 'date pic>>>>>');
-  //   console.log(Apidata.data, '>>>>>>>>>>>');
+
   return (
     <View>
-      {Apidata.map(field => {
-        // console.log('field', field);
-        return (
-          <View key={field.id}>{renderField(field)}</View> // date
-        );
-      })}
+      <ScrollView>
+        {Apidata.map(field => (
+          <View key={field.id}>{renderField(field)}</View>
+        ))}
+        <Button title="Submit" onPress={submit} />
+      </ScrollView>
     </View>
   );
 };
@@ -182,21 +266,13 @@ const styles = StyleSheet.create({
   inputView: {
     borderWidth: 1,
     margin: 10,
+    borderRadius: 10,
   },
   textarea: {
     borderWidth: 1,
     margin: 10,
     height: 100,
+    borderRadius: 10,
     textAlignVertical: 'top',
-  },
-  main: {
-    flex: 1,
-    margin: 20,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

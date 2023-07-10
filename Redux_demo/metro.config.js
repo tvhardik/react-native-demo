@@ -19,5 +19,7 @@ module.exports = (async () => {
       assetExts: assetExts.filter(ext => ext !== 'svg'),
       sourceExts: [...sourceExts, 'svg'],
     },
+    presets: ['module:metro-react-native-babel-preset'],
+    plugins: ['react-native-reanimated/plugin'],
   };
 })();
