@@ -634,6 +634,7 @@ PODS:
   - AppAuth/Core (1.6.2)
   - AppAuth/ExternalUserAgent (1.6.2):
     - AppAuth/Core
+  - BEMCheckBox (1.4.1)
   - boost (1.76.0)
   - BoringSSL-GRPC (0.0.24):
     - BoringSSL-GRPC/Implementation (= 0.0.24)
@@ -693,7 +694,7 @@ PODS:
     - GoogleUtilities/Logger (~> 7.8)
   - FirebaseCoreExtension (10.11.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseCoreInternal (10.11.0):
+  - FirebaseCoreInternal (10.12.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - FirebaseDatabase (10.11.0):
     - FirebaseCore (~> 10.0)
@@ -1121,6 +1122,8 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
+  - react-native-slider (4.4.2):
+    - React-Core
   - react-native-splash-screen (3.3.0):
     - React-Core
   - React-perflogger (0.71.12)
@@ -1208,6 +1211,9 @@ PODS:
     - React-logger (= 0.71.12)
     - React-perflogger (= 0.71.12)
   - RNCAsyncStorage (1.19.0):
+    - React-Core
+  - RNCCheckbox (0.5.16):
+    - BEMCheckBox (~> 1.4)
     - React-Core
   - RNCMaskedView (0.2.9):
     - React-Core
@@ -1308,6 +1314,7 @@ DEPENDENCIES:
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-restart (from `../node_modules/react-native-restart`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -1323,6 +1330,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
@@ -1341,6 +1349,7 @@ SPEC REPOS:
   trunk:
     - abseil
     - AppAuth
+    - BEMCheckBox
     - BoringSSL-GRPC
     - FBAEMKit
     - FBSDKCoreKit
@@ -1434,6 +1443,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-restart"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-slider:
+    :path: "../node_modules/@react-native-community/slider"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
   React-perflogger:
@@ -1464,6 +1475,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCCheckbox:
+    :path: "../node_modules/@react-native-community/checkbox"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
   RNCPicker:
@@ -1494,6 +1507,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
+  BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   BVLinearGradient: fbe308a1d19a8133f69e033abc85d8008644f5e3
@@ -1511,7 +1525,7 @@ SPEC CHECKSUMS:
   FirebaseAuth: 7aabcb00fbf330db49c207c0d645b8b1b62df0e9
   FirebaseCore: 62fd4d549f5e3f3bd52b7998721c5fa0557fb355
   FirebaseCoreExtension: cacdad57fdb60e0b86dcbcac058ec78237946759
-  FirebaseCoreInternal: 9e46c82a14a3b3a25be4e1e151ce6d21536b89c0
+  FirebaseCoreInternal: 950500ad8a08963657f6d8c67b579740c06d6aa1
   FirebaseDatabase: 4e1cb7f44ce6ffa553033913dd0d634b2310ce65
   FirebaseFirestore: 09be82b113fbcb225b9797d2c525ae8886abc7a3
   FirebaseInstallations: 2a2c6859354cbec0a228a863d4daf6de7c74ced4
@@ -1555,6 +1569,7 @@ SPEC CHECKSUMS:
   react-native-pager-view: 0ccb8bf60e2ebd38b1f3669fa3650ecce81db2df
   react-native-restart: 7595693413fe3ca15893702f2c8306c62a708162
   react-native-safe-area-context: 68b07eabfb0d14547d36f6929c0e98d818064f02
+  react-native-slider: 33b8d190b59d4f67a541061bb91775d53d617d9d
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   React-perflogger: 75b0e25075c67565a830985f3c373e2eae5389e0
   React-RCTActionSheet: a0c3e916b327e297d124d9ebe8b0c721840ee04d
@@ -1570,6 +1585,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 7902246857a4ead4166869e6c42d4df329ff721d
   ReactCommon: a023fdfe1c3bd4d465153915a45d8eda51172a45
   RNCAsyncStorage: 4b98ac3c64efa4e35c1197cb0c5ca5e9f5d4c666
+  RNCCheckbox: 75255b03e604bbcc26411eb31c4cbe3e3865f538
   RNCMaskedView: 949696f25ec596bfc697fc88e6f95cf0c79669b6
   RNCPicker: 0bc2f0a29abcca7b7ed44a2d036aac9ab6d25700
   RNFBApp: 81a9593ff681b448d1847f5d5493906310cdebe3
