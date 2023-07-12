@@ -4,18 +4,18 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  Button,
   Switch,
   ScrollView,
   SafeAreaView,
+  TouchableOpacity,
 } from 'react-native';
 import {Apidata} from '../Apidata';
-import {Dropdown} from 'react-native-element-dropdown';
 import Slider from '@react-native-community/slider';
 import DatePicker from 'react-native-date-picker';
-import {Picker} from '@react-native-picker/picker';
 import CheckBox from '../CheckBox';
+import SelectDropdown from 'react-native-select-dropdown';
 import RadioForm from 'react-native-simple-radio-button';
+import RadioButton from './RadioButton';
 const ResponsiveApi = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [date, setDate] = useState(new Date());
@@ -23,10 +23,15 @@ const ResponsiveApi = () => {
   const [formData, setFormData] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [inputArea, setInputArea] = useState('');
-  const [slider, setSlider] = useState();
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [selectedId, setSelectedId] = useState('');
+
+  const [sliderValue, setSliderValue] = useState(0);
+
+  const handleSliderChange = value => {
+    setSliderValue(value);
+  };
 
   const [checkbox, setCheckBox] = useState([]);
   const checkboxbutton = (value, isChecked) => {
@@ -37,11 +42,25 @@ const ResponsiveApi = () => {
     }
   };
 
+  // const RadioChange = value => {
+  //   const selectedOption = Apidata.find(
+  //     field => field.field_type === 'radio_button',
+  //   ).option[value];
+  //   setSelectedId(selectedOption.value);
+  // };
+  // const RadioChange = value => {
+  //   const radioField = Apidata.find(
+  //     field => field.field_type === 'radio_button',
+  //   );
+  //   if (radioField && radioField.option) {
+  //     const selectedOption = radioField.option[value];
+  //     if (selectedOption) {
+  //       setSelectedId(selectedOption.value);
+  //     }
+  //   }
+  // };
   const RadioChange = value => {
-    const selectedOption = Apidata.find(
-      field => field.field_type === 'radio_button',
-    ).option[value];
-    setSelectedId(selectedOption.value);
+    setSelectedId(value);
   };
 
   const submit = () => {
@@ -49,7 +68,7 @@ const ResponsiveApi = () => {
       let value;
       switch (field.field_type) {
         case 'range_input':
-          value = slider;
+          value = sliderValue;
           break;
         case 'date_input':
           value = date.toLocaleDateString();
@@ -82,22 +101,32 @@ const ResponsiveApi = () => {
   };
   const renderField = field => {
     return (
-      <View style={{margin: 10}}>
-        <Text>{field.name}</Text>
+      <View style={{flex: 1, margin: 5}}>
+        <Text style={{margin: 10, fontSize: 16}}>{field.name}</Text>
         {field.field_type === 'range_input' ? (
-          <Slider
-            style={{width: 390, height: 40}}
-            minimumValue={0}
-            maximumValue={100}
-            minimumTrackTintColor="black"
-            maximumTrackTintColor="#000000"
-            onValueChange={value => setSlider(value)}
-          />
+          <View style={{}}>
+            <Slider
+              minimumValue={0}
+              maximumValue={100}
+              minimumTrackTintColor="#20d6be"
+              onValueChange={value => handleSliderChange(value)}
+            />
+            <Text style={{textAlign: 'right', marginRight: 20}}>
+              {sliderValue.toFixed(0)}
+            </Text>
+          </View>
         ) : field.field_type === 'date_input' ? (
           <View>
-            <Button title="Open" onPress={() => setOpen(true)} />
+            <TouchableOpacity
+              style={{borderBottomWidth: 1, margin: 10}}
+              onPress={() => setOpen(true)}>
+              <Text style={{fontSize: 16, marginBottom: 10, color: '#d3d3d3'}}>
+                MM/DD/YYYY
+              </Text>
+            </TouchableOpacity>
             <DatePicker
               modal
+              mode="date"
               open={open}
               date={date}
               onConfirm={date => {
@@ -110,24 +139,48 @@ const ResponsiveApi = () => {
             />
           </View>
         ) : field.field_type === 'select_input' ? (
-          <Picker
-            selectedValue={selectedLanguage}
-            onValueChange={itemValue => setSelectedLanguage(itemValue)}>
-            {field.option.map((option, index) => (
-              <Picker.Item key={index} label={option} value={option} />
-            ))}
-          </Picker>
+          <SelectDropdown
+            data={field.option}
+            defaultValue={selectedLanguage}
+            onSelect={selectedItem => setSelectedLanguage(selectedItem)}
+            buttonTextAfterSelection={selectedItem => {
+              return selectedItem;
+            }}
+            rowTextForSelection={item => {
+              return item;
+            }}
+            dropdownStyle={{
+              alignContent: 'center',
+              borderRadius: 8,
+            }}
+            buttonStyle={{
+              backgroundColor: '#ffffff',
+              width: '95%',
+              marginHorizontal: 10,
+              borderBottomWidth: 1,
+            }}
+            buttonTextStyle={{
+              color: '#d3d3d3',
+              fontSize: 18,
+              textAlign: 'left',
+              marginLeft: -5,
+            }}
+            rowStyle={{
+              backgroundColor: 'white',
+              borderBottomColor: 'gray',
+            }}
+          />
         ) : field.field_type === 'input_text' ? (
           <TextInput
             style={styles.inputView}
-            placeholder="Input"
+            placeholder="Text Input"
             autoCapitalize="none"
             onChangeText={text => setInputValue(text)}
           />
         ) : field.field_type === 'text_area' ? (
           <TextInput
             style={styles.textarea}
-            placeholder="Textarea"
+            placeholder="Project attribute"
             multiline={true}
             numberOfLines={10}
             onChangeText={text => {
@@ -135,27 +188,31 @@ const ResponsiveApi = () => {
             }}
           />
         ) : field.field_type === 'toggle_switch' ? (
-          <Switch
-            trackColor={{false: '#767577', true: '#81b0ff'}}
-            thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-          />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: 10,
+            }}>
+            <Text style={{fontSize: 18}}>Private Profile</Text>
+            <Switch
+              trackColor={{false: '#767577', true: '#81b0ff'}}
+              thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+          </View>
         ) : field.field_type === 'radio_button' ? (
-          <RadioForm
-            style={{margin: 5}}
-            initial={null}
-            onPress={RadioChange}
-            buttonSize={10}
-            buttonOuterSize={20}
-            buttonColor={'#000'}
-            selectedButtonColor={'green'}
-            radio_props={field.option.map((option, item) => ({
-              label: option.value,
-              value: item,
-            }))}
-          />
+          <View>
+            <RadioButton
+              options={field.option}
+              onChange={RadioChange}
+              selectedOption={selectedId}
+            />
+          </View>
         ) : field.field_type === 'check_box' ? (
           field.option.map((option, index) => (
             <CheckBox
@@ -173,16 +230,21 @@ const ResponsiveApi = () => {
   };
 
   return (
-    <View>
+    <View style={{}}>
       <SafeAreaView>
         <ScrollView>
           {Apidata.map(field => (
             <View key={field.id}>{renderField(field)}</View>
           ))}
-          <Button title="Submit" onPress={submit} />
-          <Text style={{margin: 10, fontSize: 20}}>
+          <TouchableOpacity style={styles.SaveButton} onPress={submit}>
+            <Text style={{fontSize: 20, padding: 10}}>Save</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.EditButton} onPress={submit}>
+            <Text style={{color: 'red', fontSize: 20, padding: 10}}>Edit</Text>
+          </TouchableOpacity>
+          {/* <Text style={{margin: 10, fontSize: 20}}>
             {JSON.stringify(formData)}
-          </Text>
+          </Text> */}
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -193,16 +255,49 @@ export default ResponsiveApi;
 
 const styles = StyleSheet.create({
   inputView: {
-    borderWidth: 1,
+    borderBottomWidth: 1,
     margin: 10,
-    height: 40,
-    borderRadius: 5,
+    // height: 40,
+    fontSize: 18,
+    // padding: 10,
+    paddingBottom: 10,
   },
   textarea: {
     borderWidth: 1,
     margin: 10,
     height: 100,
-    borderRadius: 5,
+    padding: 10,
+    fontSize: 18,
     textAlignVertical: 'top',
+  },
+  SaveButton: {
+    height: 50,
+    width: '90%',
+    margin: 10,
+    backgroundColor: '#20d6be',
+    alignItems: 'center',
+    alignSelf: 'center',
+    borderRadius: 5,
+    elevation: 20,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 10,
+  },
+  EditButton: {
+    height: 50,
+    width: '90%',
+    margin: 10,
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    alignSelf: 'center',
+    borderRadius: 5,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 10,
   },
 });
