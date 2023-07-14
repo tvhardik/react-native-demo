@@ -3,7 +3,7 @@ export const Apidata = [
     id: 3,
     name: 'Progress',
     field_type: 'range_input',
-    option: '1-100',
+    option: '0',
     option_type: 'string',
     created_at: '2023-06-26T07:42:18.633Z',
     updated_at: '2023-06-26T07:43:08.816Z',
@@ -98,3 +98,14 @@ export const Apidata = [
     updated_at: '2023-06-26T07:48:44.232Z',
   },
 ];
+export const itemremove = () => {
+  setDate(new Date());
+  setOpen(false);
+  setFormData([]);
+  setInputValue('');
+  setInputArea('');
+  setIsEnabled(false);
+  setSelectedId('');
+  setSliderValue(0);
+  setCheckBox([]);
+};

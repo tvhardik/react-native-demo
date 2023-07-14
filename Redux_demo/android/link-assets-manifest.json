@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/NotoSerif-Bold.ttf",
+      "sha1": "0369d526665f453b5e6f3286eb5321363dea52ca"
+    },
+    {
+      "path": "assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf",
+      "sha1": "b517e2ea39be46bd87fb7d112078e124ee87f57c"
+    },
+    {
+      "path": "assets/fonts/YsabeauInfant-Regular.ttf",
+      "sha1": "c4a437416f1aa918af7adff0605f0f77a7712bef"
+    },
+    {
+      "path": "assets/fonts/YsabeauInfant-SemiBold.ttf",
+      "sha1": "7f33e40c9cf8a9bd67c49ca82ea6e21d4fc418bf"
+    }
+  ]
+}
