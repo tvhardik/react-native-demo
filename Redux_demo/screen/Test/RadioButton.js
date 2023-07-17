@@ -2,23 +2,24 @@ import React, {useState} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 
 const RadioButton = ({options, onChange}) => {
-  const [selectedOption, setSelectedOption] = useState('');
-
-  const Select = option => {
-    setSelectedOption(option.value);
-    onChange(option.value);
+  const Select = index => {
+    const selectedValue = options[index]?.value;
+    const updatedOptions = options.map((d, i) => {
+      return {...d, isCheck: index === i};
+    });
+    onChange(selectedValue);
   };
-
+  // console.log(options);
   return (
     <View
       style={{
         flexDirection: 'row',
         margin: 15,
       }}>
-      {options.map(option => (
+      {options?.map((option, index) => (
         <TouchableOpacity
           key={option.value}
-          onPress={() => Select(option)}
+          onPress={() => Select(index)}
           style={{
             flex: 1,
             height: 50,
@@ -27,8 +28,7 @@ const RadioButton = ({options, onChange}) => {
             shadowOpacity: 0.4,
             shadowRadius: 5,
             elevation: 15,
-            backgroundColor:
-              selectedOption === option.value ? '#20d6be' : '#f5f5f5',
+            backgroundColor: option.isCheck ? '#20d6be' : '#f5f5f5',
             justifyContent: 'center',
             alignItems: 'center',
           }}>

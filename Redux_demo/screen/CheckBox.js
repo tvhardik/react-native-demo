@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Fontisto';
 const CheckBox = ({label, value, onValueChange}) => {
   const [isChecked, setIsChecked] = useState(value);
 
-  const handleCheckboxToggle = () => {
+  const CheckboxToggle = () => {
     const newValue = !isChecked;
     setIsChecked(newValue);
     onValueChange(newValue);
@@ -13,7 +13,7 @@ const CheckBox = ({label, value, onValueChange}) => {
 
   return (
     <TouchableOpacity
-      onPress={handleCheckboxToggle}
+      onPress={CheckboxToggle}
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',

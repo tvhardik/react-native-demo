@@ -9,310 +9,342 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
-import {Apidata} from '../Apidata';
 import Slider from '@react-native-community/slider';
 import DatePicker from 'react-native-date-picker';
 import CheckBox from '../CheckBox';
 import SelectDropdown from 'react-native-select-dropdown';
 import RadioButton from './RadioButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const ResponsiveApi = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState(-1);
+  const [editMode, setEditMode] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState(0);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState('');
   const [formData, setFormData] = useState([]);
+  const [selectedRadioButton, setSelectedRadioButton] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [inputArea, setInputArea] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
-  const [selectedId, setSelectedId] = useState('');
   const [sliderValue, setSliderValue] = useState(0);
   const [checkbox, setCheckBox] = useState([]);
-
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
-  const SliderChange = value => {
-    setSliderValue(value);
-  };
+  const [Apidata, setApiData] = useState([
+    {
+      id: 3,
+      name: 'Progress',
+      field_type: 'range_input',
+      option: '0',
+      option_type: 'string',
+      created_at: '2023-06-26T07:42:18.633Z',
+      updated_at: '2023-06-26T07:43:08.816Z',
+    },
+    {
+      id: 4,
+      name: 'Date',
+      field_type: 'date_input',
+      option: '',
+      option_type: 'string',
+      created_at: '2023-06-26T07:42:50.086Z',
+      updated_at: '2023-06-26T07:42:50.086Z',
+    },
+    {
+      id: 5,
+      name: 'SelectInput',
+      field_type: 'select_input',
+      option: ['value1', 'value2', 'value3'],
+      option_type: 'json',
+      created_at: '2023-06-26T07:43:48.658Z',
+      updated_at: '2023-06-26T07:43:48.658Z',
+    },
+    {
+      id: 6,
+      name: 'InputText',
+      field_type: 'input_text',
+      option: '',
+      option_type: 'string',
+      created_at: '2023-06-26T07:44:18.960Z',
+      updated_at: '2023-06-26T07:44:18.960Z',
+    },
+    {
+      id: 7,
+      name: 'TextArea',
+      field_type: 'text_area',
+      option: '',
+      option_type: 'string',
+      created_at: '2023-06-26T07:46:43.958Z',
+      updated_at: '2023-06-26T07:46:43.958Z',
+    },
+    {
+      id: 8,
+      name: 'SwitchTag',
+      field_type: 'toggle_switch',
+      option: '',
+      option_type: 'string',
+      created_at: '2023-06-26T07:47:31.075Z',
+      updated_at: '2023-06-26T07:47:31.075Z',
+    },
+    {
+      id: 9,
+      name: 'Gender',
+      field_type: 'radio_button',
+      option: [
+        {
+          value: 'Male',
+          isCheck: false,
+        },
+        {
+          value: 'Female',
+          isCheck: false,
+        },
+      ],
+      option_type: 'json',
+      created_at: '2023-06-26T07:47:59.938Z',
+      updated_at: '2023-06-26T07:48:17.869Z',
+    },
+    {
+      id: 10,
+      name: 'Checked',
+      field_type: 'check_box',
+      option: [
+        {
+          value: 'value1',
+          isCheck: false,
+        },
+        {
+          value: 'value2',
+          isCheck: false,
+        },
+        {
+          value: 'value3',
+          isCheck: false,
+        },
+        {
+          value: 'value4',
+          isCheck: false,
+        },
+      ],
+      option_type: 'json',
+      created_at: '2023-06-26T07:48:44.232Z',
+      updated_at: '2023-06-26T07:48:44.232Z',
+    },
+  ]);
 
   const updateRecord = (item, value) => {
-    const data = Apidata.map((d, index) => {
-      return {...d, option: d.id === item.id ? value : item.option};
+    const updatedData = Apidata.map(data => {
+      return data.id === item.id ? {...item, option: value} : data;
     });
-    setApiData(data);
-  };
 
-  const checkboxbutton = (item, value, isChecked) => {
-    // if (isChecked) {
-    //   setCheckBox(Stateupd => [...Stateupd, value]);
-    // } else {
-    //   setCheckBox(Stateupd => Stateupd.filter(item => item !== value));
-    // }
-    updateRecord(
-      item,
-      item.option.map(d => {
-        return {...d, isCheck: d.value === value ? !d.isCheck : d.isCheck};
-      }),
-    );
+    setApiData(updatedData);
   };
-
-  const RadioChange = value => {
-    setSelectedId(value);
-  };
-
-  const submit = async () => {
-    const newData = Apidata.map(field => {
-      let value;
-      switch (field.field_type) {
-        case 'range_input':
-          value = sliderValue.toFixed(0);
-          break;
-        case 'date_input':
-          value = date.toLocaleDateString();
-          break;
-        case 'input_text':
-          value = inputValue;
-          break;
-        case 'text_area':
-          value = inputArea;
-          break;
-        case 'toggle_switch':
-          value = isEnabled;
-          break;
-        case 'select_input':
-          value = selectedLanguage;
-          break;
-        case 'radio_button':
-          value = selectedId;
-          break;
-        case 'check_box':
-          value = checkbox;
-          break;
-        default:
+  const checkboxbutton = (field, value, isChecked) => {
+    const updatedOptions = field.option.map(option => {
+      if (option && option.value === value) {
+        return {...option, isCheck: isChecked};
       }
-      return {id: field.id, value};
+      return option;
     });
-
-    try {
-      await AsyncStorage.setItem('formData', JSON.stringify(newData));
-    } catch (error) {}
-    setFormData(newData);
-    setSelectedLanguage(-1);
-    setDate(new Date());
-    setOpen(false);
-    setFormData([]);
-    setInputValue('');
-    setInputArea('');
-    setIsEnabled(false);
-    setSelectedId('');
-    setSliderValue(0);
-    setCheckBox([]);
+    updateRecord(field, updatedOptions);
   };
-  useEffect(() => {
-    edit();
-  }, []);
 
-  const edit = async () => {
+  const RadioButtonChange = selectedValue => {
+    setSelectedRadioButton(selectedValue);
+  };
+
+  const submitData = async () => {
     try {
-      const storedData = await AsyncStorage.getItem('formData');
-      const parsedData = JSON.parse(storedData);
-      console.log('parsedData', parsedData);
-      const updatedData = Apidata.map(field => {
-        const storedField = parsedData.find(data => data.id === field.id);
-        console.log(storedField);
-        // if (storedField.id === field.id) {
-        //   console.log('djshd');
-        //   return {...field, value: storedField.value};
-        // }
-        // if (storedField) {
-        //   switch (field.field_type) {
-        //     case 'range_input':
-        //       setSliderValue(parseInt(storedField.value));
-        //       break;
-        //     case 'date_input':
-        //       const storedDate = new Date(storedField.value);
-        //       if (isNaN(storedDate.getTime())) {
-        //         setDate(new Date());
-        //       } else {
-        //         setDate(storedDate);
-        //       }
-        //       break;
-        //     case 'input_text':
-        //       setInputValue(storedField.value);
-        //       break;
-        //     case 'text_area':
-        //       setInputArea(storedField.value);
-        //       break;
-        //     case 'toggle_switch':
-        //       setIsEnabled(storedField.value);
-        //       break;
-        //     case 'select_input':
-        //       setSelectedLanguage(storedField.value);
-        //       break;
-        //     case 'radio_button':
-        //       setSelectedId(storedField.value);
-        //       break;
-        //     case 'check_box':
-        //       setCheckBox(storedField.value);
-        //       break;
-        //     default:
-        //       break;
-        //   }
-        //   return {id: field.id, value: storedField.value};
-        // } else {
-        //   return {id: field.id, value: updatedData.valuesss};
-        // }
+      const formData = Apidata.map(field => {
+        if (field.field_type === 'check_box') {
+          return {
+            id: field.id,
+            option: field.option
+              .filter(option => option.isCheck)
+              .map(option => option.value),
+          };
+        } else if (field.field_type === 'radio_button') {
+          return {
+            id: field.id,
+            option: selectedRadioButton,
+          };
+        } else {
+          return {
+            id: field.id,
+            option: field.option,
+          };
+        }
       });
-      console.log('updatedData', updatedData);
-      setFormData(updatedData);
+
+      await AsyncStorage.setItem('formData', JSON.stringify(formData));
+      console.log('formData:', formData);
+      console.log('Data saved');
     } catch (error) {}
   };
 
-  useEffect(() => {
-    submit();
-  }, []);
-
-  const renderField = field => {
-    return (
-      <View style={{margin: 5}}>
-        <Text style={styles.MainText}>{field.name}</Text>
-        {field.field_type === 'range_input' ? (
-          <View>
-            <Slider
-              minimumValue={0}
-              maximumValue={100}
-              value={sliderValue}
-              minimumTrackTintColor="#20d6b3"
-              onValueChange={value => SliderChange(value)}
-            />
-            <Text style={{textAlign: 'right', marginRight: 20}}>
-              {sliderValue.toFixed(0)}
+  const renderFiel = field => {
+    if (field.field_type === 'range_input') {
+      return (
+        <View key={field.id}>
+          <Text style={styles.MainText}>{field.name}</Text>
+          <Slider
+            minimumValue={0}
+            maximumValue={100}
+            minimumTrackTintColor="#20d6b3"
+            value={parseFloat(field?.option)}
+            onValueChange={value => updateRecord(field, value.toFixed(0))}
+          />
+          <Text style={{textAlign: 'right', marginRight: 20}}>
+            {parseFloat(field?.option).toFixed(0)}
+          </Text>
+        </View>
+      );
+    } else if (field.field_type === 'date_input') {
+      return (
+        <View key={field.id}>
+          <Text style={styles.MainText}>{field.name}</Text>
+          <TouchableOpacity
+            style={{borderBottomWidth: 1, margin: 10}}
+            onPress={() => setOpen(true)}>
+            <Text style={{fontSize: 18, marginBottom: 5}}>
+              {field.option ? new Date(field.option).toLocaleDateString() : ''}
             </Text>
-          </View>
-        ) : field.field_type === 'date_input' ? (
-          <View>
-            <TouchableOpacity
-              style={{borderBottomWidth: 1, margin: 10}}
-              onPress={() => setOpen(true)}>
-              <Text style={{fontSize: 18, marginBottom: 5}}>
-                {date.toLocaleDateString()}
-              </Text>
-            </TouchableOpacity>
-            <DatePicker
-              modal
-              mode="date"
-              open={open}
-              date={date}
-              onConfirm={selectedDate => {
-                setOpen(false);
-                setDate(selectedDate);
-              }}
-              onCancel={() => {
-                setOpen(false);
-              }}
-            />
-          </View>
-        ) : field.field_type === 'select_input' ? (
+          </TouchableOpacity>
+          <DatePicker
+            modal
+            mode="date"
+            open={open}
+            date={date}
+            onConfirm={selectedDate => {
+              setOpen(false);
+              updateRecord(field, selectedDate);
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
+        </View>
+      );
+    } else if (field.field_type === 'select_input') {
+      return (
+        <View key={field.id}>
+          <Text style={styles.MainText}>{field.name}</Text>
           <SelectDropdown
             data={field.option}
-            defaultButtonText={selectedLanguage}
-            // defaultValue={selectedLanguage}
-            // value={selectedLanguage}
-            onSelect={(selectedItem, index) => {
-              setSelectedLanguage(index);
+            defaultValue={field.option[selectedLanguage]}
+            onSelect={selectedItem => console.log(field, selectedItem)}
+            defaultValueByIndex={field?.option}
+            buttonTextAfterSelection={selectedItem => selectedItem}
+            rowTextForSelection={item => item}
+            dropdownStyle={{
+              alignContent: 'center',
+              borderRadius: 8,
             }}
-            defaultValueByIndex={selectedLanguage}
-            buttonTextAfterSelection={selectedItem => {
-              return selectedItem;
+            buttonStyle={{
+              backgroundColor: '#ffffff',
+              width: '95%',
+              marginHorizontal: 10,
+              borderBottomWidth: 1,
             }}
-            // rowTextForSelection={item => {
-            //   return item;
-            // }}
-            // dropdownStyle={{
-            //   alignContent: 'center',
-            //   borderRadius: 8,
-            // }}
-            // buttonStyle={{
-            //   backgroundColor: '#ffffff',
-            //   width: '95%',
-            //   marginHorizontal: 10,
-            //   borderBottomWidth: 1,
-            // }}
-            // buttonTextStyle={{
-            //   color: '#d3d3d3',
-            //   fontSize: 18,
-            //   textAlign: 'left',
-            //   marginLeft: -5,
-            // }}
-            // rowStyle={{
-            //   backgroundColor: 'white',
-            //   borderBottomColor: 'gray',
-            // }}
+            buttonTextStyle={{
+              color: '#d3d3d3',
+              fontSize: 18,
+              textAlign: 'left',
+              marginLeft: -5,
+            }}
+            rowStyle={{
+              backgroundColor: 'white',
+              borderBottomColor: 'gray',
+            }}
           />
-        ) : field.field_type === 'input_text' ? (
+        </View>
+      );
+    } else if (field.field_type === 'input_text') {
+      return (
+        <View key={field.id}>
+          <Text style={styles.MainText}>{field.name}</Text>
           <TextInput
             style={styles.inputView}
             placeholder="Text Input"
             autoCapitalize="none"
-            value={inputValue}
-            onChangeText={text => updateRecord(item, text)}
+            value={field?.option}
+            onChangeText={text => {
+              updateRecord(field, text);
+            }}
           />
-        ) : field.field_type === 'text_area' ? (
+        </View>
+      );
+    } else if (field.field_type === 'text_area') {
+      return (
+        <View key={field.id}>
+          <Text style={styles.MainText}>{field.name}</Text>
           <TextInput
             style={styles.textarea}
             placeholder="Project attribute"
             multiline={true}
             numberOfLines={10}
-            value={inputArea}
+            value={field?.option}
             onChangeText={text => {
-              setInputArea(text);
+              updateRecord(field, text);
             }}
           />
-        ) : field.field_type === 'toggle_switch' ? (
+        </View>
+      );
+    } else if (field.field_type === 'toggle_switch') {
+      return (
+        <View key={field.id}>
+          <Text style={styles.MainText}>{field.name}</Text>
           <View style={styles.Switch}>
             <Text style={{fontSize: 18}}>Private Profile</Text>
             <Switch
               trackColor={{false: '#767577', true: '#81b0ff'}}
-              thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
+              onValueChange={value => updateRecord(field, value)}
+              value={field?.option}
             />
           </View>
-        ) : field.field_type === 'radio_button' ? (
-          <View>
-            <RadioButton
-              options={field.option}
-              onChange={RadioChange}
-              selectedOption={selectedId}
-            />
-          </View>
-        ) : field.field_type === 'check_box' ? (
-          field.option.map((option, index) => (
+        </View>
+      );
+    } else if (field.field_type === 'radio_button') {
+      return (
+        <View key={field.id}>
+          <Text style={styles.MainText}>{field.name}</Text>
+          <RadioButton
+            options={field.option.map(option => ({
+              ...option,
+              isCheck: option.value === selectedRadioButton,
+            }))}
+            onChange={RadioButtonChange}
+          />
+        </View>
+      );
+    } else if (field.field_type === 'check_box') {
+      return (
+        <View key={field.id}>
+          <Text style={styles.MainText}>{field.name}</Text>
+          {field.option.map((option, index) => (
             <CheckBox
               key={index}
-              label={option.value}
-              checked={option.isCheck}
+              label={option?.value}
+              checked={option?.isCheck}
               onValueChange={isChecked =>
-                checkboxbutton(field, option.value, isChecked)
+                checkboxbutton(field, option?.value, isChecked)
               }
             />
-          ))
-        ) : null}
-      </View>
-    );
+          ))}
+        </View>
+      );
+    } else {
+      return null;
+    }
   };
-
   return (
     <View style={{margin: 5}}>
       <SafeAreaView>
         <ScrollView>
-          {Apidata.map(field => (
-            <View key={field.id}>{renderField(field)}</View>
-          ))}
-          <TouchableOpacity style={styles.SaveButton} onPress={submit}>
+          {Apidata.map(field => renderFiel(field))}
+          <TouchableOpacity style={styles.SaveButton} onPress={submitData}>
             <Text style={styles.SaveButtonText}>Save</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.EditButton} onPress={edit}>
+          <TouchableOpacity style={styles.EditButton} onPress={submitData}>
             <Text style={styles.EditButtonText}>Edit</Text>
           </TouchableOpacity>
         </ScrollView>
