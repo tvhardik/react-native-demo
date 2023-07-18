@@ -17,18 +17,12 @@ import RadioButton from './RadioButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ResponsiveApi = () => {
-  const [editMode, setEditMode] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState(0);
+  const [selectedLanguage, setSelectedLanguage] = useState(1);
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState('');
+  const [storedFormData, setStoredFormData] = useState(null);
   const [formData, setFormData] = useState([]);
   const [selectedRadioButton, setSelectedRadioButton] = useState('');
-  const [inputValue, setInputValue] = useState('');
-  const [inputArea, setInputArea] = useState('');
-  const [isEnabled, setIsEnabled] = useState(false);
-  const [sliderValue, setSliderValue] = useState(0);
-  const [checkbox, setCheckBox] = useState([]);
   const [Apidata, setApiData] = useState([
     {
       id: 3,
@@ -52,7 +46,20 @@ const ResponsiveApi = () => {
       id: 5,
       name: 'SelectInput',
       field_type: 'select_input',
-      option: ['value1', 'value2', 'value3'],
+      option: [
+        {
+          value: 'Value1',
+          isCheck: false,
+        },
+        {
+          value: 'Value2',
+          isCheck: false,
+        },
+        {
+          value: 'Value3',
+          isCheck: false,
+        },
+      ],
       option_type: 'json',
       created_at: '2023-06-26T07:43:48.658Z',
       updated_at: '2023-06-26T07:43:48.658Z',
@@ -154,7 +161,10 @@ const ResponsiveApi = () => {
   const submitData = async () => {
     try {
       const formData = Apidata.map(field => {
-        if (field.field_type === 'check_box') {
+        if (
+          field.field_type === 'check_box' ||
+          field.field_type === 'select_input'
+        ) {
           return {
             id: field.id,
             option: field.option
@@ -177,8 +187,74 @@ const ResponsiveApi = () => {
       await AsyncStorage.setItem('formData', JSON.stringify(formData));
       console.log('formData:', formData);
       console.log('Data saved');
+      clearFormData();
     } catch (error) {}
   };
+
+  const storeData = async () => {
+    try {
+      const formData = await AsyncStorage.getItem('formData');
+      if (formData) {
+        setStoredFormData(JSON.parse(formData));
+      }
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    storeData();
+  }, []);
+
+  const editData = () => {
+    if (storedFormData) {
+      const updatedData = Apidata.map(data => {
+        const storedField = storedFormData.find(field => field.id === data.id);
+        if (storedField) {
+          return {...data, option: storedField.option};
+        }
+        return data;
+      });
+      setApiData(updatedData);
+    }
+  };
+  // const clearFormData = () => {
+  //   const clearedData = Apidata.map(field => {
+  //     if (field.field_type === 'check_box') {
+  //       return {
+  //         ...field,
+  //         option: field.option.map(option => ({...option, isCheck: false})),
+  //       };
+  //     } else if (field.field_type === 'radio_button') {
+  //       return {
+  //         ...field,
+  //         option: field.option.map(option => ({...option, isCheck: false})),
+  //       };
+  //     } else if (field.field_type === 'toggle_switch') {
+  //       return {
+  //         ...field,
+  //         option: false,
+  //       };
+  //     } else if (field.field_type === 'range_input') {
+  //       return {
+  //         ...field,
+  //         option: '0',
+  //       };
+  //     } else if (field.field_type === 'input_text') {
+  //       return {
+  //         ...field,
+  //         option: '',
+  //       };
+  //     } else if (field.field_type === 'text_area') {
+  //       return {
+  //         ...field,
+  //         option: '',
+  //       };
+  //     } else {
+  //       return field;
+  //     }
+  //   });
+
+  //   setApiData(clearedData);
+  // };
 
   const renderFiel = field => {
     if (field.field_type === 'range_input') {
@@ -229,31 +305,46 @@ const ResponsiveApi = () => {
           <Text style={styles.MainText}>{field.name}</Text>
           <SelectDropdown
             data={field.option}
-            defaultValue={field.option[selectedLanguage]}
-            onSelect={selectedItem => console.log(field, selectedItem)}
-            defaultValueByIndex={field?.option}
-            buttonTextAfterSelection={selectedItem => selectedItem}
-            rowTextForSelection={item => item}
-            dropdownStyle={{
-              alignContent: 'center',
-              borderRadius: 8,
+            onSelect={selectedItem => {
+              const selectOptions = field.option.map(d => {
+                return {...d, isCheck: selectedItem.value === d.value};
+              });
+              updateRecord(field, selectOptions);
+              console.log(selectOptions);
             }}
-            buttonStyle={{
-              backgroundColor: '#ffffff',
-              width: '95%',
-              marginHorizontal: 10,
-              borderBottomWidth: 1,
+            buttonTextAfterSelection={(selectedItem, index) => {
+              // text represented after item is selected
+              // if data array is an array of objects then return selectedItem.property to render after item is selected
+              return selectedItem.value;
             }}
-            buttonTextStyle={{
-              color: '#d3d3d3',
-              fontSize: 18,
-              textAlign: 'left',
-              marginLeft: -5,
+            rowTextForSelection={(item, index) => {
+              // text represented for each item in dropdown
+              // if data array is an array of objects then return item.property to represent item in dropdown
+              return item.value;
             }}
-            rowStyle={{
-              backgroundColor: 'white',
-              borderBottomColor: 'gray',
-            }}
+            // defaultButtonText={field?.option}
+            // buttonTextAfterSelection={selectedItem => selectedItem}
+            // rowTextForSelection={item => item}
+            // dropdownStyle={{
+            //   alignContent: 'center',
+            //   borderRadius: 8,
+            // }}
+            // buttonStyle={{
+            //   backgroundColor: '#ffffff',
+            //   width: '95%',
+            //   marginHorizontal: 10,
+            //   borderBottomWidth: 1,
+            // }}
+            // buttonTextStyle={{
+            //   color: '#d3d3d3',
+            //   fontSize: 18,
+            //   textAlign: 'left',
+            //   marginLeft: -5,
+            // }}
+            // rowStyle={{
+            //   backgroundColor: 'white',
+            //   borderBottomColor: 'gray',
+            // }}
           />
         </View>
       );
@@ -307,13 +398,13 @@ const ResponsiveApi = () => {
       return (
         <View key={field.id}>
           <Text style={styles.MainText}>{field.name}</Text>
-          <RadioButton
+          {/* <RadioButton
             options={field.option.map(option => ({
               ...option,
               isCheck: option.value === selectedRadioButton,
             }))}
             onChange={RadioButtonChange}
-          />
+          /> */}
         </View>
       );
     } else if (field.field_type === 'check_box') {
@@ -344,7 +435,7 @@ const ResponsiveApi = () => {
           <TouchableOpacity style={styles.SaveButton} onPress={submitData}>
             <Text style={styles.SaveButtonText}>Save</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.EditButton} onPress={submitData}>
+          <TouchableOpacity style={styles.EditButton} onPress={editData}>
             <Text style={styles.EditButtonText}>Edit</Text>
           </TouchableOpacity>
         </ScrollView>

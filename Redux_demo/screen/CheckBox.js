@@ -19,7 +19,7 @@ const CheckBox = ({label, value, onValueChange}) => {
         justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: 15,
-        margin: 2,
+        marginVertical: 2,
       }}>
       <Text style={{fontSize: 20}}>{label}</Text>
       <Icon

@@ -9,7 +9,7 @@ const RadioButton = ({options, onChange}) => {
     });
     onChange(selectedValue);
   };
-  // console.log(options);
+
   return (
     <View
       style={{
