@@ -17,13 +17,15 @@ import SelectDropdown from 'react-native-select-dropdown';
 import RadioButton from './RadioButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-const ResponsiveApi = () => {
+const EditScreen = ({route}) => {
   const navigation = useNavigation();
+  const {formData} = route.params;
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
   const [storedFormData, setStoredFormData] = useState(null);
+
   const [selectedRadioButton, setSelectedRadioButton] = useState(null);
   const [Apidata, setApiData] = useState([
     {
@@ -145,17 +147,17 @@ const ResponsiveApi = () => {
     });
 
     setApiData(updatedData);
-    // saveFormData(updatedData);
+    saveFormData(updatedData);
   };
 
-  // const saveFormData = async data => {
-  //   try {
-  //     await AsyncStorage.setItem('formData', JSON.stringify(data));
-  //     // console.log('Form data saved successfully');
-  //   } catch (error) {
-  //     // console.log('Error saving form data:', error);
-  //   }
-  // };
+  const saveFormData = async data => {
+    try {
+      await AsyncStorage.setItem('formData', JSON.stringify(data));
+      // console.log('Form data saved successfully');
+    } catch (error) {
+      // console.log('Error saving form data:', error);
+    }
+  };
 
   const checkboxbutton = (field, value, isChecked) => {
     const updatedOptions = field.option.map(option => {
@@ -236,14 +238,15 @@ const ResponsiveApi = () => {
       });
 
       await AsyncStorage.setItem('formData', JSON.stringify(formData));
-      // console.log('formData >>>>>>', formData);
+      console.log('formData >>>>>>', formData);
+
       setSubmittedData(formData);
-      // clearFormData();
-      navigation.navigate('EditScreen', {formData: formData});
+      clearFormData();
     } catch (error) {
       console.log(error);
     }
-  };             
+  };
+
   const storeData = async () => {
     try {
       const formData = await AsyncStorage.getItem('formData');
@@ -337,56 +340,56 @@ const ResponsiveApi = () => {
         }
         return data;
       });
-
+      navigation.goBack();
       setApiData(updatedData);
       setIsLoading(false);
     }
   };
 
-  // const clearFormData = () => {
-  //   const clearedData = Apidata.map(field => {
-  //     if (field.field_type === 'check_box') {
-  //       return {
-  //         ...field,
-  //         option: field.option.map(option => ({...option, isCheck: false})),
-  //       };
-  //     } else if (field.field_type === 'radio_button') {
-  //       return {
-  //         ...field,
-  //         option: field.option.map(option => ({...option, isCheck: false})),
-  //       };
-  //     } else if (field.field_type === 'toggle_switch') {
-  //       return {
-  //         ...field,
-  //         option: false,
-  //       };
-  //     } else if (field.field_type === 'range_input') {
-  //       return {
-  //         ...field,
-  //         option: '0',
-  //       };
-  //     } else if (field.field_type === 'input_text') {
-  //       return {
-  //         ...field,
-  //         option: '',
-  //       };
-  //     } else if (field.field_type === 'text_area') {
-  //       return {
-  //         ...field,
-  //         option: '',
-  //       };
-  //     } else if (field.field_type === 'select_input') {
-  //       return {
-  //         ...field,
-  //         option: field.option.map(option => ({...option, isCheck: false})),
-  //       };
-  //     } else {
-  //       return field;
-  //     }
-  //   });
+  const clearFormData = () => {
+    const clearedData = Apidata.map(field => {
+      if (field.field_type === 'check_box') {
+        return {
+          ...field,
+          option: field.option.map(option => ({...option, isCheck: false})),
+        };
+      } else if (field.field_type === 'radio_button') {
+        return {
+          ...field,
+          option: field.option.map(option => ({...option, isCheck: false})),
+        };
+      } else if (field.field_type === 'toggle_switch') {
+        return {
+          ...field,
+          option: false,
+        };
+      } else if (field.field_type === 'range_input') {
+        return {
+          ...field,
+          option: '0',
+        };
+      } else if (field.field_type === 'input_text') {
+        return {
+          ...field,
+          option: '',
+        };
+      } else if (field.field_type === 'text_area') {
+        return {
+          ...field,
+          option: '',
+        };
+      } else if (field.field_type === 'select_input') {
+        return {
+          ...field,
+          option: field.option.map(option => ({...option, isCheck: false})),
+        };
+      } else {
+        return field;
+      }
+    });
 
-  //   setApiData(clearedData);
-  // };
+    setApiData(clearedData);
+  };
 
   const renderFiel = field => {
     if (field.field_type === 'range_input') {
@@ -553,36 +556,24 @@ const ResponsiveApi = () => {
     }
   };
   return (
-    <View style={{margin: 5}}>
-      <SafeAreaView>
-        <ScrollView>
-          {isLoading ? (
-            <ActivityIndicator color={'black'} />
-          ) : (
-            Apidata.map(field => renderFiel(field))
-          )}
-          <TouchableOpacity style={styles.SaveButton} onPress={submitData}>
-            <Text style={styles.SaveButtonText}>Save</Text>
-          </TouchableOpacity>
-          {/* <TouchableOpacity style={styles.EditButton} onPress={editData}>
-            <Text style={styles.EditButtonText}>Edit</Text>
-          </TouchableOpacity> */}
-          {/* {submittedData && (
-            <View style={{marginTop: 20}}>
-              {submittedData.map(data => (
-                <View key={data.id}>
-                  <Text>{JSON.stringify(data.option)}</Text>
-                </View>
-              ))}
+    <View style={{}}>
+      {formData && (
+        <View style={{marginTop: 20}}>
+          {formData.map(data => (
+            <View key={data.id}>
+              <Text>{JSON.stringify(data.option)}</Text>
             </View>
-          )} */}
-        </ScrollView>
-      </SafeAreaView>
+          ))}
+        </View>
+      )}
+      <TouchableOpacity style={styles.EditButton} onPress={editData}>
+        <Text style={styles.EditButtonText}>Edit</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default ResponsiveApi;
+export default EditScreen;
 
 const styles = StyleSheet.create({
   inputView: {

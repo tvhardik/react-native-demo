@@ -20,7 +20,7 @@ const Home = () => {
   );
 };
 const Login = props => {
-  console.log(props.navigation);
+  // console.log(props.navigation);
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Text>Login Screen</Text>

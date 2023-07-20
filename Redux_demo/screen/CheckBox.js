@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Fontisto';
 
-const CheckBox = ({label, value, onValueChange}) => {
-  const [isChecked, setIsChecked] = useState(value);
+const CheckBox = ({label, checked, onValueChange}) => {
+  const [isChecked, setIsChecked] = useState(checked);
+
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked]);
 
   const CheckboxToggle = () => {
     const newValue = !isChecked;

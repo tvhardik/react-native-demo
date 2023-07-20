@@ -8,6 +8,7 @@ const RadioButton = ({options, onChange}) => {
       return {...d, isCheck: index === i};
     });
     onChange(selectedValue);
+    // console.log('selectedValue>>>>>>>>>>', selectedValue);
   };
 
   return (
