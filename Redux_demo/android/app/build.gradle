@@ -91,14 +91,14 @@ def reactNativeArchitectures() {
 
 android {
     ndkVersion rootProject.ext.ndkVersion
-
+    buildToolsVersion "27.0.3"
     compileSdkVersion rootProject.ext.compileSdkVersion
-
     namespace "com.redux_demo"
     defaultConfig {
         applicationId "com.redux_demo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        vectorDrawables.useSupportLibrary = true
         versionCode 1
         versionName "1.0"   
         multiDexEnabled true

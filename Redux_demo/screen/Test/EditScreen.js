@@ -5,10 +5,7 @@ import {
   TextInput,
   StyleSheet,
   Switch,
-  ScrollView,
-  SafeAreaView,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
 import DatePicker from 'react-native-date-picker';
@@ -25,7 +22,6 @@ const EditScreen = ({route}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
   const [storedFormData, setStoredFormData] = useState(null);
-
   const [selectedRadioButton, setSelectedRadioButton] = useState(null);
   const [Apidata, setApiData] = useState([
     {
@@ -159,93 +155,93 @@ const EditScreen = ({route}) => {
     }
   };
 
-  const checkboxbutton = (field, value, isChecked) => {
-    const updatedOptions = field.option.map(option => {
-      if (option.value === value) {
-        return {...option, isCheck: isChecked};
-      }
-      return option;
-    });
+  // const checkboxbutton = (field, value, isChecked) => {
+  //   const updatedOptions = field.option.map(option => {
+  //     if (option.value === value) {
+  //       return {...option, isCheck: isChecked};
+  //     }
+  //     return option;
+  //   });
 
-    const updatedData = Apidata.map(data => {
-      if (data.id === field.id) {
-        return {...data, option: updatedOptions};
-      }
-      return data;
-    });
+  //   const updatedData = Apidata.map(data => {
+  //     if (data.id === field.id) {
+  //       return {...data, option: updatedOptions};
+  //     }
+  //     return data;
+  //   });
 
-    setApiData(updatedData);
-  };
-  // checkboxbutton(field, option.value, isChecked);
+  //   setApiData(updatedData);
+  // };
+  // // checkboxbutton(field, option.value, isChecked);
 
-  const RadioButtonChange = (fieldId, selectedValue) => {
-    const updatedData = Apidata.map(field => {
-      if (field.id === fieldId) {
-        const updatedOptions = field.option.map(option => ({
-          ...option,
-          isCheck: option.value === selectedValue,
-        }));
+  // const RadioButtonChange = (fieldId, selectedValue) => {
+  //   const updatedData = Apidata.map(field => {
+  //     if (field.id === fieldId) {
+  //       const updatedOptions = field.option.map(option => ({
+  //         ...option,
+  //         isCheck: option.value === selectedValue,
+  //       }));
 
-        return {...field, option: updatedOptions};
-      }
-      return field;
-    });
+  //       return {...field, option: updatedOptions};
+  //     }
+  //     return field;
+  //   });
 
-    setApiData(updatedData);
-    setSelectedRadioButton(selectedValue);
-  };
+  //   setApiData(updatedData);
+  //   setSelectedRadioButton(selectedValue);
+  // };
 
-  const submitData = async () => {
-    try {
-      const formData = Apidata.map(field => {
-        if (field.field_type === 'check_box') {
-          const filteredadta = field.option
-            .filter(option => option.isCheck)
-            .map(option => option.value);
-          // console.log('filteredadta>>>', filteredadta);
-          return {
-            id: field.id,
-            option: filteredadta,
-          };
-        } else if (field.field_type === 'radio_button') {
-          const selectedValue =
-            field.option.find(option => option.isCheck)?.value || '';
-          return {
-            id: field.id,
-            option: selectedValue,
-          };
-        } else if (field.field_type === 'select_input') {
-          // const selectedOptions = field.option.filter(option => option.isCheck);
-          // // console.log('selectedOptions>>>', selectedOptions);
-          // return {
-          //   id: field.id,
-          //   option: selectedOptions.map(option => option.value),
-          // };
-          const filteredadta = field.option
-            .filter(option => option.isCheck)
-            .map(option => option.value);
-          // console.log('filteredadta>>>', filteredadta);
-          return {
-            id: field.id,
-            option: filteredadta,
-          };
-        } else {
-          return {
-            id: field.id,
-            option: field.option,
-          };
-        }
-      });
+  // const submitData = async () => {
+  //   try {
+  //     const formData = Apidata.map(field => {
+  //       if (field.field_type === 'check_box') {
+  //         const filteredadta = field.option
+  //           .filter(option => option.isCheck)
+  //           .map(option => option.value);
+  //         // console.log('filteredadta>>>', filteredadta);
+  //         return {
+  //           id: field.id,
+  //           option: filteredadta,
+  //         };
+  //       } else if (field.field_type === 'radio_button') {
+  //         const selectedValue =
+  //           field.option.find(option => option.isCheck)?.value || '';
+  //         return {
+  //           id: field.id,
+  //           option: selectedValue,
+  //         };
+  //       } else if (field.field_type === 'select_input') {
+  //         // const selectedOptions = field.option.filter(option => option.isCheck);
+  //         // // console.log('selectedOptions>>>', selectedOptions);
+  //         // return {
+  //         //   id: field.id,
+  //         //   option: selectedOptions.map(option => option.value),
+  //         // };
+  //         const filteredadta = field.option
+  //           .filter(option => option.isCheck)
+  //           .map(option => option.value);
+  //         // console.log('filteredadta>>>', filteredadta);
+  //         return {
+  //           id: field.id,
+  //           option: filteredadta,
+  //         };
+  //       } else {
+  //         return {
+  //           id: field.id,
+  //           option: field.option,
+  //         };
+  //       }
+  //     });
 
-      await AsyncStorage.setItem('formData', JSON.stringify(formData));
-      console.log('formData >>>>>>', formData);
+  //     await AsyncStorage.setItem('formData', JSON.stringify(formData));
+  //     console.log('formData >>>>>>', formData);
 
-      setSubmittedData(formData);
-      clearFormData();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     setSubmittedData(formData);
+  //     clearFormData();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const storeData = async () => {
     try {
@@ -346,50 +342,50 @@ const EditScreen = ({route}) => {
     }
   };
 
-  const clearFormData = () => {
-    const clearedData = Apidata.map(field => {
-      if (field.field_type === 'check_box') {
-        return {
-          ...field,
-          option: field.option.map(option => ({...option, isCheck: false})),
-        };
-      } else if (field.field_type === 'radio_button') {
-        return {
-          ...field,
-          option: field.option.map(option => ({...option, isCheck: false})),
-        };
-      } else if (field.field_type === 'toggle_switch') {
-        return {
-          ...field,
-          option: false,
-        };
-      } else if (field.field_type === 'range_input') {
-        return {
-          ...field,
-          option: '0',
-        };
-      } else if (field.field_type === 'input_text') {
-        return {
-          ...field,
-          option: '',
-        };
-      } else if (field.field_type === 'text_area') {
-        return {
-          ...field,
-          option: '',
-        };
-      } else if (field.field_type === 'select_input') {
-        return {
-          ...field,
-          option: field.option.map(option => ({...option, isCheck: false})),
-        };
-      } else {
-        return field;
-      }
-    });
+  // const clearFormData = () => {
+  //   const clearedData = Apidata.map(field => {
+  //     if (field.field_type === 'check_box') {
+  //       return {
+  //         ...field,
+  //         option: field.option.map(option => ({...option, isCheck: false})),
+  //       };
+  //     } else if (field.field_type === 'radio_button') {
+  //       return {
+  //         ...field,
+  //         option: field.option.map(option => ({...option, isCheck: false})),
+  //       };
+  //     } else if (field.field_type === 'toggle_switch') {
+  //       return {
+  //         ...field,
+  //         option: false,
+  //       };
+  //     } else if (field.field_type === 'range_input') {
+  //       return {
+  //         ...field,
+  //         option: '0',
+  //       };
+  //     } else if (field.field_type === 'input_text') {
+  //       return {
+  //         ...field,
+  //         option: '',
+  //       };
+  //     } else if (field.field_type === 'text_area') {
+  //       return {
+  //         ...field,
+  //         option: '',
+  //       };
+  //     } else if (field.field_type === 'select_input') {
+  //       return {
+  //         ...field,
+  //         option: field.option.map(option => ({...option, isCheck: false})),
+  //       };
+  //     } else {
+  //       return field;
+  //     }
+  //   });
 
-    setApiData(clearedData);
-  };
+  //   setApiData(clearedData);
+  // };
 
   const renderFiel = field => {
     if (field.field_type === 'range_input') {

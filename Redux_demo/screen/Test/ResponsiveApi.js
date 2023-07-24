@@ -183,7 +183,6 @@ const ResponsiveApi = () => {
           ...option,
           isCheck: option.value === selectedValue,
         }));
-
         return {...field, option: updatedOptions};
       }
       return field;
@@ -243,14 +242,12 @@ const ResponsiveApi = () => {
     } catch (error) {
       console.log(error);
     }
-  };             
+  };
   const storeData = async () => {
     try {
       const formData = await AsyncStorage.getItem('formData');
       if (formData) {
-        setTimeout(() => {
-          setStoredFormData(JSON.parse(formData));
-        }, 1000);
+        setStoredFormData(JSON.parse(formData));
       }
     } catch (error) {
       console.log(error);
@@ -261,87 +258,87 @@ const ResponsiveApi = () => {
     storeData();
   }, []);
 
-  const editData = () => {
-    setIsLoading(true);
-    if (storedFormData) {
-      const updatedData = Apidata.map(data => {
-        const storedField = storedFormData.find(field => field.id === data.id);
+  // const editData = () => {
+  //   setIsLoading(true);
+  //   if (storedFormData) {
+  //     const updatedData = Apidata.map(data => {
+  //       const storedField = storedFormData.find(field => field.id === data.id);
 
-        if (storedField) {
-          if (data.field_type === 'check_box') {
-            let isCheck = false;
-            const updatedOptions = data.option.map(option => {
-              // console.log('optionssss>>>', option);
-              const storedOption = storedField?.option?.find(
-                storedOpt => storedOpt === option?.value,
-              );
-              // console.log('storedOption>>>', storedOption);
-              if (storedOption) {
-                isCheck = true;
-              } else {
-                isCheck = false;
-              }
-              return {...option, isCheck};
-            });
-            return {
-              ...data,
-              option: updatedOptions,
-            };
-          } else if (data.field_type === 'radio_button') {
-            const selectedValue = storedField.option;
-            const updatedOptions = data.option.map(option => ({
-              ...option,
-              isCheck: option.value === selectedValue,
-            }));
-            return {
-              ...data,
-              option: updatedOptions,
-            };
-          } else if (data.field_type === 'select_input') {
-            // const updatedOptions = data.option.map(option => {
-            //   const storedOption = storedField.option.find(
-            //     storedOpt => storedOpt.value === option.value,
-            //   );
-            //   // console.log('storedOption select_input>>>>', storedOption);
-            //   const isCheck = storedOption ? storedOption.isCheck : false;
-            //   return {...option, isCheck};
-            // });
-            // // console.log('updatedOptions select_input>>>>', updatedOptions);
-            // return {
-            //   ...data,
-            //   option: updatedOptions,
-            let isCheck = false;
-            const updatedOptions = data.option.map(option => {
-              // console.log('optionssss>>>', option);
-              const storedOption = storedField?.option?.find(
-                storedOpt => storedOpt === option?.value,
-              );
-              // console.log('storedOption>>>', storedOption);
-              if (storedOption) {
-                isCheck = true;
-              } else {
-                isCheck = false;
-              }
-              return {...option, isCheck};
-            });
-            return {
-              ...data,
-              option: updatedOptions,
-            };
-          } else {
-            return {
-              ...data,
-              option: storedField.option,
-            };
-          }
-        }
-        return data;
-      });
+  //       if (storedField) {
+  //         if (data.field_type === 'check_box') {
+  //           let isCheck = false;
+  //           const updatedOptions = data.option.map(option => {
+  //             // console.log('optionssss>>>', option);
+  //             const storedOption = storedField?.option?.find(
+  //               storedOpt => storedOpt === option?.value,
+  //             );
+  //             // console.log('storedOption>>>', storedOption);
+  //             if (storedOption) {
+  //               isCheck = true;
+  //             } else {
+  //               isCheck = false;
+  //             }
+  //             return {...option, isCheck};
+  //           });
+  //           return {
+  //             ...data,
+  //             option: updatedOptions,
+  //           };
+  //         } else if (data.field_type === 'radio_button') {
+  //           const selectedValue = storedField.option;
+  //           const updatedOptions = data.option.map(option => ({
+  //             ...option,
+  //             isCheck: option.value === selectedValue,
+  //           }));
+  //           return {
+  //             ...data,
+  //             option: updatedOptions,
+  //           };
+  //         } else if (data.field_type === 'select_input') {
+  //           // const updatedOptions = data.option.map(option => {
+  //           //   const storedOption = storedField.option.find(
+  //           //     storedOpt => storedOpt.value === option.value,
+  //           //   );
+  //           //   // console.log('storedOption select_input>>>>', storedOption);
+  //           //   const isCheck = storedOption ? storedOption.isCheck : false;
+  //           //   return {...option, isCheck};
+  //           // });
+  //           // // console.log('updatedOptions select_input>>>>', updatedOptions);
+  //           // return {
+  //           //   ...data,
+  //           //   option: updatedOptions,
+  //           let isCheck = false;
+  //           const updatedOptions = data.option.map(option => {
+  //             // console.log('optionssss>>>', option);
+  //             const storedOption = storedField?.option?.find(
+  //               storedOpt => storedOpt === option?.value,
+  //             );
+  //             // console.log('storedOption>>>', storedOption);
+  //             if (storedOption) {
+  //               isCheck = true;
+  //             } else {
+  //               isCheck = false;
+  //             }
+  //             return {...option, isCheck};
+  //           });
+  //           return {
+  //             ...data,
+  //             option: updatedOptions,
+  //           };
+  //         } else {
+  //           return {
+  //             ...data,
+  //             option: storedField.option,
+  //           };
+  //         }
+  //       }
+  //       return data;
+  //     });
 
-      setApiData(updatedData);
-      setIsLoading(false);
-    }
-  };
+  //     setApiData(updatedData);
+  //     setIsLoading(false);
+  //   }
+  // };
 
   // const clearFormData = () => {
   //   const clearedData = Apidata.map(field => {

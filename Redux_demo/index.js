@@ -7,4 +7,5 @@ import {name as appName} from './app.json';
 import App from './screen/test';
 import ResponsiveApi from './screen/Test/ResponsiveApi';
 import Navigation from './screen/Test/Navigation';
-AppRegistry.registerComponent(appName, () => Navigation);
+import CameraScreen from './src/Camera /CameraScreen';
+AppRegistry.registerComponent(appName, () => CameraScreen);

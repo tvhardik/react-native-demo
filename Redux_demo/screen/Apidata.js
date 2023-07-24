@@ -1,4 +1,6 @@
-// export const [Apidata, setApiData] = useStat2([
+// import {useState} from 'react';
+
+// export const [Apidata, setApiData] = useState([
 //   {
 //     id: 3,
 //     name: 'Progress',

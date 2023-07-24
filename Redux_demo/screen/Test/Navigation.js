@@ -10,8 +10,16 @@ const Navigation = () => {
     <>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="SaveScreen" component={ResponsiveApi} />
-          <Stack.Screen name="EditScreen" component={EditScreen} />
+          <Stack.Screen
+            name="SaveScreen"
+            component={ResponsiveApi}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="EditScreen"
+            component={EditScreen}
+            options={{headerShown: false}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
