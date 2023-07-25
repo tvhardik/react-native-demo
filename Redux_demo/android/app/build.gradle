@@ -160,7 +160,7 @@ android {
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
-                                                                           
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'                                                          
     implementation("com.facebook.react:react-android")
     implementation project(':react-native-push-notification')
     implementation platform('com.google.firebase:firebase-bom:32.1.1')

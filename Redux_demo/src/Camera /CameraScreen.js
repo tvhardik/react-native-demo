@@ -6,10 +6,12 @@ import {
   SafeAreaView,
   PermissionsAndroid,
   Platform,
+  CameraRoll,
   Image,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Video from 'react-native-video';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const CameraScreen = () => {
   const [cameraPermission, setCameraPermission] = useState(false);
@@ -17,8 +19,28 @@ const CameraScreen = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   useEffect(() => {
+    // requestStoragePermission();
     checkCameraPermission();
   }, []);
+  // const requestStoragePermission = async () => {
+  //   try {
+  //     if (Platform.OS === 'android') {
+  //       const granted = await PermissionsAndroid.request(
+  //         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+  //         {
+  //           title: 'Storage Permission',
+  //           message: 'App needs access to your storage to save images.',
+  //         },
+  //       );
+  //       return granted === PermissionsAndroid.RESULTS.GRANTED;
+  //     } else {
+  //       return true;
+  //     }
+  //   } catch (error) {
+  //     console.warn('Error while requesting storage permission:', error);
+  //     return false;
+  //   }
+  // };
 
   const checkCameraPermission = async () => {
     if (Platform.OS === 'android') {
@@ -46,43 +68,75 @@ const CameraScreen = () => {
     }
   };
 
-  const OpenCamera = () => {
-    //image open camera
+  const OpenCamera = async () => {
+    // open Camera
     if (cameraPermission) {
-      ImagePicker.openCamera({
-        compressImageQuality: 0.5,
-      })
-        .then(image => {
-          setSelectedImage(image.path);
-          const originalImageSizeInMB = (image.size / (1024 * 1024)).toFixed(2);
-          console.log('Original Image Size MB >>>', originalImageSizeInMB);
-          const compressedImageSizeInMB = originalImageSizeInMB * 0.5;
-          console.log('Compresse Image Size MB >>>', compressedImageSizeInMB);
-        })
-        .catch(error => {
-          console.log('Error:', error);
+      try {
+        const image = await ImagePicker.openCamera({
+          mediaType: 'image',
+          // compressImageQuality: 1,
         });
+
+        const originalImageSizeInMB = (image.size / (1024 * 1024)).toFixed(2);
+        console.log('Original Image Size >>>', originalImageSizeInMB);
+
+        const desiredCompressedImageSizeInMB = 0.5;
+
+        const compressionQuality = Math.min(
+          1,
+          desiredCompressedImageSizeInMB / originalImageSizeInMB,
+        );
+
+        const compressedImage = await ImagePicker.openCropper({
+          path: image.path,
+          compressImageQuality: compressionQuality,
+        });
+
+        const compressedImageSizeInMB = (
+          compressedImage.size /
+          (1024 * 1024)
+        ).toFixed(2);
+        console.log('Compressed Image Size >>>', compressedImageSizeInMB, 'KB');
+        setSelectedImage(compressedImage.path);
+      } catch (error) {
+        console.log('Error:', error);
+      }
     } else {
       console.log('Camera permission not granted.');
     }
   };
+
   const OpenCameraVideo = () => {
-    //Open Camera Video
     if (cameraPermission) {
       ImagePicker.openCamera({
         mediaType: 'video',
-        compressVideo: {
-          quality: 0.5,
-        },
       })
         .then(video => {
+          //original video
           const originalSizeInMB = (video.size / (1024 * 1024)).toFixed(2);
           console.log('Original Video Size >>>', originalSizeInMB);
+
+          //compressed video
+          const desiredCompressedVideoSizeInMB = 5;
+
+          //needed to achieve the desired size
+          const compress = Math.min(
+            1,
+            desiredCompressedVideoSizeInMB / originalSizeInMB,
+          );
+
+          // Calculate the compressed video
           const compressedSizeInMB = (
-            (video.size * 0.5) /
+            (video.size * compress) /
             (1024 * 1024)
           ).toFixed(2);
-          console.log('Compresse Video Size >>>', compressedSizeInMB);
+          console.log('Compressed Video Size >>>', compressedSizeInMB);
+
+          // Update for video
+          const compressVideo = {
+            quality: compress,
+          };
+
           setSelectedVideo(video.path);
         })
         .catch(error => {
@@ -94,31 +148,59 @@ const CameraScreen = () => {
   };
 
   const OpenGallery = () => {
-    //Open Gallery
+    // Open Gallery
     ImagePicker.openPicker({
       mediaType: 'any',
-      compressImageQuality: 0.5,
     })
       .then(media => {
         if (media.mime && media.mime.startsWith('image')) {
-          //image.
-          setSelectedImage(media.path);
-          //   const originalImageSizeInMB = (media.size / (1024 * 1024)).toFixed(2);
-          //   console.log('Original Image Size MB >>>', originalImageSizeInMB);
-          //   const compressedImageSizeInMB = originalImageSizeInMB * 0.5;
-          //   console.log('Compresse Image Size MB >>>', compressedImageSizeInMB);
-        } else if (media.mime && media.mime.startsWith('video')) {
-          //video.
-          setSelectedVideo(media.path);
-          //   const originalSizeInMB = (media.size / (1024 * 1024)).toFixed(2);
-          //   console.log('Original Video Size MB >>>', originalSizeInMB);
-          const compressedSizeInMB = (
-            (media.size * 0.5) /
+          // Image selected
+          const originalImageSizeInMB = (media.size / (1024 * 1024)).toFixed(2);
+          console.log('Original Image Size MB >>>', originalImageSizeInMB);
+          const desiredCompressedImageSizeInMB = 0.5;
+          const compressionQuality = Math.min(
+            1,
+            desiredCompressedImageSizeInMB / originalImageSizeInMB,
+          );
+          // Calculate the compressed image
+          const compressedImageSizeInMB = (
+            (media.size * compressionQuality) /
             (1024 * 1024)
           ).toFixed(2);
-          console.log('Compresse Video Size MB >>>', compressedSizeInMB);
+          console.log('Compressed Image Size MB >>>', compressedImageSizeInMB);
+
+          // Update for image
+          const compressedImage = {
+            ...media,
+            path: media.path,
+          };
+
+          setSelectedImage(compressedImage.path);
+        } else if (media.mime && media.mime.startsWith('video')) {
+          // Video selected
+          const originalSizeInMB = (media.size / (1024 * 1024)).toFixed(2);
+          console.log('Original Video Size MB >>>', originalSizeInMB);
+          const desiredCompressedVideoSizeInMB = 5;
+          const compress = Math.min(
+            1,
+            desiredCompressedVideoSizeInMB / originalSizeInMB,
+          );
+          // Calculate the compressed video
+          const compressedSizeInMB = (
+            (media.size * compress) /
+            (1024 * 1024)
+          ).toFixed(2);
+          console.log('Compressed Video Size MB >>>', compressedSizeInMB);
+
+          // Update for video
+          const compressedVideo = {
+            ...media,
+            path: media.path,
+          };
+
+          setSelectedVideo(compressedVideo.path);
         } else {
-          console.log('Unsupport');
+          console.log('Unsupported media type');
         }
       })
       .catch(error => {
@@ -134,11 +216,7 @@ const CameraScreen = () => {
         </>
       ) : selectedVideo ? (
         <>
-          <Video
-            source={{uri: selectedVideo}}
-            style={styles.selectedVideo}
-            controls
-          />
+          <Video source={{uri: selectedVideo}} style={styles.selectedVideo} />
         </>
       ) : (
         <Text>No Photo or Video Selected</Text>
