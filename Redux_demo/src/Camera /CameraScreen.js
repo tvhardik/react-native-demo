@@ -19,28 +19,30 @@ const CameraScreen = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
 
   useEffect(() => {
-    // requestStoragePermission();
+    requestStoragePermission();
     checkCameraPermission();
   }, []);
-  // const requestStoragePermission = async () => {
-  //   try {
-  //     if (Platform.OS === 'android') {
-  //       const granted = await PermissionsAndroid.request(
-  //         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-  //         {
-  //           title: 'Storage Permission',
-  //           message: 'App needs access to your storage to save images.',
-  //         },
-  //       );
-  //       return granted === PermissionsAndroid.RESULTS.GRANTED;
-  //     } else {
-  //       return true;
-  //     }
-  //   } catch (error) {
-  //     console.warn('Error while requesting storage permission:', error);
-  //     return false;
-  //   }
-  // };
+  const requestStoragePermission = async () => {
+    try {
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'Storage Permission',
+            message: 'App needs access to your storage to save images.',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          },
+        );
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } else {
+        return true;
+      }
+    } catch (error) {
+      console.warn('Error while requesting storage permission:', error);
+      return false;
+    }
+  };
 
   const checkCameraPermission = async () => {
     if (Platform.OS === 'android') {
@@ -67,14 +69,56 @@ const CameraScreen = () => {
       setCameraPermission(true);
     }
   };
+  const downloadMedia = async (path, mediaType) => {
+    try {
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'Storage Permission',
+            message: 'App needs access to your storage to save media files.',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          },
+        );
+
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          const sourcePath = `file://${path}`;
+          let ext = mediaType === 'image' ? '.jpg' : '.mp4';
+          const destPath = `${RNFetchBlob.fs.dirs.DCIMDir}/${path
+            .split('/')
+            .pop()}${ext}`;
+
+          await RNFetchBlob.fs.cp(sourcePath, destPath);
+          RNFetchBlob.fs.scanFile([
+            {
+              path: destPath,
+              mime: mediaType === 'image' ? 'image/jpeg' : 'video/mp4',
+            },
+          ]);
+          console.log('Media downloaded and saved successfully.');
+        } else {
+          console.log('Storage permission not granted.');
+        }
+      } else {
+        console.log(
+          'Saving media to gallery is not supported on this platform.',
+        );
+      }
+    } catch (error) {
+      console.log('Error while downloading media:', error);
+    }
+    console.log('mediaType >>>', mediaType);
+    console.log('path >>>', path);
+  };
 
   const OpenCamera = async () => {
     // open Camera
+
     if (cameraPermission) {
       try {
         const image = await ImagePicker.openCamera({
           mediaType: 'image',
-          // compressImageQuality: 1,
         });
 
         const originalImageSizeInMB = (image.size / (1024 * 1024)).toFixed(2);
@@ -98,6 +142,8 @@ const CameraScreen = () => {
         ).toFixed(2);
         console.log('Compressed Image Size >>>', compressedImageSizeInMB, 'KB');
         setSelectedImage(compressedImage.path);
+        // console.log('compressedImage.path >>>>', compressedImage.path);
+        await downloadMedia(compressedImage.path);
       } catch (error) {
         console.log('Error:', error);
       }
@@ -111,7 +157,7 @@ const CameraScreen = () => {
       ImagePicker.openCamera({
         mediaType: 'video',
       })
-        .then(video => {
+        .then(async video => {
           //original video
           const originalSizeInMB = (video.size / (1024 * 1024)).toFixed(2);
           console.log('Original Video Size >>>', originalSizeInMB);
@@ -134,10 +180,12 @@ const CameraScreen = () => {
 
           // Update for video
           const compressVideo = {
-            quality: compress,
+            size: compress,
           };
-
+          // console.log('compressVideo >>>>', compressVideo.size);
           setSelectedVideo(video.path);
+          // console.log('compressedSizeInMB >>>', compressedSizeInMB);
+          await downloadMedia(video.path);
         })
         .catch(error => {
           console.log('Error:', error);
@@ -147,66 +195,77 @@ const CameraScreen = () => {
     }
   };
 
-  const OpenGallery = () => {
-    // Open Gallery
-    ImagePicker.openPicker({
-      mediaType: 'any',
-    })
-      .then(media => {
-        if (media.mime && media.mime.startsWith('image')) {
-          // Image selected
-          const originalImageSizeInMB = (media.size / (1024 * 1024)).toFixed(2);
-          console.log('Original Image Size MB >>>', originalImageSizeInMB);
-          const desiredCompressedImageSizeInMB = 0.5;
-          const compressionQuality = Math.min(
-            1,
-            desiredCompressedImageSizeInMB / originalImageSizeInMB,
-          );
-          // Calculate the compressed image
-          const compressedImageSizeInMB = (
-            (media.size * compressionQuality) /
-            (1024 * 1024)
-          ).toFixed(2);
-          console.log('Compressed Image Size MB >>>', compressedImageSizeInMB);
+  // const OpenGallery = () => {
+  //   // Open Gallery
+  //   ImagePicker.openPicker({
+  //     mediaType: 'any',
+  //   })
+  //     .then(media => {
+  //       if (media.mime && media.mime.startsWith('image')) {
+  //         // Image selected
+  //         const originalImageSizeInMB = (media.size / (1024 * 1024)).toFixed(2);
+  //         console.log('Original Image Size MB >>>', originalImageSizeInMB);
+  //         const desiredCompressedImageSizeInMB = 0.5;
+  //         const compressionQuality = Math.min(
+  //           1,
+  //           desiredCompressedImageSizeInMB / originalImageSizeInMB,
+  //         );
+  //         // Calculate the compressed image
+  //         const compressedImageSizeInMB = (
+  //           (media.size * compressionQuality) /
+  //           (1024 * 1024)
+  //         ).toFixed(2);
+  //         console.log('Compressed Image Size MB >>>', compressedImageSizeInMB);
 
-          // Update for image
-          const compressedImage = {
-            ...media,
-            path: media.path,
-          };
+  //         // Update for image
+  //         const compressedImage = {
+  //           ...media,
+  //           path: media.path,
+  //         };
+  //         setSelectedImage(compressedImage.path);
+  //       } else if (media.mime && media.mime.startsWith('video')) {
+  //         // Video selected
+  //         const originalSizeInMB = (media.size / (1024 * 1024)).toFixed(2);
+  //         console.log('Original Video Size MB >>>', originalSizeInMB);
+  //         const desiredCompressedVideoSizeInMB = 5;
+  //         const compress = Math.min(
+  //           1,
+  //           desiredCompressedVideoSizeInMB / originalSizeInMB,
+  //         );
+  //         // Calculate the compressed video
+  //         const compressedSizeInMB = (
+  //           (media.size * compress) /
+  //           (1024 * 1024)
+  //         ).toFixed(2);
+  //         console.log('Compressed Video Size MB >>>', compressedSizeInMB);
 
-          setSelectedImage(compressedImage.path);
-        } else if (media.mime && media.mime.startsWith('video')) {
-          // Video selected
-          const originalSizeInMB = (media.size / (1024 * 1024)).toFixed(2);
-          console.log('Original Video Size MB >>>', originalSizeInMB);
-          const desiredCompressedVideoSizeInMB = 5;
-          const compress = Math.min(
-            1,
-            desiredCompressedVideoSizeInMB / originalSizeInMB,
-          );
-          // Calculate the compressed video
-          const compressedSizeInMB = (
-            (media.size * compress) /
-            (1024 * 1024)
-          ).toFixed(2);
-          console.log('Compressed Video Size MB >>>', compressedSizeInMB);
+  //         // Convert video size from MB to bits
+  //         const compressedSizeInBits = (
+  //           compressedSizeInMB *
+  //           8 *
+  //           1024 *
+  //           1024
+  //         ).toFixed(2);
+  //         console.log(
+  //           'Compressed Video Size in bits >>>',
+  //           compressedSizeInBits,
+  //         );
 
-          // Update for video
-          const compressedVideo = {
-            ...media,
-            path: media.path,
-          };
+  //         // Update for video
+  //         const compressedVideo = {
+  //           ...media,
+  //           path: media.path,
+  //         };
 
-          setSelectedVideo(compressedVideo.path);
-        } else {
-          console.log('Unsupported media type');
-        }
-      })
-      .catch(error => {
-        console.log('Error:', error);
-      });
-  };
+  //         setSelectedVideo(compressedVideo.path);
+  //       } else {
+  //         console.log('Unsupported media type');
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log('Error:', error);
+  //     });
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -229,9 +288,9 @@ const CameraScreen = () => {
         onPress={OpenCameraVideo}>
         <Text style={styles.buttonText}>Open Camera Video</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.openGalleryButton} onPress={OpenGallery}>
+      {/* <TouchableOpacity style={styles.openGalleryButton} onPress={OpenGallery}>
         <Text style={styles.buttonText}>Open Gallery</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </SafeAreaView>
   );
 };
