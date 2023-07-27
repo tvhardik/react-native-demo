@@ -8,4 +8,6 @@ import App from './screen/test';
 import ResponsiveApi from './screen/Test/ResponsiveApi';
 import Navigation from './screen/Test/Navigation';
 import CameraScreen from './src/Camera /CameraScreen';
-AppRegistry.registerComponent(appName, () => CameraScreen);
+import Singup from './quadralynx/Singup';
+AppRegistry.registerComponent(appName, () => Singup);
+        

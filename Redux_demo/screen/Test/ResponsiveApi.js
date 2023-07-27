@@ -630,6 +630,7 @@ const styles = StyleSheet.create({
     fontFamily: 'YsabeauInfant-SemiBold',
     fontSize: 20,
     padding: 10,
+    
   },
   EditButtonText: {fontWeight: '500', color: 'red', fontSize: 20, padding: 10},
   MainText: {
