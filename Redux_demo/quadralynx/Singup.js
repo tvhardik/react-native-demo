@@ -2,74 +2,70 @@ import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   Image,
   SafeAreaView,
   Animated,
 } from 'react-native';
-
+import AnimatedTextInput from './AnimatedTextInput';
 const Signup = () => {
-  // const [isHidden, setIsHidden] = useState(false);
-  // const animationValue = new Animated.Value(0);
-  // const animateAndHideImage = () => {
-  //   Animated.timing(animationValue, {
-  //     toValue: 1,
-  //     duration: 500,
-  //     useNativeDriver: true,
-  //   }).start(() => {
-  //     setIsHidden(true);
-  //   });
-  // };
+  const [firstNameInputFocused, setFirstNameInputFocused] = useState(
+    new Animated.Value(0),
+  );
+  const [lastNameInputFocused, setLastNameInputFocused] = useState(
+    new Animated.Value(0),
+  );
 
-  // const moveLeft = {
-  //   transform: [
-  //     {
-  //       translateX: animationValue.interpolate({
-  //         inputRange: [0, 1],
-  //         outputRange: [0, -200],
-  //       }),
-  //     },
-  //   ],
-  // };
+  const createAnimation = (animation, targetValue) => {
+    Animated.timing(animation, {
+      toValue: targetValue,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+  };
 
-  // const ImageStyle = {
-  //   width: 67,
-  //   height: 70,
-  //   position: 'absolute',
-  //   margin: 15,
-  //   opacity: isHidden ? 0 : 1,
-  // };
+  const handleFirstNameFocus = () => {
+    createAnimation(firstNameInputFocused, 1);
+    createAnimation(lastNameInputFocused, 0);
+  };
+
+  const handleLastNameFocus = () => {
+    createAnimation(lastNameInputFocused, 1);
+    createAnimation(firstNameInputFocused, 0);
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={styles.Maincontainer}>
-        <TouchableOpacity style={styles.Backbutton}>
-          <Text style={styles.BackButtonText}>BACK</Text>
+      <View style={styles.maincontainer}>
+        <TouchableOpacity style={styles.backbutton}>
+          <Image
+            source={require('./assets/logo/Backicon.png')}
+            style={styles.backButtonImage}
+          />
+          <Text style={styles.backButtonText}>BACK</Text>
         </TouchableOpacity>
+
         <View style={styles.container}>
-          <Text style={styles.Title}>What is Your Name?</Text>
-          <View style={styles.TextInputContainer}>
-            <Image
-              source={require('./assets/logo/user.png')}
-              style={styles.Icon}
-              resizeMode="contain"
-            />
-            <TextInput style={styles.TextInput} placeholder="First Name" />
-          </View>
-          <View style={styles.TextInputContainer}>
-            <Image
-              source={require('./assets/logo/user.png')}
-              style={styles.Icon}
-              resizeMode="contain"
-            />
-            <TextInput style={styles.TextInput} placeholder="Last Name" />
-          </View>
-          <TouchableOpacity style={styles.NextButton}>
-            <Text style={styles.NextButtonText}>NEXT</Text>
+          <Text style={styles.title}>What is Your Name?</Text>
+          <AnimatedTextInput
+            inputFocused={firstNameInputFocused}
+            placeholder="First Name"
+            onFocus={handleFirstNameFocus}
+            imageSource={require('./assets/logo/user.png')}
+          />
+          <AnimatedTextInput
+            inputFocused={lastNameInputFocused}
+            placeholder="Last Name"
+            onFocus={handleLastNameFocus}
+            imageSource={require('./assets/logo/user.png')}
+          />
+          <TouchableOpacity style={styles.nextButton}>
+            <Text style={styles.nextButtonText}>NEXT</Text>
           </TouchableOpacity>
-          <Text>By Continuing, you agree to our</Text>
+          <Text style={{margin: 5, fontSize: 15}}>
+            By Continuing, you agree to our
+          </Text>
           <Text>
             <Text style={styles.link}>Terms</Text>
             {'  '}
@@ -82,74 +78,70 @@ const Signup = () => {
   );
 };
 
-export default Signup;
-
 const styles = StyleSheet.create({
-  Maincontainer: {flex: 1, padding: 25},
-  Title: {color: '#1770BE', fontSize: 20},
+  maincontainer: {flex: 1, padding: 25},
+  title: {
+    color: '#1770BE',
+    fontSize: 18,
+    padding: 10,
+    fontFamily: 'Anybody-ExtraBold',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  TextInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderTopLeftRadius: 50,
-    borderBottomLeftRadius: 50,
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
-    backgroundColor: '#F1F1F1',
-    borderWidth: 2,
-    borderColor: '#E6E6E6',
-    marginVertical: 10,
+  nextButtonText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontFamily: 'Anybody-Black',
   },
-  TextInput: {
-    flex: 1,
-    fontSize: 15,
-  },
-  Icon: {
-    width: 64,
-    height: 64,
-    margin: 3,
-  },
-  NextButtonText: {color: '#ffffff', fontSize: 18},
-  NextButton: {
+  nextButton: {
     backgroundColor: '#1770BE',
     borderRadius: 48,
-    elevation: 15,
     marginVertical: 15,
     paddingHorizontal: 27,
-    paddingVertical: 10,
+    paddingVertical: 15,
+    shadowColor: '#000',
+    shadowOffset: {width: 5, height: 5},
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 15,
   },
-  Details: {
-    color: 'black',
-    margin: 30,
-  },
-  Backbutton: {
+  backbutton: {
     backgroundColor: '#1770BE',
-    borderRadius: 20,
+    borderRadius: 25,
     paddingHorizontal: 15,
     paddingVertical: 10,
     position: 'absolute',
     top: 20,
     left: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {width: 5, height: 5},
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 15,
   },
-  BackButtonText: {
+  backButtonText: {
     color: '#ffffff',
     fontSize: 18,
-  },
-  details: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 25,
+    fontFamily: 'Anybody-Black',
   },
   link: {
     color: '#1770BE',
     textDecorationLine: 'underline',
+    fontSize: 15,
   },
-  DetelisView: {
-    // backgroundColor: 'red',
+  detelisView: {
     marginTop: 20,
   },
+  backButtonImage: {
+    width: 20,
+    height: 15,
+    marginRight: 10,
+  },
 });
+
+export default Signup;

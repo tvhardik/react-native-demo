@@ -2,16 +2,36 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "assets/fonts/NotoSerif-Bold.ttf",
-      "sha1": "0369d526665f453b5e6f3286eb5321363dea52ca"
+      "path": "assets/fonts/Anybody-Black.ttf",
+      "sha1": "8a74841e0c25ed57615e79350df251d988998a95"
     },
     {
-      "path": "assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf",
-      "sha1": "b517e2ea39be46bd87fb7d112078e124ee87f57c"
+      "path": "assets/fonts/Anybody-CondensedExtraBold.ttf",
+      "sha1": "d87298841aff5dfa800eb3b9dab9885ba4928999"
     },
     {
-      "path": "assets/fonts/YsabeauInfant-Regular.ttf",
-      "sha1": "c4a437416f1aa918af7adff0605f0f77a7712bef"
+      "path": "assets/fonts/Anybody-ExtraBold.ttf",
+      "sha1": "5ebd70122d66de0f53fd9c146261b5236677fe36"
+    },
+    {
+      "path": "assets/fonts/Anybody-Italic.ttf",
+      "sha1": "73707450b7b5abc51f283e7139b1a54472c6c887"
+    },
+    {
+      "path": "assets/fonts/Anybody-Medium.ttf",
+      "sha1": "e31d66cd2a721d8684f3e567bcd320d8e0ce7b9d"
+    },
+    {
+      "path": "assets/fonts/Anybody-Regular.ttf",
+      "sha1": "3b64f85341af6dc7e10506ad2fafdc0fe18f4258"
+    },
+    {
+      "path": "assets/fonts/Anybody-VariableFont_wdth,wght.ttf",
+      "sha1": "aba3573904c352ac1a5b946ac2347804d80a362d"
+    },
+    {
+      "path": "assets/fonts/JosefinSans-Bold.ttf",
+      "sha1": "57aae89112d94e577486ffa80b64e6f68efad405"
     },
     {
       "path": "assets/fonts/YsabeauInfant-SemiBold.ttf",

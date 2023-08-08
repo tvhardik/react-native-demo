@@ -11,14 +11,19 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		14E64587424944008A5DEC61 /* PlayfairDisplay-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E5ED1F747A44C4697F7ECC5 /* PlayfairDisplay-Italic-VariableFont_wght.ttf */; };
+		1607BEC25BBE4507B1F51D19 /* Anybody-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 330B80DE769A4AE18A62E15F /* Anybody-Italic.ttf */; };
+		1F4F1E9014884E20843F77FF /* Anybody-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EA286895814B41C6838BDEA3 /* Anybody-Medium.ttf */; };
 		2144B17C072906B3ECF142AD /* Pods_Redux_demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 508993A67D54887561D7F06A /* Pods_Redux_demo.framework */; };
-		29577D392BA54F48861F55A6 /* YsabeauInfant-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D06E7A1530954803B568E366 /* YsabeauInfant-Regular.ttf */; };
+		3AC5B44DCE9F4482952FFA83 /* Anybody-CondensedExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 342E1169359842F994D607D1 /* Anybody-CondensedExtraBold.ttf */; };
 		3F52D606532F40D3895B2DF8 /* YsabeauInfant-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A33A926DD53A439ABE9EDCF8 /* YsabeauInfant-SemiBold.ttf */; };
 		4D9C7B794CB1AA4B721BB027 /* Pods_Redux_demo_Redux_demoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E237799CE3CACFC2F52737 /* Pods_Redux_demo_Redux_demoTests.framework */; };
+		52D872B665FD45968E2F7FC0 /* Anybody-VariableFont_wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E665E4240FA422AA029DCF1 /* Anybody-VariableFont_wdth,wght.ttf */; };
+		6189CD7F26664A0BBF8FA669 /* Anybody-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35DC222B870B40E79919889B /* Anybody-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		92603D0BA7B9469F8EB1C8AF /* JosefinSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 981D4569910B4A9CB60F9062 /* JosefinSans-Bold.ttf */; };
+		A78B48CA58004B408E4C10B2 /* Anybody-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9342782378E44B0A941D21E9 /* Anybody-Black.ttf */; };
 		B3B7395A2A3C44F400040FAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3B739592A3C44F400040FAB /* GoogleService-Info.plist */; };
-		E83BF095152F4C188494A9B5 /* NotoSerif-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD5A61967FC84850B5404DBA /* NotoSerif-Bold.ttf */; };
+		E5BD642E15214AE2A765C69C /* Anybody-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1F14982976440258658F09D /* Anybody-ExtraBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,10 +46,16 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Redux_demo/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Redux_demo/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Redux_demo/main.m; sourceTree = "<group>"; };
-		2E5ED1F747A44C4697F7ECC5 /* PlayfairDisplay-Italic-VariableFont_wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "PlayfairDisplay-Italic-VariableFont_wght.ttf"; path = "../assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		330B80DE769A4AE18A62E15F /* Anybody-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Anybody-Italic.ttf"; path = "../assets/fonts/Anybody-Italic.ttf"; sourceTree = "<group>"; };
+		342E1169359842F994D607D1 /* Anybody-CondensedExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Anybody-CondensedExtraBold.ttf"; path = "../assets/fonts/Anybody-CondensedExtraBold.ttf"; sourceTree = "<group>"; };
 		345423BEE132EF7CFFD4F805 /* Pods-Redux_demo-Redux_demoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Redux_demo-Redux_demoTests.release.xcconfig"; path = "Target Support Files/Pods-Redux_demo-Redux_demoTests/Pods-Redux_demo-Redux_demoTests.release.xcconfig"; sourceTree = "<group>"; };
+		35DC222B870B40E79919889B /* Anybody-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Anybody-Regular.ttf"; path = "../assets/fonts/Anybody-Regular.ttf"; sourceTree = "<group>"; };
 		508993A67D54887561D7F06A /* Pods_Redux_demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Redux_demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Redux_demo/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9342782378E44B0A941D21E9 /* Anybody-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Anybody-Black.ttf"; path = "../assets/fonts/Anybody-Black.ttf"; sourceTree = "<group>"; };
+		981D4569910B4A9CB60F9062 /* JosefinSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "JosefinSans-Bold.ttf"; path = "../assets/fonts/JosefinSans-Bold.ttf"; sourceTree = "<group>"; };
+		9E665E4240FA422AA029DCF1 /* Anybody-VariableFont_wdth,wght.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Anybody-VariableFont_wdth,wght.ttf"; path = "../assets/fonts/Anybody-VariableFont_wdth,wght.ttf"; sourceTree = "<group>"; };
+		A1F14982976440258658F09D /* Anybody-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Anybody-ExtraBold.ttf"; path = "../assets/fonts/Anybody-ExtraBold.ttf"; sourceTree = "<group>"; };
 		A33A926DD53A439ABE9EDCF8 /* YsabeauInfant-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "YsabeauInfant-SemiBold.ttf"; path = "../assets/fonts/YsabeauInfant-SemiBold.ttf"; sourceTree = "<group>"; };
 		A5591C2DCEA2099EF49E6712 /* Pods-Redux_demo-Redux_demoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Redux_demo-Redux_demoTests.debug.xcconfig"; path = "Target Support Files/Pods-Redux_demo-Redux_demoTests/Pods-Redux_demo-Redux_demoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A5717414B5647C6BD9BF907D /* Pods-Redux_demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Redux_demo.release.xcconfig"; path = "Target Support Files/Pods-Redux_demo/Pods-Redux_demo.release.xcconfig"; sourceTree = "<group>"; };
@@ -68,8 +79,7 @@
 		B3B7395B2A3C46A700040FAB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B7E237799CE3CACFC2F52737 /* Pods_Redux_demo_Redux_demoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Redux_demo_Redux_demoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C56D83BDC2616E827E423D20 /* Pods-Redux_demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Redux_demo.debug.xcconfig"; path = "Target Support Files/Pods-Redux_demo/Pods-Redux_demo.debug.xcconfig"; sourceTree = "<group>"; };
-		CD5A61967FC84850B5404DBA /* NotoSerif-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerif-Bold.ttf"; path = "../assets/fonts/NotoSerif-Bold.ttf"; sourceTree = "<group>"; };
-		D06E7A1530954803B568E366 /* YsabeauInfant-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "YsabeauInfant-Regular.ttf"; path = "../assets/fonts/YsabeauInfant-Regular.ttf"; sourceTree = "<group>"; };
+		EA286895814B41C6838BDEA3 /* Anybody-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Anybody-Medium.ttf"; path = "../assets/fonts/Anybody-Medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -138,10 +148,15 @@
 		628EA5A0876847EFA68AC969 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CD5A61967FC84850B5404DBA /* NotoSerif-Bold.ttf */,
-				2E5ED1F747A44C4697F7ECC5 /* PlayfairDisplay-Italic-VariableFont_wght.ttf */,
-				D06E7A1530954803B568E366 /* YsabeauInfant-Regular.ttf */,
 				A33A926DD53A439ABE9EDCF8 /* YsabeauInfant-SemiBold.ttf */,
+				35DC222B870B40E79919889B /* Anybody-Regular.ttf */,
+				9E665E4240FA422AA029DCF1 /* Anybody-VariableFont_wdth,wght.ttf */,
+				981D4569910B4A9CB60F9062 /* JosefinSans-Bold.ttf */,
+				9342782378E44B0A941D21E9 /* Anybody-Black.ttf */,
+				342E1169359842F994D607D1 /* Anybody-CondensedExtraBold.ttf */,
+				A1F14982976440258658F09D /* Anybody-ExtraBold.ttf */,
+				330B80DE769A4AE18A62E15F /* Anybody-Italic.ttf */,
+				EA286895814B41C6838BDEA3 /* Anybody-Medium.ttf */,
 			);
 			name = Resources;
 			path = "";
@@ -314,10 +329,15 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				B3B7395A2A3C44F400040FAB /* GoogleService-Info.plist in Resources */,
-				E83BF095152F4C188494A9B5 /* NotoSerif-Bold.ttf in Resources */,
-				14E64587424944008A5DEC61 /* PlayfairDisplay-Italic-VariableFont_wght.ttf in Resources */,
-				29577D392BA54F48861F55A6 /* YsabeauInfant-Regular.ttf in Resources */,
 				3F52D606532F40D3895B2DF8 /* YsabeauInfant-SemiBold.ttf in Resources */,
+				6189CD7F26664A0BBF8FA669 /* Anybody-Regular.ttf in Resources */,
+				52D872B665FD45968E2F7FC0 /* Anybody-VariableFont_wdth,wght.ttf in Resources */,
+				92603D0BA7B9469F8EB1C8AF /* JosefinSans-Bold.ttf in Resources */,
+				A78B48CA58004B408E4C10B2 /* Anybody-Black.ttf in Resources */,
+				3AC5B44DCE9F4482952FFA83 /* Anybody-CondensedExtraBold.ttf in Resources */,
+				E5BD642E15214AE2A765C69C /* Anybody-ExtraBold.ttf in Resources */,
+				1607BEC25BBE4507B1F51D19 /* Anybody-Italic.ttf in Resources */,
+				1F4F1E9014884E20843F77FF /* Anybody-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
