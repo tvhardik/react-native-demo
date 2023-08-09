@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Animated, Image, StyleSheet, TextInput, View} from 'react-native';
 
 const AnimatedTextInput = ({
@@ -9,16 +9,31 @@ const AnimatedTextInput = ({
   onBlur,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-
-  const Focus = () => {
-    setIsFocused(true);
-    onFocus && onFocus();
+  // const inputFocuse = new Animated.Value(!isFocused ? 1 : 0);
+  const focusTextInput = () => {
+    // console.log('focusTextInput');
+    // console.log('isFocused', isFocused);
+    // setIsFocused(!isFocused);
+    // onFocus(isFocused);
+    // Animated.timing(inputFocuse, {
+    //   toValue: 1,
+    //   duration: 200,
+    //   useNativeDriver: !false,
+    // }).start();
   };
 
-  const Blur = () => {
-    setIsFocused(false);
-    onBlur && onBlur();
+  const blurTextInput = () => {
+    // console.log('blurTextInput');
+    // setIsFocused(false);
+    // onBlur && onBlur();
+    // Animated.timing(inputFocuse, {
+    //   toValue: 0,
+    //   duration: 200,
+    //   useNativeDriver: !true,
+    // }).start();
   };
+
+  // console.log('isFocused', isFocused);
 
   return (
     <View
@@ -43,17 +58,31 @@ const AnimatedTextInput = ({
         style={[
           styles.placeholderContainer,
           {
-            marginLeft: inputFocused.interpolate({
-              inputRange: [0, 1],
-              outputRange: [40, -40],
-            }),
+            transform: [
+              {
+                translateX: inputFocused.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [40, -40],
+                }),
+              },
+              // {
+              //   rotate: inputFocused.interpolate({
+              //     inputRange: [0, 1],
+              //     outputRange: ['0deg', '360deg'],
+              //   }),
+              // },
+            ],
           },
         ]}>
         <TextInput
           style={styles.textInput}
+          onPressIn={() => {
+            onFocus(!isFocused);
+            setIsFocused(!isFocused);
+          }}
           placeholder={placeholder}
-          onFocus={Focus}
-          onBlur={Blur}
+          onFocus={focusTextInput}
+          onBlur={blurTextInput}
         />
       </Animated.View>
     </View>

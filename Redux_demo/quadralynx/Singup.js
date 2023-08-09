@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -10,14 +10,11 @@ import {
 } from 'react-native';
 import AnimatedTextInput from './AnimatedTextInput';
 const Signup = () => {
-  const [firstNameInputFocused, setFirstNameInputFocused] = useState(
-    new Animated.Value(0),
-  );
-  const [lastNameInputFocused, setLastNameInputFocused] = useState(
-    new Animated.Value(0),
-  );
+  const firstNameInputFocused = useRef(new Animated.Value(0)).current;
+  const lastNameInputFocused = useRef(new Animated.Value(0)).current;
 
   const createAnimation = (animation, targetValue) => {
+    // console.log('animation', animation);
     Animated.timing(animation, {
       toValue: targetValue,
       duration: 200,
@@ -25,14 +22,22 @@ const Signup = () => {
     }).start();
   };
 
-  const handleFirstNameFocus = () => {
-    createAnimation(firstNameInputFocused, 1);
-    createAnimation(lastNameInputFocused, 0);
+  // const reverseanimation = animation => {
+  //   Animated.timing(animation, {
+  //     toValue: 0,
+  //     duration: 200,
+  //     useNativeDriver: false,
+  //   }).start();
+  // };
+
+  const FirstNameFocus = isFocused => {
+    createAnimation(firstNameInputFocused, isFocused ? 1 : 0);
+    // reverseanimation(lastNameInputFocused);
   };
 
-  const handleLastNameFocus = () => {
-    createAnimation(lastNameInputFocused, 1);
-    createAnimation(firstNameInputFocused, 0);
+  const LastNameFocus = isFocused => {
+    createAnimation(lastNameInputFocused, isFocused ? 1 : 0);
+    // reverseanimation(firstNameInputFocused);
   };
 
   return (
@@ -51,13 +56,13 @@ const Signup = () => {
           <AnimatedTextInput
             inputFocused={firstNameInputFocused}
             placeholder="First Name"
-            onFocus={handleFirstNameFocus}
+            onFocus={FirstNameFocus}
             imageSource={require('./assets/logo/user.png')}
           />
           <AnimatedTextInput
             inputFocused={lastNameInputFocused}
             placeholder="Last Name"
-            onFocus={handleLastNameFocus}
+            onFocus={LastNameFocus}
             imageSource={require('./assets/logo/user.png')}
           />
           <TouchableOpacity style={styles.nextButton}>
