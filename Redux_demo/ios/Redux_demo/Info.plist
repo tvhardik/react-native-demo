@@ -60,7 +60,6 @@
 		<string>your_font_file_name.ttf</string>
 		<string>FontAwesome.ttf</string>
 		<string>FontAwesome5_Brands.ttf</string>
-		<string>FontAwesome5_Regular.ttf</string>
 		<string>FontAwesome5_Solid.ttf</string>
 		<string>Foundation.ttf</string>
 		<string>Ionicons.ttf</string>
@@ -72,8 +71,10 @@
 		<string>Fontisto.ttf</string>
 		<string>NotoSerif-Bold.ttf</string>
 		<string>PlayfairDisplay-Italic-VariableFont_wght.ttf</string>
-		<string>YsabeauInfant-Regular.ttf</string>
+		<string>Anybody-Regular.ttf</string>
+		<string>Anybody-Black.ttf</string>
 		<string>YsabeauInfant-SemiBold.ttf</string>
+		<string>Anybody-ExtraBold.ttf</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
     <string>App needs access to your photo library.</string>

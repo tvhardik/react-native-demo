@@ -835,9 +835,9 @@ PODS:
     - React
   - PushwooshInboxUIXCFramework (6.1.1):
     - PushwooshXCFramework (>= 6.3.4)
-  - PushwooshXCFramework (6.5.0):
-    - PushwooshXCFramework/Core (= 6.5.0)
-  - PushwooshXCFramework/Core (6.5.0)
+  - PushwooshXCFramework (6.5.1):
+    - PushwooshXCFramework/Core (= 6.5.1)
+  - PushwooshXCFramework/Core (6.5.1)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -1578,7 +1578,7 @@ SPEC CHECKSUMS:
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   pushwoosh-react-native-plugin: 095165bbc9a660eda0e6e80d2a96d195a835d514
   PushwooshInboxUIXCFramework: 0baa2dce4d5fe820577648b7ef62b6064c515fc8
-  PushwooshXCFramework: 66a8f09b8ac8f60d59ee9e13d473340242c74b94
+  PushwooshXCFramework: 8e4ba8650676428c892b6cab6d3d99d90d60ffe1
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 4db5e3e18b906377a502da5b358ff159ba4783ed
   RCTTypeSafety: 6c1a8aed043050de0d537336c95cd1be7b66c272
