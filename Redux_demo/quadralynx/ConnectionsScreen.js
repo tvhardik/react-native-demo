@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-const ConnectionsScreen = () => {
-  const [activePage, setActivePage] = useState(0);
+import PaginationDots from './PaginationDots';
+const ConnectionsScreen = ({numDots, activePage, setActivePage}) => {
+  // const [activePage, setActivePage] = useState(0);
   const navigation = useNavigation();
 
   return (
@@ -60,9 +61,7 @@ const ConnectionsScreen = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.buttomButton}>
-        <TouchableOpacity
-          style={styles.leftRightButtonView}
-          onPress={() => setActivePage(activePage > 0 ? activePage - 1 : 0)}>
+        <TouchableOpacity style={styles.leftRightButtonView}>
           <Image
             source={require('./assets/logo/left-arrow.png')}
             style={styles.leftArrow}
@@ -70,24 +69,20 @@ const ConnectionsScreen = () => {
           />
         </TouchableOpacity>
         <View style={styles.paginationDots}>
-          {Array.from({length: 2}).map((dot, i) => (
-            <TouchableOpacity
-              key={i}
-              style={[
-                styles.paginationDot,
-                {
-                  backgroundColor: i === activePage ? '#00476F' : 'transparent',
-                  borderColor: i === activePage ? 'transparent' : '#00476F',
-                },
-              ]}
-              onPress={() => setActivePage(i)}
-            />
-          ))}
+          <PaginationDots
+            numDots={3}
+            activePage={activePage}
+            setActivePage={setActivePage}
+          />
         </View>
         <TouchableOpacity
           style={styles.leftRightButtonView}
           onPress={() => {
-            setActivePage(activePage > 1 ? activePage - 0 : 1);
+            setActivePage(activePage + 1);
+
+            if (activePage === 2) {
+              navigation.navigate('settingScreen');
+            }
           }}>
           <Image
             source={require('./assets/logo/right-arrow.png')}

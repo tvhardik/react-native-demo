@@ -5,13 +5,34 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
-  Settings,
+  Animated,
+  Switch,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import DataSharingSwitch from './DataSharingSwitch';
+import RadioButton from './RadioButton';
+import PaginationDots from './PaginationDots';
+
 const Setting = () => {
-  const [activePage, setActivePage] = useState(0);
   const navigation = useNavigation();
+  const [switch1Value, setSwitch1Value] = useState(false);
+  const [switch2Value, setSwitch2Value] = useState(false);
+  const [switch3Value, setSwitch3Value] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleSelect = option => {
+    setSelectedOption(option);
+  };
+
+  const options = [
+    'Always',
+    'During specific hours',
+    'During specific intervals',
+  ];
+  const [activePage, setActivePage] = useState(0);
+  const numScreens = 3; // Total number of screens/pages
+
   return (
     <SafeAreaView style={styles.maincontainer}>
       <TouchableOpacity style={styles.backbutton}>
@@ -21,48 +42,48 @@ const Setting = () => {
         />
         <Text style={styles.backButtonText}>BACK</Text>
       </TouchableOpacity>
-      <Text style={styles.title}>Clinicians</Text>
-      <View style={styles.groupView}>
-        <TouchableOpacity style={styles.searchAndFlagView}>
-          <Image
-            source={require('./assets/logo/search.png')}
-            style={styles.searchImage}
-            resizeMode="contain"
-          />
-          <Text style={styles.searchText}>SEARCH</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.searchAndFlagView}>
-          <Image
-            source={require('./assets/logo/flag.png')}
-            style={styles.flagImage}
-            resizeMode="contain"
-          />
-          <Text style={styles.sortByText}>SORT BY</Text>
-        </TouchableOpacity>
-      </View>
-      <View>
-        <TouchableOpacity style={styles.detelisBox}>
-          <Text style={styles.detelisBoxTitle}>Spokane Sip</Text>
-          <Text style={styles.detelisText}>
-            4407 N Division St, #303{'\n'}Spokane, WA 99207{'\n'}1.9 mi from
-            your current location{'\n'}(509) 860-9539{'\n'}Medicare/Medicaid
-            accepted
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.detelisBox}>
-          <Text style={styles.detelisBoxTitle}>
-            Early Life Speech & Language
-          </Text>
-          <Text style={styles.detelisText}>
-            506 W 2nd Ave{'\n'}Spokane, WA 99201{'\n'}3.1 mi from your current
-            location{'\n'}(509) 838-2310
-          </Text>
-        </TouchableOpacity>
+      <Text style={styles.title}>Setting</Text>
+      <View style={{flex: 1, marginHorizontal: 19}}>
+        <Text style={styles.titleText}>Sharing</Text>
+        <DataSharingSwitch
+          labelText="Enable Data Sharing"
+          value={switch1Value}
+          onValueChange={value => setSwitch1Value(value)}
+        />
+        <Text
+          style={{
+            fontSize: 14,
+            marginVertical: 10,
+            fontFamily: 'Anybody-Italic',
+          }}>
+          Data is only shared with approved connections.
+        </Text>
+        <Text style={styles.titleText}>Notifications</Text>
+        <DataSharingSwitch
+          labelText="Enable Notifications"
+          value={switch2Value}
+          onValueChange={value => setSwitch2Value(value)}
+        />
+        <Text style={styles.titleText}>Notify Me About</Text>
+        <DataSharingSwitch
+          labelText="All new connections"
+          value={switch3Value}
+          onValueChange={value => setSwitch3Value(value)}
+        />
+        <Text style={styles.titleText}>Notification Frequency</Text>
+        <View>
+          {options.map(option => (
+            <RadioButton
+              key={option}
+              label={option}
+              selected={selectedOption === option}
+              onSelect={handleSelect}
+            />
+          ))}
+        </View>
       </View>
       <View style={styles.buttomButton}>
-        <TouchableOpacity
-          style={styles.leftRightButtonView}
-          onPress={() => setActivePage(activePage > 0 ? activePage - 1 : 0)}>
+        <TouchableOpacity style={styles.leftRightButtonView}>
           <Image
             source={require('./assets/logo/left-arrow.png')}
             style={styles.leftArrow}
@@ -70,30 +91,13 @@ const Setting = () => {
           />
         </TouchableOpacity>
         <View style={styles.paginationDots}>
-          {Array.from({length: 2}).map((dot, i) => (
-            <TouchableOpacity
-              key={i}
-              style={[
-                styles.paginationDot,
-                {
-                  backgroundColor: i === activePage ? '#00476F' : 'transparent',
-                  borderColor: i === activePage ? 'transparent' : '#00476F',
-                },
-              ]}
-              onPress={() => setActivePage(i)}
-            />
-          ))}
+          <PaginationDots
+            numDots={numScreens}
+            activePage={activePage}
+            setActivePage={setActivePage}
+          />
         </View>
-        <TouchableOpacity
-          style={styles.leftRightButtonView}
-          onPress={() => {
-            navigation.navigate('settingScreen');
-          }}>
-          {/* <TouchableOpacity
-          style={styles.leftRightButtonView}
-          onPress={() => {
-            setActivePage(activePage > 1 ? activePage - 0 : 1);
-          }}> */}
+        <TouchableOpacity style={styles.leftRightButtonView}>
           <Image
             source={require('./assets/logo/right-arrow.png')}
             style={styles.righArrow}
@@ -101,6 +105,7 @@ const Setting = () => {
           />
         </TouchableOpacity>
       </View>
+      <View></View>
     </SafeAreaView>
   );
 };
@@ -136,30 +141,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   title: {
+    margin: 10,
     fontSize: 28,
-    color: '#1770BE',
+    color: 'black',
     textAlign: 'center',
     fontFamily: 'Anybody-ExtraBold',
   },
-  searchAndFlagView: {
-    width: '48%',
-    height: 43,
-    backgroundColor: '#00476F',
-    borderRadius: 48,
-    paddingHorizontal: 3,
-    marginTop: 21,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  detelisBox: {
-    marginHorizontal: 22,
-    borderRadius: 20,
-    borderColor: '#1770BE',
-    borderWidth: 1,
-    padding: 22,
-    marginTop: 25,
-  },
+
   leftRightButtonView: {
     backgroundColor: '#00476F',
     width: 64,
@@ -180,44 +168,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  paginationDot: {
-    width: 18,
-    height: 18,
-    borderRadius: 20,
-    marginHorizontal: 15,
-    borderWidth: 2,
-    marginHorizontal: 4,
-  },
-  detelisText: {
-    fontSize: 16,
-    marginTop: 10,
-    fontFamily: 'Anybody-Regular',
-    lineHeight: 23,
-  },
-  detelisBoxTitle: {
-    fontSize: 16,
-    color: '#1770BE',
-    fontFamily: 'Anybody-ExtraBold',
-  },
-  groupView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginHorizontal: 35,
-  },
-  searchText: {
-    color: '#ffffff',
-    fontSize: 15,
-    flex: 0.9,
-    fontFamily: 'Anybody-Black',
-  },
-  searchImage: {height: 40, width: '43%'},
-  flagImage: {height: 35, width: '27%'},
-  sortByText: {
-    color: '#ffffff',
-    fontSize: 15,
-    flex: 0.85,
-    fontFamily: 'Anybody-Black',
-  },
   leftArrow: {width: 35, height: 40, marginRight: 5},
   righArrow: {width: 35, height: 40, marginLeft: 5},
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  titleText: {
+    fontSize: 16,
+    marginVertical: 7,
+    fontFamily: 'Anybody-ExtraBold',
+  },
 });

@@ -2,16 +2,24 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Fontisto';
 
-const CheckBox = ({label, checked, onValueChange}) => {
-  const [isChecked, setIsChecked] = useState(checked);
+const CheckBox = ({label, value, onValueChange}) => {
+  const [checkBoxValue, setCheckBoxValue] = useState(value);
 
   useEffect(() => {
-    setIsChecked(checked);
-  }, [checked]);
+    setCheckBoxValue(value);
+  }, [value]);
 
   const CheckboxToggle = () => {
-    const newValue = !isChecked;
-    setIsChecked(newValue);
+    let newValue;
+    if (checkBoxValue === 'checked') {
+      newValue = 'unchecked';
+    } else if (checkBoxValue === 'unchecked') {
+      newValue = 'indeterminate';
+    } else {
+      newValue = 'checked';
+    }
+
+    setCheckBoxValue(newValue);
     onValueChange(newValue);
   };
 
@@ -27,7 +35,13 @@ const CheckBox = ({label, checked, onValueChange}) => {
       }}>
       <Text style={{fontSize: 20}}>{label}</Text>
       <Icon
-        name={isChecked ? 'checkbox-active' : 'checkbox-passive'}
+        name={
+          checkBoxValue === 'checked'
+            ? 'checkbox-active'
+            : checkBoxValue === 'unchecked'
+            ? 'checkbox-passive'
+            : 'indeterminate'
+        }
         size={20}
       />
     </TouchableOpacity>

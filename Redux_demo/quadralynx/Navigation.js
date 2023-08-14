@@ -10,7 +10,7 @@ const Navigation = () => {
   return (
     <>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="connectionsScreen">
           <Stack.Screen
             name="connectionsScreen"
             component={ConnectionsScreen}
