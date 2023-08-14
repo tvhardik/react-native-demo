@@ -65,12 +65,6 @@ const AnimatedTextInput = ({
                   outputRange: [40, -40],
                 }),
               },
-              // {
-              //   rotate: inputFocused.interpolate({
-              //     inputRange: [0, 1],
-              //     outputRange: ['0deg', '360deg'],
-              //   }),
-              // },
             ],
           },
         ]}>
@@ -100,7 +94,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F1F1F1',
     borderWidth: 1,
     borderColor: '#E6E6E6',
-    marginVertical: 10,
+    marginVertical: 15,
+    margin: 15,
   },
   textInput: {
     flex: 1,
@@ -114,11 +109,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    width: 59,
-    height: 59,
+    width: 90,
+    height: 70,
     margin: 3,
-    backgroundColor: '#ffffff',
+    zIndex: 10,
+    // backgroundColor: '#ffffff',
     borderRadius: 26,
+    marginLeft: 33,
   },
   placeholderContainer: {
     flex: 1,

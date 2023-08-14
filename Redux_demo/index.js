@@ -12,4 +12,7 @@ import ResponsiveApi from './screen/Test/ResponsiveApi';
 // import VoiceExercise from './quadralynx/VoiceExercise';
 // import ConnectionsScreen from './quadralynx/ConnectionsScreen';
 import Navigation from './quadralynx/Navigation';
-AppRegistry.registerComponent(appName, () => Navigation);
+
+import MyConnectionsScreen from './quadralynx/MyConnectionsScreen';
+import ConnectionsScreen from './quadralynx/ConnectionsScreen';
+AppRegistry.registerComponent(appName, () => MyConnectionsScreen);

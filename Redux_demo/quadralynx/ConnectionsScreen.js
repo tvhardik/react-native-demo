@@ -7,11 +7,12 @@ import {
   Image,
 } from 'react-native';
 import React, {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 import PaginationDots from './PaginationDots';
+import SearchAndFlagButton from './SearchAndFlagButton';
 const ConnectionsScreen = ({numDots, activePage, setActivePage}) => {
   // const [activePage, setActivePage] = useState(0);
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.maincontainer}>
@@ -24,22 +25,16 @@ const ConnectionsScreen = ({numDots, activePage, setActivePage}) => {
       </TouchableOpacity>
       <Text style={styles.title}>Clinicians</Text>
       <View style={styles.groupView}>
-        <TouchableOpacity style={styles.searchAndFlagView}>
-          <Image
-            source={require('./assets/logo/search.png')}
-            style={styles.searchImage}
-            resizeMode="contain"
-          />
-          <Text style={styles.searchText}>SEARCH</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.searchAndFlagView}>
-          <Image
-            source={require('./assets/logo/flag.png')}
-            style={styles.flagImage}
-            resizeMode="contain"
-          />
-          <Text style={styles.sortByText}>SORT BY</Text>
-        </TouchableOpacity>
+        <SearchAndFlagButton
+          imageSource={require('./assets/logo/search.png')}
+          buttonText="SEARCH"
+          onPress={() => {}}
+        />
+        <SearchAndFlagButton
+          imageSource={require('./assets/logo/flag.png')}
+          buttonText="SORT BY"
+          onPress={() => {}}
+        />
       </View>
       <View>
         <TouchableOpacity style={styles.detelisBox}>
@@ -77,13 +72,13 @@ const ConnectionsScreen = ({numDots, activePage, setActivePage}) => {
         </View>
         <TouchableOpacity
           style={styles.leftRightButtonView}
-          onPress={() => {
-            setActivePage(activePage + 1);
-
-            if (activePage === 2) {
-              navigation.navigate('settingScreen');
-            }
-          }}>
+          // onPress={() => {
+          //   setActivePage(activePage + 1);
+          //   if (activePage === 2) {
+          //     navigation.navigate('settingScreen');
+          //   }
+          // }}
+        >
           <Image
             source={require('./assets/logo/right-arrow.png')}
             style={styles.righArrow}
