@@ -1,0 +1,566 @@
+// import React, { useState } from 'react';
+// import { SafeAreaView, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+
+// const ATM = () => {
+//   const [withdrawAmount, setWithdrawAmount] = useState('');
+//   const [totalAmount, setTotalAmount] = useState(50000);
+//   const [withdrawnNotes, setWithdrawnNotes] = useState([]);
+
+//   const handleWithdraw = () => {
+//     if (withdrawAmount % 100 === 0 && withdrawAmount <= totalAmount) {
+//       const notes = [2000, 500, 200, 100];
+//       const withdrawnNotes = [];
+//       let remainingAmount = withdrawAmount;
+
+//       notes.forEach(note => {
+//         const count = Math.floor(remainingAmount / note);
+//         if (count > 0) {
+//           withdrawnNotes.push({ note, count });
+//           remainingAmount -= count * note;
+//         }
+//       });
+
+//       console.log('Withdrawn Notes:', withdrawnNotes);
+//       console.log('Remaining Balance:', totalAmount - withdrawAmount);
+
+//       setWithdrawnNotes(withdrawnNotes);
+//       setTotalAmount(totalAmount - withdrawAmount);
+//       setWithdrawAmount('');
+//     }
+//   };
+
+//   console.log('Total Amount:', totalAmount);
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       <Text style={styles.title}>ATM</Text>
+//       <TextInput
+//         style={styles.textInput}
+//         placeholder="Withdraw Amount"
+//         keyboardType="numeric"
+//         value={withdrawAmount}
+//         onChangeText={amount => setWithdrawAmount(amount)}
+//       />
+//       <TouchableOpacity style={styles.button} onPress={handleWithdraw}>
+//         <Text style={styles.buttonText}>Withdraw</Text>
+//       </TouchableOpacity>
+//       <Text style={styles.remainingBalance}>Remaining Balance: ₹ {totalAmount}/-</Text>
+//       <Text style={styles.withdrawnNotesTitle}>Withdrawn Notes:</Text>
+//       {withdrawnNotes.map((noteInfo, index) => (
+//         <Text key={index} style={styles.withdrawnNote}>
+//           {`${noteInfo.count} x ₹ ${noteInfo.note}/-`}
+//         </Text>
+//       ))}
+//     </SafeAreaView>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     margin: 40,
+//   },
+//   title: {
+//     fontSize: 24,
+//     fontWeight: 'bold',
+//     marginBottom: 20,
+//   },
+//   textInput: {
+//     borderWidth: 1,
+//     borderRadius: 10,
+//     padding: 14,
+//     height: 50,
+//     width: '100%',
+//     marginBottom: 20,
+//   },
+//   button: {
+//     backgroundColor: 'blue',
+//     paddingHorizontal: 20,
+//     paddingVertical: 10,
+//     borderRadius: 5,
+//   },
+//   buttonText: {
+//     color: 'white',
+//     fontSize: 16,
+//     fontWeight: 'bold',
+//   },
+//   remainingBalance: {
+//     marginTop: 20,
+//     fontSize: 16,
+//   },
+//   withdrawnNotesTitle: {
+//     marginTop: 20,
+//     fontSize: 18,
+//     fontWeight: 'bold',
+//   },
+//   withdrawnNote: {
+//     fontSize: 16,
+//     marginVertical: 5,
+//   },
+// });
+
+// export default ATM;
+
+// // ----------------------------------------------------------
+// Details
+
+
+
+// quadralynx
+//   ———————— this image  <Image
+//           source={require('./assets/logo/Group4869.png')}
+//           style={{width: 500, height: 200}}
+//         />
+// Bottom set how to 
+
+
+// —————————
+// <View
+//         style={{
+//           flexDirection: 'row',
+//         }}>
+//         <Text>
+//           To{'\n'}Quiet
+//           {'      '}
+//         </Text>
+//         <Text>
+//           Just{'\n'}Right{'      '}
+//         </Text>
+//         <Text>
+//           Too{'\n'}Loud{'  '}
+//         </Text>
+//       </View>
+// —————————
+//    // transform: [{translateY: Dimensions.get('window').height * 0.99}],
+// ——————————
+// import React, { useState } from 'react';
+// import { SafeAreaView, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+
+// const ATM = () => {
+//   const [withdrawAmount, setWithdrawAmount] = useState('');
+//   const [totalAmount, setTotalAmount] = useState(50000);
+//   const [withdrawnNotes, setWithdrawnNotes] = useState([]);
+
+//   const handleWithdraw = () => {
+//     if (withdrawAmount % 100 === 0 && withdrawAmount <= totalAmount) {
+//       const notes = [2000, 500, 200, 100];
+//       const withdrawnNotes = [];
+//       let remainingAmount = withdrawAmount;
+
+//       notes.forEach(note => {
+//         const count = Math.floor(remainingAmount / note);
+//         if (count > 0) {
+//           withdrawnNotes.push({ note, count });
+//           remainingAmount -= count * note;
+//         }
+//       });
+
+//       console.log('Withdrawn Notes:', withdrawnNotes);
+//       console.log('Remaining Balance:', totalAmount - withdrawAmount);
+
+//       setWithdrawnNotes(withdrawnNotes);
+//       setTotalAmount(totalAmount - withdrawAmount);
+//       setWithdrawAmount('');
+//     }
+//   };
+
+//   console.log('Total Amount:', totalAmount);
+
+//   return (
+//     <SafeAreaView style={styles.container}>
+//       <Text style={styles.title}>ATM</Text>
+//       <TextInput
+//         style={styles.textInput}
+//         placeholder="Withdraw Amount"
+//         keyboardType="numeric"
+//         value={withdrawAmount}
+//         onChangeText={amount => setWithdrawAmount(amount)}
+//       />
+//       <TouchableOpacity style={styles.button} onPress={handleWithdraw}>
+//         <Text style={styles.buttonText}>Withdraw</Text>
+//       </TouchableOpacity>
+//       <Text style={styles.remainingBalance}>Remaining Balance: ₹ {totalAmount}/-</Text>
+//       <Text style={styles.withdrawnNotesTitle}>Withdrawn Notes:</Text>
+//       {withdrawnNotes.map((noteInfo, index) => (
+//         <Text key={index} style={styles.withdrawnNote}>
+//           {`${noteInfo.count} x ₹ ${noteInfo.note}/-`}
+//         </Text>
+//       ))}
+//     </SafeAreaView>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     margin: 40,
+//   },
+//   title: {
+//     fontSize: 24,
+//     fontWeight: 'bold',
+//     marginBottom: 20,
+//   },
+//   textInput: {
+//     borderWidth: 1,
+//     borderRadius: 10,
+//     padding: 14,
+//     height: 50,
+//     width: '100%',
+//     marginBottom: 20,
+//   },
+//   button: {
+//     backgroundColor: 'blue',
+//     paddingHorizontal: 20,
+//     paddingVertical: 10,
+//     borderRadius: 5,
+//   },
+//   buttonText: {
+//     color: 'white',
+//     fontSize: 16,
+//     fontWeight: 'bold',
+//   },
+//   remainingBalance: {
+//     marginTop: 20,
+//     fontSize: 16,
+//   },
+//   withdrawnNotesTitle: {
+//     marginTop: 20,
+//     fontSize: 18,
+//     fontWeight: 'bold',
+//   },
+//   withdrawnNote: {
+//     fontSize: 16,
+//     marginVertical: 5,
+//   },
+// });
+
+// export default ATM;
+
+// ———————————————————————————————
+// import {
+//   Button,
+//   SafeAreaView,
+//   StyleSheet,
+//   Text,
+//   TextInput,
+//   View,
+// } from 'react-native';
+// import React, {useState} from 'react';
+
+// const Atm = () => {
+//   const [withdrawAmount, setWithdrawAmount] = useState('');
+//   const [totalAmount, setTotalAmount] = useState(50000);
+//   const [totalNote, setTotalNote] = useState([]);
+
+//   const handleWithdraw = () => {
+//     if (withdrawAmount <= 0) {
+//       alert('Please enter a valid withdrawal amount.');
+//       return;
+//     }
+
+//     if (withdrawAmount % 100 !== 0) {
+//       alert('Withdrawal amount must be a multiple of 100.');
+//       return;
+//     }
+
+//     if (withdrawAmount > totalAmount) {
+//       alert('Insufficient balance.');
+//       return;
+//     }
+
+//     const notes = [2000, 500, 200, 100];
+//     const noteCount = [];
+
+//     let remainingAmount = withdrawAmount;
+
+//     for (const note of notes) {
+//       const count = Math.floor(remainingAmount / note);
+//       remainingAmount -= count * note;
+//       noteCount.push({note, count});
+//     }
+
+//     setTotalAmount(totalAmount - withdrawAmount);
+//     setTotalNote(noteCount);
+//     setWithdrawAmount('');
+//   };
+
+//   return (
+//     <SafeAreaView style={styles.safeAreaView}>
+//       <Text>ATM</Text>
+//       <TextInput
+//         style={styles.textInput}
+//         placeholder="Withdraw amount"
+//         keyboardType="numeric"
+//         value={withdrawAmount}
+//         onChangeText={amount => setWithdrawAmount(amount)}
+//       />
+//       <Button title="Withdraw" onPress={handleWithdraw} />
+//       <View style={styles.resultContainer}>
+//         <Text>Total Amount: ₹ {totalAmount}</Text>
+//         <Text>
+//           Remaining Deduction Amount: ₹ {totalAmount - withdrawAmount}
+//         </Text>
+//         <Text>Notes:</Text>
+//         {totalNote.map((noteItem, index) => (
+//           <Text key={index}>
+//             {noteItem.note} * {noteItem.count} = ₹{' '}
+//             {noteItem.note * noteItem.count}
+//           </Text>
+//         ))}
+//       </View>
+//     </SafeAreaView>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   textInput: {
+//     borderWidth: 1,
+//     borderRadius: 10,
+//     padding: 14,
+//     height: 50,
+//     width: '100%',
+//     marginBottom: 10,
+//   },
+//   safeAreaView: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     margin: 40,
+//   },
+//   resultContainer: {
+//     marginTop: 20,
+//     alignItems: 'center',
+//   },
+// });
+
+// export default Atm;
+// ——————————————————————————————
+
+// import {
+//   Button,
+//   SafeAreaView,
+//   StyleSheet,
+//   Text,
+//   TextInput,
+//   View,
+// } from 'react-native';
+// import React, { useState } from 'react';
+
+// const Atm = () => {
+//   const [withdrawAmount, setWithdrawAmount] = useState('');
+//   const [totalAmount, setTotalAmount] = useState(50000);
+//   const [totalNote, setTotalNote] = useState([]);
+
+//   const handleWithdraw = () => {
+//     if (withdrawAmount <= 0) {
+//       alert('Please enter a valid withdrawal amount.');
+//       return;
+//     }
+
+//     if (withdrawAmount % 100 !== 0) {
+//       alert('Withdrawal amount must be a multiple of 100.');
+//       return;
+//     }
+
+//     if (withdrawAmount > totalAmount) {
+//       alert('Insufficient balance.');
+//       return;
+//     }
+
+//     const notes = [2000, 500, 200, 100];
+//     const noteCount = [];
+
+//     let remainingAmount = withdrawAmount;
+
+//     for (const note of notes) {
+//       const count = Math.floor(remainingAmount / note);
+//       remainingAmount -= count * note;
+//       noteCount.push({ note, count });
+//     }
+
+//     console.log('Withdrawal successful!');
+//     console.log('Withdrawn Amount:', withdrawAmount);
+//     console.log('Remaining Balance:', totalAmount - withdrawAmount);
+//     console.log('Notes:', noteCount);
+
+//     setTotalAmount(totalAmount - withdrawAmount);
+//     setTotalNote(noteCount);
+//     setWithdrawAmount('');
+//   };
+
+//   return (
+//     <SafeAreaView style={styles.safeAreaView}>
+//       <Text>ATM</Text>
+//       <TextInput
+//         style={styles.textInput}
+//         placeholder="Withdraw amount"
+//         keyboardType="numeric"
+//         value={withdrawAmount}
+//         onChangeText={(amount) => setWithdrawAmount(amount)}
+//       />
+//       <Button title="Withdraw" onPress={handleWithdraw} />
+//       <View style={styles.resultContainer}>
+//         <Text>Total Amount: ₹ {totalAmount}</Text>
+//         <Text>
+//           Remaining Deduction Amount: ₹ {totalAmount - withdrawAmount}
+//         </Text>
+//         <Text>Notes:</Text>
+//         {totalNote.map((noteItem, index) => (
+//           <Text key={index}>
+//             {noteItem.note} * {noteItem.count} = ₹{' '}
+//             {noteItem.note * noteItem.count}
+//           </Text>
+//         ))}
+//       </View>
+//     </SafeAreaView>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   textInput: {
+//     borderWidth: 1,
+//     borderRadius: 10,
+//     padding: 14,
+//     height: 50,
+//     width: '100%',
+//     marginBottom: 10,
+//   },
+//   safeAreaView: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     margin: 40,
+//   },
+//   resultContainer: {
+//     marginTop: 20,
+//     alignItems: 'center',
+//   },
+// });
+
+// export default Atm;
+// ---------------------------------------------------
+// import {
+//   Button,
+//   SafeAreaView,
+//   StyleSheet,
+//   Text,
+//   TextInput,
+//   View,
+// } from 'react-native';
+// import React, {useState} from 'react';
+
+// const Atm = () => {
+//   const [withdrawAmount, setWithdrawAmount] = useState('');
+//   const [totalAmount, setTotalAmount] = useState(50000);
+//   const [totalNote, setTotalNote] = useState([]);
+//   const [availableNotes, setAvailableNotes] = useState({
+//     2000: 20,
+//     500: 50,
+//     200: 100,
+//     100: 200,
+//   });
+
+//   const handleWithdraw = () => {
+//     if (withdrawAmount <= 0) {
+//       alert('Please enter a valid withdrawal amount.');
+//       return;
+//     }
+
+//     if (withdrawAmount % 100 !== 0) {
+//       alert('Withdrawal amount must be a multiple of 100.');
+//       return;
+//     }
+
+//     if (withdrawAmount > totalAmount) {
+//       alert('Insufficient balance.');
+//       return;
+//     }
+
+//     const notes = [2000, 500, 200, 100];
+//     const noteCount = {};
+
+//     let remainingAmount = withdrawAmount;
+
+//     for (const note of notes) {
+//       const count = Math.min(
+//         Math.floor(remainingAmount / note),
+//         availableNotes[note],
+//       );
+//       remainingAmount -= count * note;
+//       noteCount[note] = count;
+//     }
+
+//     if (remainingAmount > 0) {
+//       alert('ATM does not have enough notes to dispense this amount.');
+//       return;
+//     }
+
+//     const updatedAvailableNotes = {...availableNotes};
+//     for (const note of notes) {
+//       updatedAvailableNotes[note] -= noteCount[note];
+//     }
+
+//     console.log('Withdrawal successful!');
+//     console.log('Withdrawn Amount:', withdrawAmount);
+//     console.log('Remaining Balance:', totalAmount - withdrawAmount);
+//     console.log('Notes:', noteCount);
+
+//     setTotalAmount(totalAmount - withdrawAmount);
+//     setTotalNote(noteCount);
+//     setAvailableNotes(updatedAvailableNotes);
+//     setWithdrawAmount('');
+//   };
+
+//   return (
+//     <SafeAreaView style={styles.safeAreaView}>
+//       <Text>ATM</Text>
+//       <TextInput
+//         style={styles.textInput}
+//         placeholder="Withdraw amount"
+//         keyboardType="numeric"
+//         value={withdrawAmount}
+//         onChangeText={amount => setWithdrawAmount(amount)}
+//       />
+//       <Button title="Withdraw" onPress={handleWithdraw} />
+//       <View style={styles.resultContainer}>
+//         <Text>Total Amount: ₹ {totalAmount}</Text>
+//         <Text>
+//           Remaining Deduction Amount: ₹ {totalAmount - withdrawAmount}
+//         </Text>
+//         <Text>Available Notes:</Text>
+//         {Object.keys(availableNotes).map((note, index) => (
+//           <Text key={index}>
+//             {note} - {availableNotes[note]} notes
+//           </Text>
+//         ))}
+//       </View>
+//     </SafeAreaView>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   textInput: {
+//     borderWidth: 1,
+//     borderRadius: 10,
+//     padding: 14,
+//     height: 50,
+//     width: '100%',
+//     marginBottom: 10,
+//   },
+//   safeAreaView: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     margin: 40,
+//   },
+//   resultContainer: {
+//     marginTop: 20,
+//     alignItems: 'center',
+//   },
+// });
+
+// export default Atm;

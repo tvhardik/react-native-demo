@@ -15,4 +15,5 @@ import Navigation from './quadralynx/Navigation';
 import TrainingScreen from './quadralynx/TrainingScreen';
 import MyConnectionsScreen from './quadralynx/MyConnectionsScreen';
 // import ConnectionsScreen from './quadralynx/ConnectionsScreen';
-AppRegistry.registerComponent(appName, () => TrainingScreen);
+import Atm from './Task/Atm';
+AppRegistry.registerComponent(appName, () => Atm);
