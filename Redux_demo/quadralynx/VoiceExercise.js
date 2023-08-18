@@ -11,7 +11,7 @@ import React from 'react';
 const VoiceExercise = () => {
   return (
     <SafeAreaView style={styles.maincontainer}>
-      <View style={{flex: 2, justifyContent: 'space-around', zIndex: 100}}>
+      <View style={{flex: 1, justifyContent: 'space-around'}}>
         <View style={styles.alertView}>
           <Image
             source={require('./assets/logo/alert.png')}
@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
   },
   alertView: {
     alignItems: 'center',
-    // marginBottom: 35,
   },
   alertImage: {height: 63, width: 72},
   alertText: {
@@ -81,23 +80,17 @@ const styles = StyleSheet.create({
   },
   exerciseImage: {marginBottom: 15, height: 85, width: '80%'},
   exerciseView: {
-    // width: 325,
-    // height: 157,
     marginHorizontal: 25,
-    // alignSelf: 'center',
     alignItems: 'center',
     backgroundColor: '#F1F1F1',
     borderRadius: 10,
     paddingBottom: 15,
     paddingTop: 25,
-    // zIndex: 10,
   },
   bottomImageView: {
     flex: 1,
     alignItems: 'center',
-    // position: 'absolute',
     bottom: 0,
-    // width: '100%',
   },
   quitButton: {
     backgroundColor: '#ffffff',

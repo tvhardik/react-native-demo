@@ -12,11 +12,13 @@ const Atm = () => {
   const [withdrawAmount, setwithdrawAmount] = useState('');
   const [totelAmount, setTotalAmount] = useState(50000);
   const avalibleNotes = {
-    2000: 1, //30000
+    2000: 15, //30000
     500: 20, //10000
     200: 30, //6000
     100: 40, //4000
   };
+  const notes = [2000, 500, 200,   100];
+
   const handelWithdraw = () => {
     if (withdrawAmount <= 0) {
       alert('plz enter valid withdraw amount');
@@ -34,26 +36,22 @@ const Atm = () => {
       alert('notes not avalible in ATM');
       return;
     }
-    const notes = [2000, 500, 200, 100];
     const notecount = {};
 
     let RemainingAmount = withdrawAmount;
+    // console.log('RemainingAmount', RemainingAmount);
     // console.log('withdrawAmount', withdrawAmount);
+
     for (const note of notes) {
-      // console.log(note)
-      // console.log('RemainingAmount', RemainingAmount);
-      
       const count = Math.min(
         Math.floor(RemainingAmount / note),
         avalibleNotes[note],
       );
-
       RemainingAmount -= count * note;
-
       notecount[note] = count;
-      // console.log(count, 'count >>');
-      // console.log(note, 'note >>');
+      console.log(note);
     }
+
     // console.log('notecount >>', notecount);
     // console.log('RemainingAmount >> ', RemainingAmount);
     // console.log('avalibleNotes >>>', avalibleNotes);
@@ -78,25 +76,8 @@ const Atm = () => {
         value={withdrawAmount}
         onChangeText={amout => setwithdrawAmount(amout)}
       />
-      <TouchableOpacity
-        style={{
-          marginVertical: 25,
-          width: '100%',
-          height: 50,
-          backgroundColor: 'black',
-          borderRadius: 10,
-          justifyContent: 'center',
-        }}
-        onPress={handelWithdraw}>
-        <Text
-          style={{
-            color: '#fff',
-            textAlign: 'center',
-            fontSize: 20,
-            fontFamily: 'Anybody-ExtraBold',
-          }}>
-          Withdraw
-        </Text>
+      <TouchableOpacity style={styles.Button} onPress={handelWithdraw}>
+        <Text style={styles.buttonText}>Withdraw</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -117,5 +98,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 40,
+  },
+  Button: {
+    marginVertical: 25,
+    width: '100%',
+    height: 50,
+    backgroundColor: 'black',
+    borderRadius: 10,
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 20,
+    fontFamily: 'Anybody-ExtraBold',
   },
 });
