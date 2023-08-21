@@ -20,3 +20,25 @@ for (let i = 1; i < note.length; i++) {
   min = Math.min(min, note[i]);
 }
 console.log(min);
+
+const avalibleNotes = {
+  2000:15,
+  500:20,
+  200:30,
+  100:40
+}
+
+for (let key in avalibleNotes) {
+  console.log(key);
+}
+
+const avalibleNotes = {
+  2000: 15,
+  500: 20,
+  200: 30,
+  100: 40
+};
+
+for (let key in avalibleNotes) {
+  console.log(avalibleNotes[key]);
+}

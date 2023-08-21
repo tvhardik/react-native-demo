@@ -9,13 +9,13 @@ import {
   Switch,
 } from 'react-native';
 import React, {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 import DataSharingSwitch from './DataSharingSwitch';
 import RadioButton from './RadioButton';
 import PaginationDots from './PaginationDots';
 
 const Setting = () => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const [switch1Value, setSwitch1Value] = useState(false);
   const [switch2Value, setSwitch2Value] = useState(false);
   const [switch3Value, setSwitch3Value] = useState(false);

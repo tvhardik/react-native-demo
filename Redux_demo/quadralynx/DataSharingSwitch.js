@@ -24,7 +24,7 @@ const CustomAnimatedSwitch = ({value, onValueChange, labelText}) => {
           styles.switch,
           {
             backgroundColor: animValue.interpolate({
-              inputRange: [0, 1],
+              inputRange: [0, 3],
               outputRange: ['gray', '#02476F'],
             }),
           },
@@ -36,7 +36,7 @@ const CustomAnimatedSwitch = ({value, onValueChange, labelText}) => {
               {
                 translateX: animValue.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [-3, 44],
+                  outputRange: [-1, 35],
                 }),
               },
             ],
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Anybody-Regular',
   },
   switch: {
-    width: 82,
+    width: 75,
     height: 35,
     borderRadius: 20,
     justifyContent: 'center',
