@@ -11,7 +11,7 @@ import React, {useState} from 'react';
 
 const Atm = () => {
   const [withdrawAmount, setwithdrawAmount] = useState('');
-  const [totelAmount, setTotalAmount] = useState();
+  const [totelAmount, setTotalAmount] = useState(5500);
   const [withdrawalInfo, setWithdrawalInfo] = useState(null);
   const [avalibleNotes, setAvalibleNote] = useState({
     2000: 1, //2000

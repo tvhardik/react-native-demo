@@ -16,5 +16,6 @@ import TrainingScreen from './quadralynx/TrainingScreen';
 import MyConnectionsScreen from './quadralynx/MyConnectionsScreen';
 // import ConnectionsScreen from './quadralynx/ConnectionsScreen';
 import Atm from './Task/Atm';
+import EmergencyDepartment from './vFNER/EmergencyDepartment';
 import Setting from './quadralynx/Setting';
-AppRegistry.registerComponent(appName, () => Atm);
+AppRegistry.registerComponent(appName, () => EmergencyDepartment);

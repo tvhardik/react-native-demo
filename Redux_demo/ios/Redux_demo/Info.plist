@@ -37,20 +37,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Allow access to save images to the gallery</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App needs access to your photo library.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -70,17 +60,43 @@
 		<string>Anybody-Italic.ttf</string>
 		<string>Fontisto.ttf</string>
 		<string>NotoSerif-Bold.ttf</string>
-	    <string>Anybody-Bold.ttf</string>
+		<string>Anybody-Bold.ttf</string>
 		<string>PlayfairDisplay-Italic-VariableFont_wght.ttf</string>
 		<string>Anybody-Regular.ttf</string>
 		<string>Anybody-Black.ttf</string>
 		<string>YsabeauInfant-SemiBold.ttf</string>
 		<string>Anybody-ExtraBold.ttf</string>
+		<string>Futura Bold Italic font.ttf</string>
+		<string>Futura Bold font.ttf</string>
+		<string>Futura Book Italic font.ttf</string>
+		<string>Futura Book font.ttf</string>
+		<string>Futura Extra Black font.ttf</string>
+		<string>Futura Heavy Italic font.ttf</string>
+		<string>Futura Heavy font.ttf</string>
+		<string>Futura Light Italic font.ttf</string>
+		<string>Futura Light font.ttf</string>
+		<string>futur.ttf</string>
+		<string>futura light bt.ttf</string>
+		<string>futura medium bt.ttf</string>
+		<string>futura medium condensed bt.ttf</string>
 	</array>
-	<key>NSPhotoLibraryUsageDescription</key>
-    <string>App needs access to your photo library.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-<string>Allow access to save images to the gallery</string>
-
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

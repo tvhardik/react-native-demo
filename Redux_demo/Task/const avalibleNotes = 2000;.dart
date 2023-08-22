@@ -42,3 +42,25 @@ const avalibleNotes = {
 for (let key in avalibleNotes) {
   console.log(avalibleNotes[key]);
 }
+
+
+    {/* <View style={{flex: 1, margin: 20, justifyContent: 'space-around'}}>
+        <Image
+          source={images.Vector}
+          style={{width: 45, height: 96, resizeMode: 'contain'}}
+        />
+        <Image
+          source={images.VectorAimbulance}
+          style={{width: 45, height: 96}}
+        />
+      </View> */}
+
+
+       <Header
+        firstImageSource={require('./assets/Icons/aimbulanceIcon.png')}
+        departmentName="Emergency Department"
+        title="Friday Noon"
+        time="58:06"
+        lineImage={require('./assets/Icons/line.png')}
+        lastImageSource={require('./assets/Icons/manu.png')}
+      />
